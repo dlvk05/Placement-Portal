@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route} from "react-router-dom";
-import Login from './containers/Authentication/Login/Login';
+import Login from './Containers/Authentication/Login/Login';
 
 class App extends React.Component{
   render() {

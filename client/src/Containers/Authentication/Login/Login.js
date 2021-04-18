@@ -14,6 +14,7 @@ class Login extends React.Component {
     },
   };
 
+  //this takes input from all forms on this page
   inputChangeHandler = (event, string) => {
     const input = event.target.value;
     console.log(input);
@@ -24,7 +25,7 @@ class Login extends React.Component {
         value: input,
       },
     };
-     this.setState({ ...updatedState });
+    this.setState({ ...updatedState });
     console.log(this.state);
   };
 
@@ -32,42 +33,48 @@ class Login extends React.Component {
     console.log("from button");
     console.log(this.state);
   };
+
   render() {
     return (
-      <div className="section">
-        <Form>
-          <Form.Group controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              onChange={(event, string) =>
-                this.inputChangeHandler(event, "email")
-              }
-            />
-            <Form.Text className="text-muted">
-              We'll never share your email with anyone else.
-            </Form.Text>
-          </Form.Group>
+    <div className="section1">
+        <div className="section2">
+          <Form>
+            <Form.Group controlId="formBasicEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                onChange={(event, string) =>
+                  this.inputChangeHandler(event, "email")
+                }
+              />
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+              </Form.Text>
+            </Form.Group>
 
-          <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              onChange={(event, string) =>
-                this.inputChangeHandler(event, "password")
-              }
-            />
-          </Form.Group>
-          <Form.Group controlId="formBasicCheckbox">
-            <Form.Check type="checkbox" label="Check me out" />
-          </Form.Group>
-          <Button variant="primary" onClick={this.random}>
-            Submit
+            <Form.Group controlId="formBasicPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                onChange={(event, string) =>
+                  this.inputChangeHandler(event, "password")
+                }
+              />
+            </Form.Group>
+            <Button variant="primary" onClick={this.random}>
+              Login
+            </Button>
+          </Form>
+          <hr />
+          <Button variant="success" className="b1">
+            Admin Login
           </Button>
-        </Form>
+          <Button variant="info">Sign Up</Button>
+        </div>
       </div>
+        
     );
   }
 }
