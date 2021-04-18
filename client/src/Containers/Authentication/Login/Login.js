@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import {Link} from "react-router-dom";
 import "./Login.css";
 
 class Login extends React.Component {
@@ -71,7 +72,9 @@ class Login extends React.Component {
           <Button variant="success" className="b1">
             Admin Login
           </Button>
+          <Link to="/Signup">
           <Button variant="info">Sign Up</Button>
+          </Link>
         </div>
       </div>
         
