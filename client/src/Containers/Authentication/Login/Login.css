@@ -1,0 +1,8 @@
+.section {
+    height: 60%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    justify-self: center;
+    border: 2px solid;
+}
