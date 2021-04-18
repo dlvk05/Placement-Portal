@@ -29,7 +29,7 @@ class Signup extends React.Component {
       value: "",
     },
     branch: {
-      type: "branch",
+      type: "department",
       value: "",
     },
   };
@@ -136,10 +136,11 @@ class Signup extends React.Component {
 
             <Form.Row>
               <Form.Group as={Col} controlId="formGridBranch">
-                <Form.Label>Branch</Form.Label>
+                <Form.Label>Department</Form.Label>
                 <Form.Control
+                  placeholder="department"
                   onChange={(event, string) => {
-                    this.inputChangeHandler(event, "branch");
+                    this.inputChangeHandler(event, "department");
                   }}
                 />
               </Form.Group>
