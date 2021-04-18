@@ -14,12 +14,13 @@ class Login extends React.Component {
         }
     }
 
-    inputChangeHndler = (type, event) =>{
+    inputChangeHndler = (event, string) =>{
         const input = event.target.value;
+        console.log(input);
         const updatedState = {
             ...this.state,
-            [type]:{
-                type:[type],
+            [string]:{
+                type:[string],
                 value: input
             }
         }
@@ -34,7 +35,7 @@ class Login extends React.Component {
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" onChange={("email", event) => this.inputChangeHndler("email", event)}/>
+            <Form.Control type="email" placeholder="Enter email" onChange={(event, string) => this.inputChangeHndler(event, "email")}/>
             <Form.Text className="text-muted">
               We'll never share your email with anyone else.
             </Form.Text>
