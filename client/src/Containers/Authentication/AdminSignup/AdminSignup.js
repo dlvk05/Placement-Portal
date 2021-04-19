@@ -1,9 +1,10 @@
 import React from "react";
-import { Form, Button, Col } from "react-bootstrap";
-import "./Signup.css";
+import {Form, Button, Col} from 'react-bootstrap';
+import styles from './AdminSignup.module.css';
 
-class Signup extends React.Component {
-  state = {
+
+class AdminSignup extends React.Component {
+  state ={
     firstName: {
       type: "firstName",
       value: "",
@@ -20,8 +21,8 @@ class Signup extends React.Component {
       type: "password",
       value: "",
     },
-    regno: {
-      type: "regno",
+    employeeid: {
+      type: "employeeid",
       value: "",
     },
     mobileno: {
@@ -32,7 +33,7 @@ class Signup extends React.Component {
       type: "department",
       value: "",
     },
-  };
+  }
 
   inputChangeHandler = (event, string) => {
     const input = event.target.value;
@@ -46,13 +47,17 @@ class Signup extends React.Component {
     this.setState({
       ...updatedState,
     });
-    console.log(this.state);
   };
+
+  onSubmitHandler = () =>{
+    console.log(this.state);    
+  }
+
 
   render() {
     return (
-      <div className="section3">
-        <div className="section4">
+      <div className={styles.section3}>
+        <div className={styles.section4}>
           <Form>
             <Form.Row>
               <Form.Group as={Col} controlId="formGridFirstName">
@@ -114,12 +119,12 @@ class Signup extends React.Component {
               </Form.Group>
             </Form.Row>
 
-            <Form.Group controlId="formGridRegistrationNumber">
-              <Form.Label>RegistrationNumber</Form.Label>
+            <Form.Group controlId="formGridEmployeeId">
+              <Form.Label>EmployeeID</Form.Label>
               <Form.Control
-                placeholder="17930XXXX"
+                placeholder="Employee ID"
                 onChange={(event, string) => {
-                  this.inputChangeHandler(event, "regno");
+                  this.inputChangeHandler(event, "employeeid");
                 }}
               />
             </Form.Group>
@@ -145,8 +150,7 @@ class Signup extends React.Component {
                 />
               </Form.Group>
             </Form.Row>
-            {/* --> might want to add an onClick function here later */}
-            <Button variant="primary" type="submit"> 
+            <Button variant="primary" onClick={this.onSubmitHandler}>
               Submit
             </Button>
           </Form>
@@ -156,4 +160,4 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+export default AdminSignup;
