@@ -1,6 +1,9 @@
 import React from "react";
-import { Form, Button, Col } from "react-bootstrap";
-import "./Signup.css";
+import { connect } from "react-redux";
+import { Form, Button, Col, Spinner } from "react-bootstrap";
+import styles from "./Signup.module.css";
+
+import * as actions from "../../../Redux/actions/index";
 
 class Signup extends React.Component {
   state = {
@@ -61,19 +64,42 @@ class Signup extends React.Component {
     });
   };
 
-  onSubmitHandler = () => {
-    // ^^^ fix this function
-    /* let x = null;
-    for(let i in this.state){
-      i.value ?  x = true : x = false;
-    } */
-    console.log(this.state);
+  onSubmitHandler = (event) => {
+    event.preventDefault(); //prevent page reload
+
+    const formData = {};
+    for (let formElementIdentifier in this.state.formData) {
+      formData[formElementIdentifier] = this.state.formData[
+        formElementIdentifier
+      ].value;
+    }
+
+    console.log(formData);
+    this.props.onUserSignup(formData);
+    this.setState({
+      ...this.state,
+      loading: true,
+    });
   };
 
   render() {
+    let spinner = (
+      <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
+        Submit
+      </Button>
+    );
+
+    if(this.state.loading&&!this.props.signupDone){
+      spinner=<Spinner animation="border" />
+    }
+
+    if (this.props.signupDone) {
+      this.props.history.push("/login");
+    }
+
     return (
-      <div className="section3">
-        <div className="section4">
+      <div className={styles.section3}>
+        <div className={styles.section4}>
           <Form>
             <Form.Row>
               <Form.Group as={Col} controlId="formGridFirstName">
@@ -154,7 +180,7 @@ class Signup extends React.Component {
 
             <Form.Group controlId="formGridMobileNumber">
               <Form.Label>Mobile Number</Form.Label>
-              <Form.Control  /* ^^^ fix this weird invalid/valid problem */
+              <Form.Control /* ^^^ fix this weird invalid/valid problem */
                 // {x ? isInvalid : null}
                 placeholder="Mobile Number"
                 required
@@ -220,14 +246,14 @@ class Signup extends React.Component {
                 <option eventkey="8">8</option>
               </Form.Control>
             </Form.Group>
-
-            <Button
+            {spinner}
+            {/* <Button
               variant="primary"
               type="submit"
               onClick={this.onSubmitHandler}
             >
               Submit
-            </Button>
+            </Button> */}
           </Form>
         </div>
       </div>
@@ -235,4 +261,16 @@ class Signup extends React.Component {
   }
 }
 
-export default Signup;
+const mapStateToProps = (state) => {
+  return {
+    signupDone: state.userAuth.signupDone,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUserSignup: (userData) => dispatch(actions.userSignup(userData)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

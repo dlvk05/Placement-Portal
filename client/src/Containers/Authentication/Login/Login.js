@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
 import {Link} from "react-router-dom";
-import "./Login.css";
+import styles from "./Login.module.css";
 
 class Login extends React.Component {
   state = {
@@ -37,8 +37,8 @@ class Login extends React.Component {
 
   render() {
     return (
-    <div className="section1">
-        <div className="section2">
+    <div className={styles.section1}>
+        <div className={styles.section2}>
           <Form>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
