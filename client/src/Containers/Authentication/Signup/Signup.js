@@ -61,19 +61,6 @@ class Signup extends React.Component {
     });
   };
 
-<<<<<<< HEAD
-  onSubmitHandler = (event) => {
-    event.preventDefault(); //prevent page reload
-
-    const formData = {};
-    for (let formElementIdentifier in this.state.formData) {
-      formData[formElementIdentifier] = this.state.formData[
-        formElementIdentifier
-      ].value;
-    }
-
-    console.log(formData);
-=======
   onSubmitHandler = () => {
     // ^^^ fix this function
     /* let x = null;
@@ -81,7 +68,6 @@ class Signup extends React.Component {
       i.value ?  x = true : x = false;
     } */
     console.log(this.state);
->>>>>>> 2653cc7d50c0d92d4e6cf827d37642fbace16a8c
   };
 
   render() {
