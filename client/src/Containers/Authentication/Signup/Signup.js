@@ -61,6 +61,7 @@ class Signup extends React.Component {
     });
   };
 
+<<<<<<< HEAD
   onSubmitHandler = (event) => {
     event.preventDefault(); //prevent page reload
 
@@ -72,6 +73,15 @@ class Signup extends React.Component {
     }
 
     console.log(formData);
+=======
+  onSubmitHandler = () => {
+    // ^^^ fix this function
+    /* let x = null;
+    for(let i in this.state){
+      i.value ?  x = true : x = false;
+    } */
+    console.log(this.state);
+>>>>>>> 2653cc7d50c0d92d4e6cf827d37642fbace16a8c
   };
 
   render() {
@@ -158,13 +168,17 @@ class Signup extends React.Component {
 
             <Form.Group controlId="formGridMobileNumber">
               <Form.Label>Mobile Number</Form.Label>
-              <Form.Control
+              <Form.Control  /* ^^^ fix this weird invalid/valid problem */
+                // {x ? isInvalid : null}
                 placeholder="Mobile Number"
                 required
                 onChange={(event, string) => {
                   this.inputChangeHandler(event, "mobileno");
                 }}
               />
+              <Form.Control.Feedback type="invalid">
+                Please enter a valid mobile no.
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Row>
