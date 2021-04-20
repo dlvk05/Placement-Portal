@@ -32,7 +32,7 @@ class AdminSignup extends React.Component {
     department: {
       type: "department",
       value: "",
-    },
+    }
   }
 
   inputChangeHandler = (event, string) => {
@@ -65,6 +65,7 @@ class AdminSignup extends React.Component {
                 <Form.Control
                   type="FirstName"
                   placeholder="Enter FirstName"
+                  required
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "firstName");
                   }}
@@ -76,6 +77,7 @@ class AdminSignup extends React.Component {
                 <Form.Control
                   type="LastName"
                   placeholder="LastName"
+                  required
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "lastName");
                   }}
@@ -87,8 +89,10 @@ class AdminSignup extends React.Component {
               <Form.Group as={Col} controlId="formGridEmail">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
+                  as="input"
                   type="email"
                   placeholder="Enter email"
+                  required
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "email");
                   }}
@@ -102,6 +106,7 @@ class AdminSignup extends React.Component {
                 <Form.Control
                   type="password"
                   placeholder="Password"
+                  required
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "password");
                   }}
@@ -113,7 +118,8 @@ class AdminSignup extends React.Component {
               <Form.Group as={Col} controlId="formGridConfirmPassword">
                 <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
-                  type="ConfirmPassword"
+                  type="password"
+                  required
                   placeholder="Confirm Password"
                 />
               </Form.Group>
@@ -123,6 +129,7 @@ class AdminSignup extends React.Component {
               <Form.Label>EmployeeID</Form.Label>
               <Form.Control
                 placeholder="Employee ID"
+                required
                 onChange={(event, string) => {
                   this.inputChangeHandler(event, "employeeid");
                 }}
@@ -133,6 +140,7 @@ class AdminSignup extends React.Component {
               <Form.Label>Mobile Number</Form.Label>
               <Form.Control
                 placeholder="Mobile Number"
+                required
                 onChange={(event, string) => {
                   this.inputChangeHandler(event, "mobileno");
                 }}
@@ -144,6 +152,7 @@ class AdminSignup extends React.Component {
                 <Form.Label>Department</Form.Label>
                 <Form.Control
                   placeholder="department"
+                  required
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "department");
                   }}
