@@ -32,6 +32,14 @@ class Signup extends React.Component {
       type: "department",
       value: "",
     },
+    program: {
+      type: "program",
+      value: "",
+    },
+    semester: {
+      type: "semester",
+      value: "",
+    },
   };
 
   inputChangeHandler = (event, string) => {
@@ -46,6 +54,9 @@ class Signup extends React.Component {
     this.setState({
       ...updatedState,
     });
+  };
+
+  onSubmitHandler = () => {
     console.log(this.state);
   };
 
@@ -60,6 +71,7 @@ class Signup extends React.Component {
                 <Form.Control
                   type="FirstName"
                   placeholder="Enter FirstName"
+                  required
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "firstName");
                   }}
@@ -71,6 +83,7 @@ class Signup extends React.Component {
                 <Form.Control
                   type="LastName"
                   placeholder="LastName"
+                  required
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "lastName");
                   }}
@@ -82,8 +95,10 @@ class Signup extends React.Component {
               <Form.Group as={Col} controlId="formGridEmail">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
+                  as="input"
                   type="email"
                   placeholder="Enter email"
+                  required
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "email");
                   }}
@@ -97,6 +112,7 @@ class Signup extends React.Component {
                 <Form.Control
                   type="password"
                   placeholder="Password"
+                  required
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "password");
                   }}
@@ -108,7 +124,8 @@ class Signup extends React.Component {
               <Form.Group as={Col} controlId="formGridConfirmPassword">
                 <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
-                  type="ConfirmPassword"
+                  type="password"
+                  required
                   placeholder="Confirm Password"
                 />
               </Form.Group>
@@ -118,6 +135,7 @@ class Signup extends React.Component {
               <Form.Label>RegistrationNumber</Form.Label>
               <Form.Control
                 placeholder="17930XXXX"
+                required
                 onChange={(event, string) => {
                   this.inputChangeHandler(event, "regno");
                 }}
@@ -128,6 +146,7 @@ class Signup extends React.Component {
               <Form.Label>Mobile Number</Form.Label>
               <Form.Control
                 placeholder="Mobile Number"
+                required
                 onChange={(event, string) => {
                   this.inputChangeHandler(event, "mobileno");
                 }}
@@ -139,14 +158,62 @@ class Signup extends React.Component {
                 <Form.Label>Department</Form.Label>
                 <Form.Control
                   placeholder="department"
+                  required
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "department");
                   }}
                 />
               </Form.Group>
             </Form.Row>
-            {/* --> might want to add an onClick function here later */}
-            <Button variant="primary" type="submit"> 
+            <Form.Row>
+              <Form.Group as={Col} controlId="formGridProgram">
+                <Form.Label>Program</Form.Label>
+                <Form.Control
+                  placeholder="Program"
+                  required
+                  onChange={(event, string) => {
+                    this.inputChangeHandler(event, "program");
+                  }}
+                />
+              </Form.Group>
+            </Form.Row>
+
+            {/* <Form.Row>
+              <Form.Group as={Col} controlId="formGridSemester">
+                <Form.Label>Semester</Form.Label>
+                <Form.Control
+                  placeholder="Semester"
+                  required
+                  onChange={(event, string) => {
+                    this.inputChangeHandler(event, "semester");
+                  }}
+                />
+              </Form.Group>
+            </Form.Row> */}
+
+            <Form.Group controlId="exampleForm.SelectCustom">
+              <Form.Label>Custom select</Form.Label>
+              <Form.Control
+                as="select"
+                custom
+                onChange={(event, string) => {
+                  this.inputChangeHandler(event, "semester");
+                  console.log("drop down is being read");
+                  
+                }}
+              >
+                <option eventkey="6">6</option>
+                <option eventkey="7">7</option>
+                <option eventkey="8">8</option>
+                
+              </Form.Control>
+            </Form.Group>
+
+            <Button
+              variant="primary"
+              type="submit"
+              onClick={this.onSubmitHandler}
+            >
               Submit
             </Button>
           </Form>
