@@ -1,4 +1,4 @@
-.section3{  /*  HERE: this contains section2 inside of it and its properties are determine how section2 will look like */
+.section3{  /*  ^^^: this contains section2 inside of it and its properties are determine how section2 will look like */
     display: flex;
     flex-direction:row-reverse;
     padding: 20px;

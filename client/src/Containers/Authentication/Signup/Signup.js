@@ -57,6 +57,11 @@ class Signup extends React.Component {
   };
 
   onSubmitHandler = () => {
+    // ^^^ fix this function
+    /* let x = null;
+    for(let i in this.state){
+      i.value ?  x = true : x = false;
+    } */
     console.log(this.state);
   };
 
@@ -144,13 +149,17 @@ class Signup extends React.Component {
 
             <Form.Group controlId="formGridMobileNumber">
               <Form.Label>Mobile Number</Form.Label>
-              <Form.Control
+              <Form.Control  /* ^^^ fix this weird invalid/valid problem */
+                // {x ? isInvalid : null}
                 placeholder="Mobile Number"
                 required
                 onChange={(event, string) => {
                   this.inputChangeHandler(event, "mobileno");
                 }}
               />
+              <Form.Control.Feedback type="invalid">
+                Please enter a valid mobile no.
+              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Row>
@@ -199,13 +208,11 @@ class Signup extends React.Component {
                 onChange={(event, string) => {
                   this.inputChangeHandler(event, "semester");
                   console.log("drop down is being read");
-                  
                 }}
               >
                 <option eventkey="6">6</option>
                 <option eventkey="7">7</option>
                 <option eventkey="8">8</option>
-                
               </Form.Control>
             </Form.Group>
 
