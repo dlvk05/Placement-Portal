@@ -2,6 +2,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
+const cors = require("cors");
 
 //importing routes
 const userAuth = require("./routes/userAuth");
@@ -10,8 +11,9 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors()); // this is so that react server can communicate with this server
 
-console.log("here1");
+
 
 // DB Config
 const db = require("./config/keys").mongoURI;
@@ -22,21 +24,21 @@ mongoose
   .then(() => console.log("MongoDB successfully connected"))
   .catch((err) => console.log(err));
 
-console.log("here2");
+
 
 //Passport middleware
 app.use(passport.initialize());
 
-console.log("here3");
+
 
 // Passport config
 require("./config/passport")(passport);
 
-console.log("here4");
+
 
 //Defining Routes
 app.use("/api", userAuth);
-console.log("here5");
+
 
 app.get(
   "/api/data",
