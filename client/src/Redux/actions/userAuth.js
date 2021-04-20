@@ -19,7 +19,7 @@ export const authFail = (error) => {
   };
 };
 
-export const signupDone=(userData)=>{
+export const signupDone=()=>{
     return{
         type: actionTypes.USER_AUTH_SIGNUPDONE,
     }
@@ -54,9 +54,10 @@ export const userSignup = (userData) => {
       .post(url, userData)
       .then((response) => {
         console.log(response);
+        dispatch(signupDone());
       })
       .catch((err) => {
-        console.log(err.response.data.error);
+        console.log(err.response.data);
       });
   };
 };

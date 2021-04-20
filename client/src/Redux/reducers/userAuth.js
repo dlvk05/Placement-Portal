@@ -55,7 +55,7 @@ const reducer = (state = initialState, action) => {
     case actionTypes.USER_AUTH_LOGOUT:
       return authLogout(state, action);
     case actionTypes.USER_AUTH_SIGNUPDONE:
-        return 
+        return authSignupDone(state, action);
     default:
       return state;
   }
