@@ -37,7 +37,10 @@ router.post("/signupUser", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then((user) => res.json(user))
+            .then((user) => res.json({
+              success:true,
+              user:user,
+            }))
             .catch((err) => console.log(err));
         });
       });

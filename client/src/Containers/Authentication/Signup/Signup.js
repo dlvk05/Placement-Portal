@@ -4,60 +4,74 @@ import "./Signup.css";
 
 class Signup extends React.Component {
   state = {
-    firstName: {
-      type: "firstName",
-      value: "",
+    formData: {
+      firstName: {
+        type: "firstName",
+        value: "",
+      },
+      lastName: {
+        type: "lastName",
+        value: "",
+      },
+      email: {
+        type: "email",
+        value: "",
+      },
+      password: {
+        type: "password",
+        value: "",
+      },
+      regno: {
+        type: "regno",
+        value: "",
+      },
+      mobileno: {
+        type: "mobileno",
+        value: "",
+      },
+      department: {
+        type: "department",
+        value: "",
+      },
+      program: {
+        type: "program",
+        value: "",
+      },
+      semester: {
+        type: "semester",
+        value: "",
+      },
     },
-    lastName: {
-      type: "lastName",
-      value: "",
-    },
-    email: {
-      type: "email",
-      value: "",
-    },
-    password: {
-      type: "password",
-      value: "",
-    },
-    regno: {
-      type: "regno",
-      value: "",
-    },
-    mobileno: {
-      type: "mobileno",
-      value: "",
-    },
-    department: {
-      type: "department",
-      value: "",
-    },
-    program: {
-      type: "program",
-      value: "",
-    },
-    semester: {
-      type: "semester",
-      value: "",
-    },
+    loading: false,
   };
 
-  inputChangeHandler = (event, string) => {
-    const input = event.target.value;
-    const updatedState = {
-      ...this.state,
-      [string]: {
-        type: [string],
-        value: input,
-      },
+  inputChangeHandler = (event, inputIdentifier) => {
+    const updatedformData = {
+      ...this.state.formData,
     };
+
+    const updatedFormElement = { ...updatedformData[inputIdentifier] };
+
+    //des updating the value in the selected input element
+    updatedFormElement.value = event.target.value;
+    updatedformData[inputIdentifier] = updatedFormElement;
+
     this.setState({
-      ...updatedState,
+      formData: updatedformData,
     });
   };
 
-  onSubmitHandler = () => {
-    console.log(this.state);
+  onSubmitHandler = (event) => {
+    event.preventDefault(); //prevent page reload
+
+    const formData = {};
+    for (let formElementIdentifier in this.state.formData) {
+      formData[formElementIdentifier] = this.state.formData[
+        formElementIdentifier
+      ].value;
+    }
+
+    console.log(formData);
   };
 
   render() {
@@ -199,13 +213,11 @@ class Signup extends React.Component {
                 onChange={(event, string) => {
                   this.inputChangeHandler(event, "semester");
                   console.log("drop down is being read");
-                  
                 }}
               >
                 <option eventkey="6">6</option>
                 <option eventkey="7">7</option>
                 <option eventkey="8">8</option>
-                
               </Form.Control>
             </Form.Group>
 

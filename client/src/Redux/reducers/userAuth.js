@@ -12,6 +12,7 @@ const initialState = {
 const authSuccess = (state, action) => {
   return {
     ...state,
+    error:null,
     token: action.idToken,
     userId: action.userId,
     isAdmin: action.isAdmin,
@@ -28,6 +29,7 @@ const authFail = (state, action) => {
 
 const authLogout = (state, action) => {
   return {
+    ...state,
     token: null,
     error: null,
     isAuthenticated: false,
@@ -39,6 +41,7 @@ const authLogout = (state, action) => {
 const authSignupDone=(state,action)=>{
     return{
         ...state,
+        error:null,
         signupDone:true,
     }
 }
