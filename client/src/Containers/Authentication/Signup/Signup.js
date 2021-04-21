@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Form, Button, Col } from "react-bootstrap";
-import "./Signup.css";
+import { Form, Button, Col, Spinner } from "react-bootstrap";
+import styles from "./Signup.module.css";
 
 import * as actions from "../../../Redux/actions/index";
 
@@ -90,7 +90,7 @@ class Signup extends React.Component {
     );
 
     if(this.state.loading&&!this.props.signupDone){
-      spinner='Loading';
+      spinner=<Spinner animation="border" />
     }
 
     if (this.props.signupDone) {
@@ -98,8 +98,8 @@ class Signup extends React.Component {
     }
 
     return (
-      <div className="section3">
-        <div className="section4">
+      <div className={styles.section3}>
+        <div className={styles.section4}>
           <Form>
             <Form.Row>
               <Form.Group as={Col} controlId="formGridFirstName">

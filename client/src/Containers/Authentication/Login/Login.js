@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import "./Login.css";
+import {Link} from "react-router-dom";
+import styles from "./Login.module.css";
 
 import * as actions from "../../../Redux/actions/index";
 class Login extends React.Component {
@@ -78,8 +78,8 @@ class Login extends React.Component {
       this.props.history.push("/");
     }
     return (
-      <div className="section1">
-        <div className="section2">
+    <div className={styles.section1}>
+        <div className={styles.section2}>
           <Form>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
