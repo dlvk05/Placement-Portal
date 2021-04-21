@@ -1,7 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
-  token: null,
+  // token: null,
   error: null,
   isAuthenticated: false,
   isAdmin: false,
@@ -9,11 +9,18 @@ const initialState = {
   signupDone:false,
 };
 
+const authErrorReset=(state,actions)=>{
+  return{
+    ...state,
+    error:null,
+  }
+}
+
 const authSuccess = (state, action) => {
   return {
     ...state,
     error:null,
-    token: action.idToken,
+    // token: action.idToken,
     userId: action.userId,
     isAdmin: action.isAdmin,
     isAuthenticated: true,
@@ -30,7 +37,7 @@ const authFail = (state, action) => {
 const authLogout = (state, action) => {
   return {
     ...state,
-    token: null,
+    // token: null,
     error: null,
     isAuthenticated: false,
     isAdmin: false,
@@ -56,6 +63,8 @@ const reducer = (state = initialState, action) => {
       return authLogout(state, action);
     case actionTypes.USER_AUTH_SIGNUPDONE:
         return authSignupDone(state, action);
+    case actionTypes.USER_AUTH_ERROR_RESET:
+        return authErrorReset(state,action);
     default:
       return state;
   }

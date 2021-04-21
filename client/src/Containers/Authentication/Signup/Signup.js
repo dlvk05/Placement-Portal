@@ -264,12 +264,14 @@ class Signup extends React.Component {
 const mapStateToProps = (state) => {
   return {
     signupDone: state.userAuth.signupDone,
+    error: state.userAuth.error,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     onUserSignup: (userData) => dispatch(actions.userSignup(userData)),
+    onErrorReset: () => dispatch(actions.authErrorReset()),
   };
 };
 

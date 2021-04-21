@@ -60,7 +60,7 @@ router.post("/loginUser", (req, res) => {
   User.findOne({ email }).then((user) => {
     // Check if user exists
     if (!user) {
-      return res.status(404).json({ emailNotfound: "Email not found" });
+      return res.status(404).json({ emailError: "Email not found" });
     }
 
     //Check password
@@ -74,6 +74,7 @@ router.post("/loginUser", (req, res) => {
           lastName: user.lastName,
           email: user.email,
           isAdmin: user.isAdmin,
+          expiresIn: 60,
         };
 
         //Sign token
@@ -94,7 +95,7 @@ router.post("/loginUser", (req, res) => {
       } else {
         return res
           .status(400)
-          .json({ passwordIncorrect: "Password incorrect" });
+          .json({ passwordError: "Password incorrect" });
       }
     });
   });

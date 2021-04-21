@@ -6,6 +6,8 @@ import * as actions from "./Redux/actions/index";
 import Login from "./Containers/Authentication/Login/Login";
 import Signup from "./Containers/Authentication/Signup/Signup";
 import AdminSignup from "./Containers/Authentication/AdminSignup/AdminSignup";
+import UserLayout from "./HOC/UserLayout/UserLayout";
+import Logout from "./Containers/Authentication/Logout/Logout";
 
 class App extends React.Component {
   componentDidMount() {
@@ -21,12 +23,21 @@ class App extends React.Component {
       </Switch>
     );
 
+    //des user is admin
     if (this.props.isAuthenticated && this.props.isAdmin) {
       routes = <h1>Admin Logged In</h1>;
     }
 
+    //des user is student
     if (this.props.isAuthenticated && !this.props.isAdmin) {
-      routes = <h1>User Logged In</h1>;
+      routes = (
+        <UserLayout>
+          <Switch>
+            <Route path="/logout" exact component={Logout} />
+          </Switch>
+          <h1>User Logged In</h1>
+        </UserLayout>
+      );
     }
 
     return <div>{routes}</div>;
