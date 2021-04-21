@@ -58,6 +58,8 @@ class AdminSignup extends React.Component {
     return (
       <div className={styles.section3}>
         <div className={styles.section4}>
+        <strong><u>Admin Registration</u></strong>
+            <hr/>
           <Form>
             <Form.Row>
               <Form.Group as={Col} controlId="formGridFirstName">
@@ -163,6 +165,11 @@ class AdminSignup extends React.Component {
               Submit
             </Button>
           </Form>
+        </div>
+        <div className={styles.dope}>
+          <h1 className={styles.h1}><u>MUJ</u>  <br/>
+            Inspired  <br/>  by  <br/>  Life.
+          </h1>
         </div>
       </div>
     );

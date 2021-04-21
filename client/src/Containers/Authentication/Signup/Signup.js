@@ -99,7 +99,12 @@ class Signup extends React.Component {
 
     return (
       <div className={styles.section3}>
+        {/* <div><h1>bbbbbbbbbb</h1></div>
+            <div><h1>hello</h1></div> */}
         <div className={styles.section4}>
+          <div>
+            <strong><u>Student Registration</u></strong>
+            <hr/>
           <Form>
             <Form.Row>
               <Form.Group as={Col} controlId="formGridFirstName">
@@ -255,6 +260,12 @@ class Signup extends React.Component {
               Submit
             </Button> */}
           </Form>
+          </div>
+        </div>
+        <div className={styles.dope}>
+          <h1 className={styles.h1}><u>MUJ</u>  <br/>
+            Inspired  <br/>  by  <br/>  Life.
+          </h1>
         </div>
       </div>
     );
