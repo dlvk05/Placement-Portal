@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./Login.module.css";
 
 import * as actions from "../../../Redux/actions/index";
@@ -33,6 +33,14 @@ class Login extends React.Component {
     if (this.props.error) {
       this.props.onErrorReset();
     }
+
+    if (this.state.loading) {
+      this.setState({
+        ...this.state,
+        loading: false,
+      });
+    }
+
     const updatedformData = {
       ...this.state.formData,
     };
@@ -77,8 +85,13 @@ class Login extends React.Component {
     if (this.props.isAuthenticated) {
       this.props.history.push("/");
     }
+
+    if (this.props.error) {
+      spinner = null;
+    }
+
     return (
-    <div className={styles.section1}>
+      <div className={styles.section1}>
         <div className={styles.section2}>
           <Form>
             <Form.Group controlId="formBasicEmail">

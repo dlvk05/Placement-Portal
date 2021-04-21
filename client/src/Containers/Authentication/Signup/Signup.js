@@ -48,7 +48,26 @@ class Signup extends React.Component {
     loading: false,
   };
 
+  componentDidUpdate() {
+    if (this.props.error) {
+      console.log("an error occurred : ");
+      console.log(this.props.error);
+    }
+  }
+
   inputChangeHandler = (event, inputIdentifier) => {
+    //des resetting error for new input
+    if (this.props.error) {
+      this.props.onErrorReset();
+    }
+
+    if(this.state.loading){
+      this.setState({
+        ...this.state,
+        loading: false,
+      })
+    }
+
     const updatedformData = {
       ...this.state.formData,
     };
@@ -89,8 +108,16 @@ class Signup extends React.Component {
       </Button>
     );
 
-    if(this.state.loading&&!this.props.signupDone){
-      spinner=<Spinner animation="border" />
+    if (this.state.loading && !this.props.signupDone) {
+      spinner = <Spinner animation="border" />;
+    }
+
+    if (this.props.error) {
+      spinner = (
+        <Button variant="primary" type="submit" onClick={this.onSubmitHandler}>
+          Submit
+        </Button>
+      );
     }
 
     if (this.props.signupDone) {
