@@ -1,43 +1,97 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from "./Login.module.css";
 
+import * as actions from "../../../Redux/actions/index";
 class Login extends React.Component {
   state = {
-    email: {
-      type: "email",
-      value: "",
+    formData: {
+      email: {
+        type: "email",
+        value: "",
+      },
+      password: {
+        type: "password",
+        value: "",
+      },
     },
-    password: {
-      type: "password",
-      value: "",
-    },
+    loading: false,
   };
+
+  componentDidUpdate() {
+    if (this.props.error) {
+      console.log("an error occurred : ");
+      console.log(this.props.error);
+    }
+  }
 
   //this takes input from all forms on this page
-  inputChangeHandler = (event, string) => {
-    const input = event.target.value;
-    console.log(input);
-    const updatedState = {
-      ...this.state,
-      [string]: {
-        type: [string],
-        value: input,
-      },
+  inputChangeHandler = (event, inputIdentifier) => {
+    //des resetting error for new input
+    if (this.props.error) {
+      this.props.onErrorReset();
+    }
+
+    if (this.state.loading) {
+      this.setState({
+        ...this.state,
+        loading: false,
+      });
+    }
+
+    const updatedformData = {
+      ...this.state.formData,
     };
-    this.setState({ ...updatedState });
-    console.log(this.state);
+
+    const updatedFormElement = { ...updatedformData[inputIdentifier] };
+
+    //des updating the value in the selected input element
+    updatedFormElement.value = event.target.value;
+    updatedformData[inputIdentifier] = updatedFormElement;
+
+    this.setState({
+      formData: updatedformData,
+    });
   };
 
-  random = () => {
-    console.log("from button");
-    console.log(this.state);
+  onSubmitHandler = (event) => {
+    // console.log('clicked');
+    event.preventDefault(); //prevent page reload
+
+    const formData = {};
+    for (let formElementIdentifier in this.state.formData) {
+      formData[formElementIdentifier] = this.state.formData[
+        formElementIdentifier
+      ].value;
+    }
+
+    console.log(formData);
+    this.props.onUserLogin(formData);
+    this.setState({
+      ...this.state,
+      loading: true,
+    });
   };
 
   render() {
+    let spinner = null;
+
+    if (this.state.loading && !this.props.isAuthenticated) {
+      spinner = "Loading";
+    }
+
+    if (this.props.isAuthenticated) {
+      this.props.history.push("/");
+    }
+
+    if (this.props.error) {
+      spinner = null;
+    }
+
     return (
-    <div className={styles.section1}>
+      <div className={styles.section1}>
         <div className={styles.section2}>
           <Form>
             <Form.Group controlId="formBasicEmail">
@@ -64,7 +118,7 @@ class Login extends React.Component {
                 }
               />
             </Form.Group>
-            <Button variant="primary" onClick={this.random}>
+            <Button variant="primary" onClick={this.onSubmitHandler}>
               Login
             </Button>
           </Form>
@@ -73,13 +127,28 @@ class Login extends React.Component {
             Admin Login
           </Button>
           <Link to="/Signup">
-          <Button variant="info">Sign Up</Button>
+            <Button variant="info">Sign Up</Button>
           </Link>
+          {spinner}
         </div>
       </div>
-        
     );
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.userAuth.isAuthenticated,
+    error: state.userAuth.error,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onUserLogin: (userData) =>
+      dispatch(actions.userLogin(userData.email, userData.password)),
+    onErrorReset: () => dispatch(actions.authErrorReset()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -3,12 +3,20 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "../../Utils/setAuthToken";
 import * as actionTypes from "./actionTypes";
 
-export const authSuccess = (token, userId,isAdmin) => {
+
+
+export const authErrorReset=()=>{
+  return{
+    type:actionTypes.USER_AUTH_ERROR_RESET,
+  }
+}
+
+export const authSuccess = (token, userId, isAdmin) => {
   return {
     type: actionTypes.USER_AUTH_SUCCESS,
-    idToken: token,
+    // idToken: token,
     userId: userId,
-    isAdmin:isAdmin,
+    isAdmin: isAdmin,
   };
 };
 
@@ -19,11 +27,11 @@ export const authFail = (error) => {
   };
 };
 
-export const signupDone=()=>{
-    return{
-        type: actionTypes.USER_AUTH_SIGNUPDONE,
-    }
-}
+export const signupDone = () => {
+  return {
+    type: actionTypes.USER_AUTH_SIGNUPDONE,
+  };
+};
 
 export const logout = () => {
   //remove data in local storage
@@ -57,7 +65,7 @@ export const userSignup = (userData) => {
         dispatch(signupDone());
       })
       .catch((err) => {
-        console.log(err.response.data);
+        dispatch(authFail(err.response.data));
       });
   };
 };
@@ -74,31 +82,39 @@ export const userLogin = (email, password) => {
     axios
       .post(url, authData)
       .then((response) => {
+        console.log("got response from /api.loginUser");
         console.log(response);
-        if (!response.token) {
+        if (!response.data.token) {
           dispatch(authFail("error"));
         } else {
-          const { token } = response.data.token;
+          const token = response.data.token;
+
           // Decode token to get user data
           const decoded = jwt_decode(token);
+          console.log(decoded);
           //create expirationDate using the expires in payload
           const expirationDate = new Date(
             new Date().getTime() + decoded.expiresIn * 1000
           );
+          console.log(expirationDate);
+
           //store data in local storage
           localStorage.setItem("token", token);
           localStorage.setItem("expirationDate", expirationDate);
           localStorage.setItem("userId", decoded.id);
           localStorage.setItem("isAdmin", decoded.isAdmin);
+
           //set axios header
           setAuthToken(token);
 
-          dispatch(authSuccess(token, decoded.id));
+          dispatch(authSuccess(token, decoded.id, decoded.isAdmin));
+
           dispatch(checkAuthTimeout(decoded.expiresIn));
         }
       })
       .catch((err) => {
-        dispatch(authFail(err.response.data.error));
+        console.log(err.response.data);
+        dispatch(authFail(err.response.data));
       });
   };
 };
@@ -114,9 +130,10 @@ export const authCheckState = () => {
         dispatch(logout());
       } else {
         const userId = localStorage.getItem("userId");
-        const isAdmin = localStorage.getItem("isAdmin");
+        const isAdmin = localStorage.getItem("isAdmin") == "true";
+        //set axios header
         setAuthToken(token);
-        dispatch(authSuccess(token, userId,isAdmin));
+        dispatch(authSuccess(token, userId, isAdmin));
         dispatch(
           checkAuthTimeout(
             (expirationDate.getTime() - new Date().getTime()) / 1000
