@@ -122,10 +122,12 @@ class Login extends React.Component {
               Login
             </Button>
           </Form>
-          <hr />
+          <hr /> 
+          <Link to="/AdminSignup">
           <Button variant="success" className="b1">
             Admin Login
           </Button>
+          </Link>
           <Link to="/Signup">
             <Button variant="info">Sign Up</Button>
           </Link>
