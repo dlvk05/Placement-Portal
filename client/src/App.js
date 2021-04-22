@@ -3,11 +3,13 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "./Redux/actions/index";
+//Custom Components import
 import Login from "./Containers/Authentication/Login/Login";
 import Signup from "./Containers/Authentication/Signup/Signup";
 import AdminSignup from "./Containers/Authentication/AdminSignup/AdminSignup";
 import UserLayout from "./HOC/UserLayout/UserLayout";
 import Logout from "./Containers/Authentication/Logout/Logout";
+import Profile from "./Containers/Profile/Profile";
 
 class App extends React.Component {
   componentDidMount() {
@@ -33,9 +35,10 @@ class App extends React.Component {
       routes = (
         <UserLayout>
           <Switch>
-            <Route path="/logout" exact component={Logout} />
+
+            <Route path="/Profile" exact component={Profile} />
+            <Route path="/Logout" exact component={Logout} />
           </Switch>
-          <h1>User Logged In</h1>
         </UserLayout>
       );
     }

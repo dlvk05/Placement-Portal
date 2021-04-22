@@ -12,7 +12,7 @@ const userNavbar = () => {
         <Nav className="mr-auto" >
           <Nav.Link href="#home" style={{color: "#F2E7C4"}}>Home</Nav.Link>
           <Nav.Link href="#JobProfiles" style={{color: "#F2E7C4"}}>Job Profiles</Nav.Link>
-          <Nav.Link href="#PersonalInfo" style={{color: "#F2E7C4"}}>Personal Info</Nav.Link>
+          <Nav.Link href="/Profile" style={{color: "#F2E7C4"}}>Profile</Nav.Link>
           <Nav.Link href="/logout" style={{color: "#F2E7C4"}}>Logout</Nav.Link>
         </Nav>
         <div style={{ color: "white", marginRight: "50px" }}>

@@ -74,7 +74,7 @@ router.post("/loginUser", (req, res) => {
           lastName: user.lastName,
           email: user.email,
           isAdmin: user.isAdmin,
-          expiresIn: 60,
+          expiresIn: 36000,
         };
 
         //Sign token
@@ -82,7 +82,7 @@ router.post("/loginUser", (req, res) => {
           payload,
           keys.secretOrKey,
           {
-            expiresIn: 3600, // 1 hr in seconds
+            expiresIn: 36000, // 1 hr in seconds
           },
           (err, token) => {
             res.json({
