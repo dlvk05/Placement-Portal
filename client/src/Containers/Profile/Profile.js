@@ -20,7 +20,7 @@ class Profile extends Component {
             <Card>
               <Card.Header>
                 <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                  Summmary
+                <a href="#Summary">Summary</a>
                 </Accordion.Toggle>
               </Card.Header>
               {/* <Accordion.Collapse eventKey="0">
@@ -40,6 +40,7 @@ class Profile extends Component {
                 <Card.Body>
                 <a href="#About">Overview</a> <br />
                   <a href="#ContactDetails">Contact Details</a> <br />
+                  <a href="#Address">Address</a> <br />
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
