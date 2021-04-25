@@ -6,6 +6,7 @@ const cors = require("cors");
 
 //importing routes
 const userAuth = require("./routes/userAuth");
+const userProfile = require('./routes/userProfile');
 
 const app = express();
 
@@ -38,6 +39,7 @@ require("./config/passport")(passport);
 
 //Defining Routes
 app.use("/api", userAuth);
+app.use("/api", userProfile);
 
 
 app.get(

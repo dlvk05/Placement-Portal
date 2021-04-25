@@ -7,6 +7,8 @@ const keys = require("../config/keys");
 // Load User model
 const User = require("../models/userModel");
 
+//Load Profile model
+const UserProfile = require("../models/profileModel");
 
 // @route POST api/signupUser
 // @desc Register user
@@ -37,17 +39,28 @@ router.post("/signupUser", (req, res) => {
           newUser.password = hash;
           newUser
             .save()
-            .then((user) => res.json({
-              success:true,
-              user:user,
-            }))
+            .then((user) => {
+              //creating empty profile linked to the account for the new user
+              const newProfile = new UserProfile({
+                userAccount: user._id,
+              });
+              //saving the new profile
+              newProfile
+                .save()
+                .then((profile) => console.log("new profile created"))
+                .catch((err) => console.log(err));
+              // sending the newUser document
+              res.json({
+                success: true,
+                user: user,
+              });
+            })
             .catch((err) => console.log(err));
         });
       });
     }
   });
 });
-
 
 // @route POST api//loginUser
 // @desc Login user and return JWT token
@@ -64,12 +77,20 @@ router.post("/loginUser", (req, res) => {
     }
 
     //Check password
-    bcrypt.compare(password, user.password).then((isMatch) => {
+    bcrypt.compare(password, user.password).then(async (isMatch) => {
       if (isMatch) {
         //User Matched
+
+        //Find associated profile id
+        let profileId = null;
+        await UserProfile.findOne({ userAccount: user.id }).then((profile) => {
+          profileId = profile.id;
+        });
+
         //Create JWT Payload
         const payload = {
           id: user.id,
+          profileId: profileId,
           firstName: user.firstName,
           lastName: user.lastName,
           email: user.email,
@@ -93,9 +114,7 @@ router.post("/loginUser", (req, res) => {
           }
         );
       } else {
-        return res
-          .status(400)
-          .json({ passwordError: "Password incorrect" });
+        return res.status(400).json({ passwordError: "Password incorrect" });
       }
     });
   });

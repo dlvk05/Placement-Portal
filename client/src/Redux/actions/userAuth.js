@@ -11,12 +11,13 @@ export const authErrorReset=()=>{
   }
 }
 
-export const authSuccess = (token, userId, isAdmin) => {
+export const authSuccess = (token, userId, isAdmin,profileId) => {
   return {
     type: actionTypes.USER_AUTH_SUCCESS,
     // idToken: token,
     userId: userId,
     isAdmin: isAdmin,
+    profileId:profileId,
   };
 };
 
@@ -39,8 +40,9 @@ export const logout = () => {
   localStorage.removeItem("expirationDate");
   localStorage.removeItem("userId");
   localStorage.removeItem("isAdmin");
+  localStorage.removeItem("profileId");
   //remove axios header
-  setAuthToken();
+  setAuthToken(false);
   return {
     type: actionTypes.USER_AUTH_LOGOUT,
   };
@@ -103,11 +105,12 @@ export const userLogin = (email, password) => {
           localStorage.setItem("expirationDate", expirationDate);
           localStorage.setItem("userId", decoded.id);
           localStorage.setItem("isAdmin", decoded.isAdmin);
+          localStorage.setItem("profileId", decoded.profileId);
 
           //set axios header
           setAuthToken(token);
 
-          dispatch(authSuccess(token, decoded.id, decoded.isAdmin));
+          dispatch(authSuccess(token, decoded.id, decoded.isAdmin,decoded.profileId));
 
           dispatch(checkAuthTimeout(decoded.expiresIn));
         }
@@ -131,9 +134,10 @@ export const authCheckState = () => {
       } else {
         const userId = localStorage.getItem("userId");
         const isAdmin = localStorage.getItem("isAdmin") == "true";
+        const profileId=localStorage.getItem("profileId");
         //set axios header
         setAuthToken(token);
-        dispatch(authSuccess(token, userId, isAdmin));
+        dispatch(authSuccess(token, userId, isAdmin,profileId));
         dispatch(
           checkAuthTimeout(
             (expirationDate.getTime() - new Date().getTime()) / 1000

@@ -7,6 +7,7 @@ const initialState = {
   isAdmin: false,
   userId: null,
   signupDone:false,
+  profileId:null,
 };
 
 const authErrorReset=(state,actions)=>{
@@ -24,6 +25,7 @@ const authSuccess = (state, action) => {
     userId: action.userId,
     isAdmin: action.isAdmin,
     isAuthenticated: true,
+    profileId:action.profileId,
   };
 };
 
@@ -42,6 +44,7 @@ const authLogout = (state, action) => {
     isAuthenticated: false,
     isAdmin: false,
     userId: null,
+    profileId:null,
   };
 };
 
