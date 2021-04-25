@@ -105,6 +105,7 @@ class Login extends React.Component {
               />
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
+                {this.props.error}
               </Form.Text>
             </Form.Group>
 

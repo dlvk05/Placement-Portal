@@ -1,0 +1,25 @@
+.wrapper{
+    display: block;
+    background: aliceblue;
+  }
+  
+  .sidenav{
+    position: fixed;
+    width: 200px;
+    top: 10%;
+    left: 5px;
+    display: block;
+    z-index: 1;
+    background-color: aquamarine;
+    overflow-x: auto;
+    padding: 3px; 
+    margin-top: 3px;
+  }
+  
+  .subdiv3{
+    margin-left: 210px;
+    margin-right: 20px;
+    width: auto;
+    display: block;
+    justify-content: center;
+  }
