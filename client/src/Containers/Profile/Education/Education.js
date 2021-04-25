@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col, Table } from "react-bootstrap";
 import CurrentModal from "./Current/CurrentModal";
+import XClassModal from "./XClass/XClassModal";
 import XIIClassModal from "./XIIClass/XIIClassModal";
 
 const styles = {
@@ -110,6 +111,26 @@ class Education extends React.Component {
             *Board e.g. CBSE* <br/>
             *Subjects e.g. Physics-Chemistry-Maths* <br/>
             *duration e.g. 2016-2017* <br/>
+          </Col>
+          <Col>
+            *Percentage Scored or CGPA*
+          </Col>
+        </Row>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <span id="ClassXII" style={{ fontSize: "20px" }}>X <sup>th</sup> Class / Equivalent</span>{" "}
+        <span style={{ float: "right", fontSize: "20px" }}>
+            <XClassModal/>
+        </span>
+        <hr/>
+        <br/>
+        <Row>
+          <Col>
+            *School Name* <br/>
+            *Board e.g. CBSE* <br/>
+            *duration e.g. 2014-2015* <br/>
           </Col>
           <Col>
             *Percentage Scored*
