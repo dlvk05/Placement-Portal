@@ -39,10 +39,11 @@ class CurrentModal extends React.Component {
             <Form>
               <Form.Row>
                 <Form.Group controlId="exampleForm.SelectCustom">
-                  <Form.Label>Current Semester</Form.Label>
+                  <Form.Label column="sm">Current Semester</Form.Label>
                   <Form.Control
                     as="select"
                     custom
+                    size="sm"
                     /* onChange={(event, string) => {
                   this.inputChangeHandler(event, "semester");
                   console.log("drop down is being read");
@@ -63,19 +64,23 @@ class CurrentModal extends React.Component {
               <Form.Row>
                 <Row>
                   <Col>
-                    <label htmlFor="">Score</label>
-                    <InputGroup className="mb-3">
-                      <Form.Control />
+                    <label htmlFor="" column="sm">
+                      Score
+                    </label>
+                    <InputGroup className="mb-3" size="sm">
+                      <Form.Control size="sm" />
                       <InputGroup.Append>
-                        <InputGroup.Text id="basic-addon2">
+                        <InputGroup.Text id="inputGroup-sizing-sm">
                           CGPA
                         </InputGroup.Text>
                       </InputGroup.Append>
                     </InputGroup>
                   </Col>
                   <Col>
-                    <label htmlFor="">Percentage Equivalent</label>
-                    <InputGroup className="mb-3">
+                    <label htmlFor="" column="sm">
+                      Percentage Equivalent
+                    </label>
+                    <InputGroup className="mb-3" size="sm">
                       <Form.Control />
                       <InputGroup.Append>
                         <InputGroup.Text id="basic-addon2">%</InputGroup.Text>
@@ -95,6 +100,7 @@ class CurrentModal extends React.Component {
                           type="date"
                           placeholder="Enter DOB"
                           required
+                          size="sm"
                           onChange={(event, string) => {
                             this.inputChangeHandler(event, "DOB");
                           }}
@@ -110,6 +116,7 @@ class CurrentModal extends React.Component {
                           type="date"
                           placeholder="Enter DOB"
                           required
+                          size="sm"
                           onChange={(event, string) => {
                             this.inputChangeHandler(event, "DOB");
                           }}
@@ -119,22 +126,36 @@ class CurrentModal extends React.Component {
                   </Col>
                 </Row>
               </Form.Row>
-
+              <br />
+              <br />
+{/* !!! This is where the Table begins PROCEED TO EDIT WITH CAUTION */}
               <Form.Row>
                 <Row>
+                  <Col xs={3}></Col>
+                  <Col xs={5}>
+                    <label htmlFor="">
+                      <strong>Performance</strong>
+                    </label>
+                  </Col>
+                  <Col>
+                    <label htmlFor="">
+                      <strong>Backlogs Details</strong>
+                    </label>
+                  </Col>
+
                   <Table size="sm">
                     <Col>
                       <thead>
                         <tr>
                           <th>
-                            <Col></Col>
+                            <Col>Sem</Col>
                           </th>
                           <th>
                             <Col></Col>
                           </th>
-                          <th>
+                          {/* <th>
                             <Col></Col>
-                          </th>
+                          </th> */}
                           <th>
                             <Col>CGPA</Col>
                           </th>
@@ -175,24 +196,9 @@ class CurrentModal extends React.Component {
                     </Col>
                     <Col>
                       <tr>
-                        <td>Semester 1</td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Label column="sm">1</Form.Label>
                         </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                      </tr>
-                    </Col>
-                    <Col>
-                      <tr>
-                        <td>Semester 2</td>
                         <td>
                           <Form.Control size="sm" />
                         </td>
@@ -209,24 +215,9 @@ class CurrentModal extends React.Component {
                     </Col>
                     <Col>
                       <tr>
-                        <td>Semester 3</td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Label column="sm">2</Form.Label>
                         </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                      </tr>
-                    </Col>
-                    <Col>
-                      <tr>
-                        <td>Semester 4</td>
                         <td>
                           <Form.Control size="sm" />
                         </td>
@@ -243,7 +234,9 @@ class CurrentModal extends React.Component {
                     </Col>
                     <Col>
                       <tr>
-                        <td>Semester 5</td>
+                        <td>
+                          <Form.Label column="sm">3</Form.Label>
+                        </td>
                         <td>
                           <Form.Control size="sm" />
                         </td>
@@ -260,7 +253,47 @@ class CurrentModal extends React.Component {
                     </Col>
                     <Col>
                       <tr>
-                        <td>Semester 6 </td>
+                        <td>
+                          <Form.Label column="sm">4</Form.Label>
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                      </tr>
+                    </Col>
+                    <Col>
+                      <tr>
+                        <td>
+                          <Form.Label column="sm">5</Form.Label>
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                      </tr>
+                    </Col>
+                    <Col>
+                      <tr>
+                        <td>
+                          <Form.Label column="sm">6</Form.Label>{" "}
+                        </td>
                         <td>
                           <Form.Control size="sm" />
                         </td>
