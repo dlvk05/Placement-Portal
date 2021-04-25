@@ -18,7 +18,7 @@ class About extends React.Component {
   render() {
     return (
       <div style={styles}>
-        <span style={{ fontSize: "20px" }}>Overview</span>{" "}
+        <span id="Overview"style={{ fontSize: "20px" }}>Overview</span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
           <OverviewModal />
         </span>
@@ -30,7 +30,7 @@ class About extends React.Component {
             <span>Name:</span>
           </Col>
           <Col>
-            <span style={{ marginLeft: "10%" }}>
+            <span >
               "this is where the name is supposed to be"
             </span>
           </Col>
@@ -42,7 +42,7 @@ class About extends React.Component {
             <span>Date of Birth:</span>
           </Col>
           <Col>
-            <span style={{ marginLeft: "10%" }}>
+            <span >
               "this is where the Date of Birth is supposed to be"
             </span>
           </Col>
@@ -54,7 +54,7 @@ class About extends React.Component {
             <span>Gender:</span>
           </Col>
           <Col>
-            <span style={{ marginLeft: "10%" }}>
+            <span >
               "this is where the gender is supposed to be"
             </span>
           </Col>
@@ -66,7 +66,7 @@ class About extends React.Component {
             <span>Category:</span>
           </Col>
           <Col>
-            <span style={{ marginLeft: "10%" }}>
+            <span >
               "this is where the category is supposed to be"
             </span>
           </Col>
@@ -91,7 +91,7 @@ class About extends React.Component {
             <span>Contact Number:</span>
           </Col>
           <Col>
-            <span style={{ marginLeft: "10%" }}>
+            <span >
               "this is where the Contact Number is supposed to be"
             </span>
           </Col>
@@ -103,7 +103,7 @@ class About extends React.Component {
             <span>Email:</span>
           </Col>
           <Col>
-            <span style={{ marginLeft: "10%" }}>
+            <span >
               "this is where the email is supposed to be"
             </span>
           </Col>
@@ -115,7 +115,7 @@ class About extends React.Component {
             <span>Personal Email:</span>
           </Col>
           <Col>
-            <span style={{ marginLeft: "10%" }}>
+            <span >
               "this is where the Personal Email is supposed to be"
             </span>
           </Col>
@@ -140,7 +140,7 @@ class About extends React.Component {
             <span>Complete Address:</span>
           </Col>
           <Col>
-            <span style={{ marginLeft: "10%" }}>
+            <span >
               "this is where the Address is supposed to be"
             </span>
           </Col>
@@ -149,10 +149,22 @@ class About extends React.Component {
         <br />
         <Row>
           <Col xs={2}>
+          <span>Pincode:</span>
+          </Col>
+          <Col>
+          <span /*  */>
+              "this is where the Pincode is supposed to be"
+            </span>
+          </Col>
+        </Row>
+        <hr/>
+        <br/>
+        <Row>
+          <Col xs={2}>
             <span>State:</span>
           </Col>
           <Col>
-            <span style={{ marginLeft: "10%" }}>
+            <span >
               "this is where the State is supposed to be"
             </span>
           </Col>
@@ -164,7 +176,7 @@ class About extends React.Component {
             <span>City:</span>
           </Col>
           <Col>
-            <span style={{ marginLeft: "10%" }}>
+            <span >
               "this is where the City is supposed to be"
             </span>
           </Col>

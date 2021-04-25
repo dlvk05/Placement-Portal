@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Button, Form, Col } from "react-bootstrap";
 
-class AddressModal extends React.Component {
+class CurrentModal extends React.Component {
   state = {
     show: false,
     about: {
@@ -26,7 +26,7 @@ class AddressModal extends React.Component {
 
         <Modal show={this.state.show} onHide={this.handleShow}>
           <Modal.Header closeButton>
-            <Modal.Title>Edit Address</Modal.Title>
+            <Modal.Title>Edit Current Education Details</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
@@ -101,4 +101,4 @@ class AddressModal extends React.Component {
   }
 }
 
-export default AddressModal;
+export default CurrentModal;
