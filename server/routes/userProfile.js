@@ -18,7 +18,6 @@ router.get("/userProfile", (req, res) => {
           .status(404)
           .json({ Error: "profile not found in the database" });
       }
-
       res.json({
         success: true,
         profile: profile,
@@ -26,33 +25,46 @@ router.get("/userProfile", (req, res) => {
     });
 });
 
-router.put("/updateUserProfile", (req, res) => {
-  let header = req.header;
-  let subHeader = req.subHeader;
-  let data = req.formData;
-  let updatedData = null;
-  if (subHeader != null) {
-    updatedData = {
-      [header]: {
-        [subHeader]: {
-          ...data,
-        },
-      },
-    };
-  }else{
-    updatedData = {
-      [header]: {
-        ...data
-      }
-    };
+router.put("/updateUserProfile/summary", (req, res) => {
+  let header = "Summary";
+  let data = req.body.formData.summary;
+  let updatedData = {
+    [header]: data,
   };
 
+  UserProfile.findById(req.body.profileId).then((foundProfile) => {
+    foundProfile[header] = data;
+    foundProfile.save().then((updatedProfile) => {
+      res.json({
+        success: true,
+        updatedProfile: updatedProfile,
+      });
+    });
+  });
+ 
+});
+
+router.put("/updateUserProfile/about", (req, res) => {
+  let header = "About";
+  let subHeader = req.body.subHeader;
+  let data = req.body.formData;
+  let updatedData = null;
   let options = { new: true };
-  UserProfile.findByIdAndUpdate(req.profileId, updatedData, options).then(
-    (updatedProfile) => {
-      console.log(updatedProfile);
+  UserProfile.findById(req.body.profileId).then((foundProfile) => {
+    console.log("called");
+    console.log(foundProfile);
+    if (subHeader != null) {
+      foundProfile[header][subHeader] = data;
+    } else {
+      foundProfile[header] = data;
     }
-  );
+    foundProfile.save().then((updatedProfile) => {
+      res.json({
+        success: true,
+        updatedProfile: foundProfile,
+      });
+    });
+  });
 });
 
 module.exports = router;
