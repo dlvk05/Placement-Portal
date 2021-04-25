@@ -98,11 +98,11 @@ class CurrentModal extends React.Component {
                       <InputGroup.Append>
                         <Form.Control
                           type="date"
-                          placeholder="Enter DOB"
+                          placeholder="Course Start Date"
                           required
                           size="sm"
                           onChange={(event, string) => {
-                            this.inputChangeHandler(event, "DOB");
+                            this.inputChangeHandler(event, "courseStartDate");
                           }}
                         />
                       </InputGroup.Append>
@@ -114,11 +114,11 @@ class CurrentModal extends React.Component {
                       <InputGroup.Append>
                         <Form.Control
                           type="date"
-                          placeholder="Enter DOB"
+                          placeholder="Course End Date"
                           required
                           size="sm"
                           onChange={(event, string) => {
-                            this.inputChangeHandler(event, "DOB");
+                            this.inputChangeHandler(event, "courseEndDate");
                           }}
                         />
                       </InputGroup.Append>

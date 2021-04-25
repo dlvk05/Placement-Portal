@@ -43,8 +43,8 @@ class Profile extends Component {
               <Accordion.Collapse eventKey="2">
                 <Card.Body>
                   <a href="#Current">Current</a> <br />
-                  <a href="#ClassXII">ClassXII Details</a> <br />
-                  <a href="#ClassXDetails">ClassX Details</a> <br />
+                  <a href="#ClassXII">Class XII Details</a> <br />
+                  <a href="#ClassX">Class X Details</a> <br />
                 </Card.Body>
               </Accordion.Collapse>
             </Card>

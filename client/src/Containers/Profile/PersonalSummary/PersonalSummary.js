@@ -5,7 +5,7 @@ import PersonalSummaryModal from "./PersonalSummaryModal/PersonalSummaryModal";
 class PersonalSummary extends React.Component {
   render() {
     return (
-        <div className={styles.wrapper}>
+        <div className={styles.wrapper} id="Summary">
             <div className={styles.halfcolor}>
             <i class="fas fa-user-circle fa-7x"></i>
             </div>
