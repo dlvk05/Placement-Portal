@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Button, Form, Col } from "react-bootstrap";
 
-class OverviewModal extends React.Component {
+class CurrentModal extends React.Component {
   state = {
     show: false,
     about: {
@@ -26,61 +26,61 @@ class OverviewModal extends React.Component {
 
         <Modal show={this.state.show} onHide={this.handleShow}>
           <Modal.Header closeButton>
-            <Modal.Title>Edit Overview</Modal.Title>
+            <Modal.Title>Edit Current Education Details</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
               <Form.Row>
-                <Form.Group as={Col} controlId="formGridName">
-                <Form.Label>Name</Form.Label>
+                <Form.Group as={Col} controlId="formGridCompleteAddress">
+                <Form.Label>Complete Address</Form.Label>
                 <Form.Control
-                  type="Name"
-                  placeholder="Enter Name"
+                  type="CompleteAddress"
+                  placeholder="Enter CompleteAddress"
                   required
                   onChange={(event, string) => {
-                    this.inputChangeHandler(event, "Name");
+                    this.inputChangeHandler(event, "CompleteAddress");
                   }}
                 />
                 </Form.Group>
               </Form.Row>
 
               <Form.Row>
-                <Form.Group as={Col} controlId="formGridDOB">
-                <Form.Label>Date of Birth</Form.Label> <br/>
-                <input
-                  type="date"
-                  placeholder="Enter DOB"
+                <Form.Group as={Col} controlId="formGridPincode">
+                <Form.Label>Pincode</Form.Label> <br/>
+                <Form.Control
+                  type="Pincode"
+                  placeholder="Enter Pincode"
                   required
                   onChange={(event, string) => {
-                    this.inputChangeHandler(event, "DOB");
+                    this.inputChangeHandler(event, "Pincode");
                   }}
                 />
                 </Form.Group>
               </Form.Row>
 
               <Form.Row>
-                <Form.Group as={Col} controlId="formGridGender">
-                <Form.Label>Gender</Form.Label>
+                <Form.Group as={Col} controlId="formGridState">
+                <Form.Label>State</Form.Label> <br/>
                 <Form.Control
-                  type="Gender"
-                  placeholder="Enter Gender"
+                  type="State"
+                  placeholder="Enter State"
                   required
                   onChange={(event, string) => {
-                    this.inputChangeHandler(event, "Gender");
+                    this.inputChangeHandler(event, "State");
                   }}
                 />
                 </Form.Group>
               </Form.Row>
 
               <Form.Row>
-                <Form.Group as={Col} controlId="formGridCategory">
-                <Form.Label>Category</Form.Label>
+                <Form.Group as={Col} controlId="formGridCity">
+                <Form.Label>City</Form.Label> <br/>
                 <Form.Control
-                  type="Category"
-                  placeholder="Enter Category"
+                  type="City"
+                  placeholder="Enter City"
                   required
                   onChange={(event, string) => {
-                    this.inputChangeHandler(event, "Category");
+                    this.inputChangeHandler(event, "City");
                   }}
                 />
                 </Form.Group>
@@ -101,4 +101,4 @@ class OverviewModal extends React.Component {
   }
 }
 
-export default OverviewModal;
+export default CurrentModal;

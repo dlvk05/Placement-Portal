@@ -9,6 +9,7 @@ class PersonalSummary extends React.Component {
             <div className={styles.halfcolor}>
             <i class="fas fa-user-circle fa-7x"></i>
             </div>
+            <br/>
             <i>this is where the Reg Number goes</i>
             <br/>
             <i>this is where the semester & dept goes</i>
@@ -16,6 +17,8 @@ class PersonalSummary extends React.Component {
             <i>this is where the Branch goes</i>
             <br/>
             <i>this is where the college name goes</i>
+            <hr/>
+            <i>this is where the personal summary goes</i>
             <hr/>
             <PersonalSummaryModal/>
         </div>
