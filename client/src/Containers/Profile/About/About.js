@@ -51,7 +51,7 @@ class About extends React.Component {
         <br />
         <br />
         <br />
-        <span style={{ fontSize: "20px" }}>Contact Details</span>{" "}
+        <span style={{ fontSize: "20px" }} id="ContactDetails">Contact Details</span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
           <ContactDetailsModal/>
         </span>
