@@ -31,6 +31,20 @@ class XIIClassModal extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <Form>
+              <Form.Group as={Col} controlId="formGridEducationType">
+                <Form.Row>
+                  <Form.Label column="sm">Education Type</Form.Label>
+                  <Form.Control
+                    type="educationType"
+                    placeholder="Enter Education Type"
+                    required
+                    size="sm"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "educationType");
+                    }}
+                  />
+                </Form.Row>
+              </Form.Group>
               <Form.Group as={Col} controlId="formGridSchoolName">
                 <Form.Row>
                   <Form.Label column="sm">School Name</Form.Label>
@@ -75,6 +89,46 @@ class XIIClassModal extends React.Component {
                   />
                 </Form.Row>
               </Form.Group>
+
+              <Form.Group as={Col} controlId="exampleForm.SelectCustom">
+                <Form.Row>
+                  <Form.Label column="sm">Score Type</Form.Label>
+                  <Form.Control
+                    as="select"
+                    custom
+                    size="sm"
+                    /* onChange={(event, string) => {
+                  this.inputChangeHandler(event, "semester");
+                  console.log("drop down is being read");
+                }} */
+                  >
+                    <option eventkey="CGPA">CGPA</option>
+                    <option eventkey="Percentage">Percentage</option>
+                  </Form.Control>
+                </Form.Row>
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridScore">
+                <Form.Row>
+                  <Form.Label column="sm">Score</Form.Label>
+                  <Form.Control
+                    type="Score"
+                    placeholder="Enter Score"
+                    required
+                    size="sm"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "Score");
+                    }}
+                  />
+                </Form.Row>
+              </Form.Group>
+
+                <Form.Group as={Col}>
+                    <Form.Row>
+                        <Form.File label="Upload XII Marksheet"/>
+                    </Form.Row>
+                </Form.Group>
+
               <Row>
                 <Col>
                   <Form.Label htmlFor="" column="sm">
@@ -126,8 +180,6 @@ class XIIClassModal extends React.Component {
                   </Col>
                 </Row>
               </Form.Row>
-
-              
             </Form>
           </Modal.Body>
           <Modal.Footer>

@@ -28,15 +28,18 @@ class Education extends React.Component {
         {/* ^^^ this is where the Current Education subsection starts */}
         <Row>
           <Col xs={5}>
+            <span>Current Semester</span> <br/>
+            <span>Registration Number</span> <br/>
             <span>Branch Name</span> <br/>
-            <span>Department</span>
+            <span>Department</span> <br/>
+            <span>Duration 2017-2021</span> <br/>
           </Col>
           <Col>
-            <span >
+            <span style={{fontSize: "25px"}}>
               "CGPA: NUMBER.NUMBER"
             </span>
             <br/>
-            <span >
+            <span style={{fontSize: "25px"}}>
               "PERCENTAGE: NUMBER.NUMBER%"
             </span>
           </Col>
@@ -56,6 +59,8 @@ class Education extends React.Component {
               <th>4</th>
               <th>5</th>
               <th>6</th>
+              <th>7</th>
+              <th>8</th>
             </tr>
           </thead>
           <tr>
@@ -66,6 +71,8 @@ class Education extends React.Component {
             <td>num4</td>
             <td>num5</td>
             <td>num6</td>
+            <td>num7</td>
+            <td>num8</td>
           </tr>
           <tr>
             <td>SGPA</td>
@@ -75,6 +82,8 @@ class Education extends React.Component {
             <td>num4</td>
             <td>num5</td>
             <td>num6</td>
+            <td>num7</td>
+            <td>num8</td>
           </tr>
           <tr>
             <td>Ongoing Backlogs</td>
@@ -84,9 +93,13 @@ class Education extends React.Component {
             <td>num</td>
             <td>num</td>
             <td>num</td>
+            <td>num</td>
+            <td>num</td>
           </tr>
           <tr>
             <td>Total Backlogs</td>
+            <td>num</td>
+            <td>num</td>
             <td>num</td>
             <td>num</td>
             <td>num</td>
@@ -112,7 +125,7 @@ class Education extends React.Component {
             *Subjects e.g. Physics-Chemistry-Maths* <br/>
             *duration e.g. 2016-2017* <br/>
           </Col>
-          <Col>
+          <Col style={{fontSize: "25px"}}>
             *Percentage Scored or CGPA*
           </Col>
         </Row>
@@ -120,7 +133,7 @@ class Education extends React.Component {
         <br/>
         <br/>
         <br/>
-        <span id="ClassXII" style={{ fontSize: "20px" }}>X <sup>th</sup> Class / Equivalent</span>{" "}
+        <span id="ClassX" style={{ fontSize: "20px" }}>X <sup>th</sup> Class / Equivalent</span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
             <XClassModal/>
         </span>
@@ -132,7 +145,7 @@ class Education extends React.Component {
             *Board e.g. CBSE* <br/>
             *duration e.g. 2014-2015* <br/>
           </Col>
-          <Col>
+          <Col style={{fontSize: "25px"}}>
             *Percentage Scored*
           </Col>
         </Row>

@@ -38,6 +38,17 @@ class CurrentModal extends React.Component {
           <Modal.Body>
             <Form>
               <Form.Row>
+                <Form.Group>
+                  <Form.Label column="sm">Registration Number</Form.Label>
+                  <Form.Control
+                    type="regno"
+                    placeholder="17930XXXX"
+                    required
+                    size="sm"
+                  />
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
                 <Form.Group controlId="exampleForm.SelectCustom">
                   <Form.Label column="sm">Current Semester</Form.Label>
                   <Form.Control
@@ -128,11 +139,11 @@ class CurrentModal extends React.Component {
               </Form.Row>
               <br />
               <br />
-{/* !!! This is where the Table begins PROCEED TO EDIT WITH CAUTION */}
+              {/* !!! This is where the Table begins PROCEED TO EDIT WITH CAUTION */}
               <Form.Row>
                 <Row>
-                  <Col xs={3}></Col>
-                  <Col xs={5}>
+                  <Col xs={2}></Col>
+                  <Col xs={3}>
                     <label htmlFor="">
                       <strong>Performance</strong>
                     </label>
@@ -150,29 +161,16 @@ class CurrentModal extends React.Component {
                           <th>
                             <Col>Sem</Col>
                           </th>
-                          <th>
-                            <Col></Col>
-                          </th>
-                          {/* <th>
-                            <Col></Col>
-                          </th> */}
+
                           <th>
                             <Col>CGPA</Col>
                           </th>
                           <th>
                             <Col></Col>
                           </th>
-                          <th>
-                            <Col></Col>
-                          </th>
+
                           <th>
                             <Col>SGPA</Col>
-                          </th>
-                          <th>
-                            <Col></Col>
-                          </th>
-                          <th>
-                            <Col></Col>
                           </th>
                           <th>
                             <Col></Col>
@@ -184,12 +182,15 @@ class CurrentModal extends React.Component {
                           <th>
                             <Col></Col>
                           </th>
-                          <th>
-                            <Col></Col>
-                          </th>
 
                           <th>
                             <Col>Ongoing</Col>
+                          </th>
+                          <th>
+                            <Col></Col>
+                          </th>
+                          <th>
+                            <Col>Upload File</Col>
                           </th>
                         </tr>
                       </thead>
@@ -211,6 +212,9 @@ class CurrentModal extends React.Component {
                         <td>
                           <Form.Control size="sm" />
                         </td>
+                        <td>
+                          <Form.File id="exampleFormControlFile1" />
+                        </td>
                       </tr>
                     </Col>
                     <Col>
@@ -229,6 +233,9 @@ class CurrentModal extends React.Component {
                         </td>
                         <td>
                           <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.File id="exampleFormControlFile1" />
                         </td>
                       </tr>
                     </Col>
@@ -249,6 +256,9 @@ class CurrentModal extends React.Component {
                         <td>
                           <Form.Control size="sm" />
                         </td>
+                        <td>
+                          <Form.File id="exampleFormControlFile1" />
+                        </td>
                       </tr>
                     </Col>
                     <Col>
@@ -267,6 +277,9 @@ class CurrentModal extends React.Component {
                         </td>
                         <td>
                           <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.File id="exampleFormControlFile1" />
                         </td>
                       </tr>
                     </Col>
@@ -287,6 +300,9 @@ class CurrentModal extends React.Component {
                         <td>
                           <Form.Control size="sm" />
                         </td>
+                        <td>
+                          <Form.File id="exampleFormControlFile1" />
+                        </td>
                       </tr>
                     </Col>
                     <Col>
@@ -305,6 +321,53 @@ class CurrentModal extends React.Component {
                         </td>
                         <td>
                           <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.File id="exampleFormControlFile1" />
+                        </td>
+                      </tr>
+                    </Col>
+                    <Col>
+                      <tr>
+                        <td>
+                          <Form.Label column="sm">7</Form.Label>{" "}
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.File id="exampleFormControlFile1" />
+                        </td>
+                      </tr>
+                    </Col>
+                    <Col>
+                      <tr>
+                        <td>
+                          <Form.Label column="sm">8</Form.Label>{" "}
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.Control size="sm" />
+                        </td>
+                        <td>
+                          <Form.File id="exampleFormControlFile1" />
                         </td>
                       </tr>
                     </Col>
