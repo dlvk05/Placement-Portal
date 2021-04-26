@@ -152,7 +152,7 @@ class About extends React.Component {
           <span>Pincode:</span>
           </Col>
           <Col>
-          <span /*  */>
+          <span>
               "this is where the Pincode is supposed to be"
             </span>
           </Col>

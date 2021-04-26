@@ -47,7 +47,7 @@ class OverviewModal extends React.Component {
               <Form.Row>
                 <Form.Group as={Col} controlId="formGridDOB">
                 <Form.Label>Date of Birth</Form.Label> <br/>
-                <input
+                <Form.Control
                   type="date"
                   placeholder="Enter DOB"
                   required

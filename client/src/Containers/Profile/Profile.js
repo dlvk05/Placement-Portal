@@ -12,11 +12,6 @@ class Profile extends Component {
         <div className={styles.sidenav}>
           <h4>Navigation Options</h4>
           <hr />
-          {/* <a href="#Summary">Nav option 1</a> <br />
-        <a href="#About">Nav option 2</a> <br />
-        <a href="#empty">Nav option 3</a> <br />
-        <a href="#empty">Nav option 4</a> <br />
-        <a href="#empty">Nav option 5</a> <br /> */}
           <Accordion defaultActiveKey="">
             <Card>
               <Card.Header>
@@ -24,12 +19,6 @@ class Profile extends Component {
                   <a href="#Summary">Summary</a>
                 </Accordion.Toggle>
               </Card.Header>
-              {/* <Accordion.Collapse eventKey="0">
-                <Card.Body>
-                <a href="#Summary">Overview</a> <br />
-                </Card.Body>
-
-              </Accordion.Collapse> */}
             </Card>
             <Card>
               <Card.Header>
@@ -54,8 +43,8 @@ class Profile extends Component {
               <Accordion.Collapse eventKey="2">
                 <Card.Body>
                   <a href="#Current">Current</a> <br />
-                  <a href="#ClassXII">ClassXII Details</a> <br />
-                  <a href="#ClassXDetails">ClassX Details</a> <br />
+                  <a href="#ClassXII">Class XII Details</a> <br />
+                  <a href="#ClassX">Class X Details</a> <br />
                 </Card.Body>
               </Accordion.Collapse>
             </Card>

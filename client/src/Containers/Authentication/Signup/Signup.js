@@ -126,8 +126,6 @@ class Signup extends React.Component {
 
     return (
       <div className={styles.section3}>
-        {/* <div><h1>bbbbbbbbbb</h1></div>
-            <div><h1>hello</h1></div> */}
         <div className={styles.section4}>
           <div>
             <strong><u>Student Registration</u></strong>
@@ -213,7 +211,6 @@ class Signup extends React.Component {
             <Form.Group controlId="formGridMobileNumber">
               <Form.Label>Mobile Number</Form.Label>
               <Form.Control /* ^^^ fix this weird invalid/valid problem */
-                // {x ? isInvalid : null}
                 placeholder="Mobile Number"
                 required
                 onChange={(event, string) => {
@@ -249,20 +246,6 @@ class Signup extends React.Component {
                 />
               </Form.Group>
             </Form.Row>
-
-            {/* <Form.Row>
-              <Form.Group as={Col} controlId="formGridSemester">
-                <Form.Label>Semester</Form.Label>
-                <Form.Control
-                  placeholder="Semester"
-                  required
-                  onChange={(event, string) => {
-                    this.inputChangeHandler(event, "semester");
-                  }}
-                />
-              </Form.Group>
-            </Form.Row> */}
-
             <Form.Group controlId="exampleForm.SelectCustom">
               <Form.Label>Custom select</Form.Label>
               <Form.Control
@@ -279,13 +262,6 @@ class Signup extends React.Component {
               </Form.Control>
             </Form.Group>
             {spinner}
-            {/* <Button
-              variant="primary"
-              type="submit"
-              onClick={this.onSubmitHandler}
-            >
-              Submit
-            </Button> */}
           </Form>
           </div>
         </div>
