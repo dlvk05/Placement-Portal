@@ -99,7 +99,7 @@ const profileSchema = new Schema({
         default: false,
       },
       FileName: String,
-      FileLocation: String,
+      // FileLocation: String,
     },
     Class10th: {
       School: String,
@@ -118,7 +118,7 @@ const profileSchema = new Schema({
         default: false,
       },
       FileName: String,
-      FileLocation: String,
+      // FileLocation: String,
     },
   },
   //Internships and Work Exp
@@ -148,7 +148,7 @@ const profileSchema = new Schema({
         default: false,
       },
       FileName: String,
-      FileLocation: String,
+      // FileLocation: String,
     },
   ],
   //Positions of Responsibility
@@ -178,7 +178,7 @@ const profileSchema = new Schema({
         default: false,
       },
       FileName: String,
-      FileLocation: String,
+      // FileLocation: String,
     },
   ],
   Accomplishments: {
