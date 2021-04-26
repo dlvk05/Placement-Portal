@@ -17,7 +17,7 @@
 	// }
 	"Bootstrap Simple Text Input Snippet":{
 		"scope": "javascript, typescript, html, JSX",
-		"prefix": "bootsimpleinput",
+		"prefix": "bsf",
 		"body": [
 			"<Form.Group as={Col} controlId=\"formGrid${1}\">",
                 "\t<Form.Row>",

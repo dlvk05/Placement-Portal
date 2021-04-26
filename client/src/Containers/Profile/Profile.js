@@ -4,6 +4,7 @@ import PersonalSummary from "./PersonalSummary/PersonalSummary";
 import About from "./About/About";
 import styles from "./Profile.module.css";
 import Education from "./Education/Education";
+import InternshipWorkExperience from "./InternshipWorkExperience/InternshipWorkExperience";
 
 class Profile extends Component {
   render() {
@@ -48,6 +49,13 @@ class Profile extends Component {
                 </Card.Body>
               </Accordion.Collapse>
             </Card>
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                  <a href="#InternshipWorkExp">Work Experience</a>
+                </Accordion.Toggle>
+              </Card.Header>
+            </Card>
           </Accordion>
         </div>
         <div className={styles.subdiv3}>
@@ -58,6 +66,9 @@ class Profile extends Component {
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
           <Education />
+        </div>
+        <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
+          <InternshipWorkExperience/>
         </div>
       </div>
     );
