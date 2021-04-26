@@ -42,8 +42,10 @@ const profileSchema = new Schema({
       },
     },
     Address: {
-      PermanentAddress: String,
-      CurrentAddress: String,
+      CompleteAddress: String,
+      Pincode: Number,
+      State: String,
+      City: String,
     },
     AdditionalInfo: {
       StudentWhatsappNo: Number,
@@ -63,8 +65,8 @@ const profileSchema = new Schema({
       CGPAScore: Number,
       PercentageScore: Number,
       Duration: {
-        StartDate: Date,
-        EndDate: Date,
+        StartDate: String,
+        EndDate: String,
       },
       Performance: [
         {
@@ -84,15 +86,14 @@ const profileSchema = new Schema({
     },
     Class12th: {
       School: String,
-      Program: String,
       Board: String,
       Branch: String,
       EducationType: String,
       Score: Number,
       ScoreType: String,
       Duration: {
-        StartDate: Date,
-        EndDate: Date,
+        StartDate: String,
+        EndDate: String,
       },
       MarksheetProvided: {
         type: Boolean,
@@ -103,15 +104,13 @@ const profileSchema = new Schema({
     },
     Class10th: {
       School: String,
-      Program: String,
       Board: String,
-      Branch: String,
       EducationType: String,
       Score: Number,
       ScoreType: String,
       Duration: {
-        StartDate: Date,
-        EndDate: Date,
+        StartDate: String,
+        EndDate: String,
       },
       MarksheetProvided: {
         type: Boolean,
@@ -131,8 +130,8 @@ const profileSchema = new Schema({
       JobFunction: String,
       CompanySector: String,
       Duration: {
-        StartDate: Date,
-        EndDate: Date,
+        StartDate: String,
+        EndDate: String,
       },
       MonthlySalary: Number,
       Details: String,
@@ -157,8 +156,8 @@ const profileSchema = new Schema({
       Title: String,
       OrganizationName: String,
       Duration: {
-        StartDate: Date,
-        EndDate: Date,
+        StartDate: String,
+        EndDate: String,
       },
       Description: String,
     },
@@ -169,8 +168,8 @@ const profileSchema = new Schema({
       Title: String,
       ProjectDomain: String,
       Duration: {
-        StartDate: Date,
-        EndDate: Date,
+        StartDate: String,
+        EndDate: String,
       },
       Description: String,
       DocumentProvided: {

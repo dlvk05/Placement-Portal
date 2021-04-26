@@ -21,6 +21,9 @@ const storage = multer.diskStorage({
     cb(null, path);
   },
   filename: (req, file, cb) => {
+    // let d=new Date();
+
+    // let fileName=req.body.profileId+"_"+req.body.header+"_"+req.body.subHeader+"_"+d;
     cb(null, file.originalname);
   },
 });
@@ -96,6 +99,12 @@ router.put("/updateUserProfile/about", (req, res) => {
   let data = req.body.formData;
   let updatedData = null;
   let options = { new: true };
+  console.log(req.body);
+
+  console.log(subHeader);
+  console.log(data);
+
+  
   UserProfile.findById(req.body.profileId).then((foundProfile) => {
     console.log("called");
     console.log(foundProfile);
