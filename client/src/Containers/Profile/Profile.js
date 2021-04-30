@@ -5,6 +5,10 @@ import About from "./About/About";
 import styles from "./Profile.module.css";
 import Education from "./Education/Education";
 import InternshipWorkExperience from "./InternshipWorkExperience/InternshipWorkExperience";
+import TechnicalSkills from "./TechnicalSkills/TechnicalSkills";
+import PositionsOfResponsibility from "./PositionsOfResponsibility/PositionsOfResponsibility";
+import Projects from "./Projects/Projects";
+import Accomplishments from "./Accomplishments/Accomplishments";
 
 class Profile extends Component {
   render() {
@@ -56,6 +60,41 @@ class Profile extends Component {
                 </Accordion.Toggle>
               </Card.Header>
             </Card>
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                  <a href="#TechnicalSkills">Technical Skills</a>
+                </Accordion.Toggle>
+              </Card.Header>
+            </Card>
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                  <a href="#PositionsOfResponsibility">Positions</a>
+                </Accordion.Toggle>
+              </Card.Header>
+            </Card>
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                  <a href="#Projects">Projects</a>
+                </Accordion.Toggle>
+              </Card.Header>
+            </Card>
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                  Accomplishments
+                </Accordion.Toggle>
+              </Card.Header>
+              <Accordion.Collapse eventKey="1">
+                <Card.Body>
+                  <a href="#Awards">Awards</a> <br />
+                  <a href="#ContactDetails">Contact Details</a> <br />
+                  <a href="#Address">Address</a> <br />
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
           </Accordion>
         </div>
         <div className={styles.subdiv3}>
@@ -69,6 +108,18 @@ class Profile extends Component {
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
           <InternshipWorkExperience/>
+        </div>
+        <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
+          <TechnicalSkills/>
+        </div>
+        <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
+          <PositionsOfResponsibility/>
+        </div>
+        <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
+          <Projects/>
+        </div>
+        <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
+          <Accomplishments/>
         </div>
       </div>
     );
