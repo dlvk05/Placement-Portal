@@ -11,7 +11,7 @@
     display: block;
     z-index: 1;
     background-color: #134a61;
-    overflow-x: auto;
+    overflow-x: scroll;
     padding: 3px; 
     margin-top: 3px;
   }
