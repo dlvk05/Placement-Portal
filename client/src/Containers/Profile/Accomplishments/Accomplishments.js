@@ -4,6 +4,9 @@ import AwardsModal from "./Awards/AwardsModal";
 import CertificationsModal from "./Certifications/CertificationsModal";
 import CompetitionsModal from "./Competitions/CompetitionsModal";
 import ConferencesModal from "./Conferences/ConferencesModal";
+import PublicationsModal from "./Publications/PublicationsModal";
+import ScholarshipsModal from "./Scholarships/ScholarshipsModal";
+import TestScoresModal from "./TestScores/TestScoresModal";
 
 const styles = {
   border: "solid 1px",
@@ -187,7 +190,7 @@ class Accomplishments extends React.Component {
           Test Scores
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          {/* <ContactDetailsModal /> */}
+          <TestScoresModal/>
         </span>
         <hr />
         <br />
@@ -236,7 +239,7 @@ class Accomplishments extends React.Component {
         Publications
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          {/* <ContactDetailsModal /> */}
+          <PublicationsModal/>
         </span>
         <hr />
         <br />
@@ -279,7 +282,7 @@ class Accomplishments extends React.Component {
             Scholarships
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          {/* <ContactDetailsModal /> */}
+          <ScholarshipsModal/>
         </span>
         <hr />
         <br />
