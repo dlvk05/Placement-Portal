@@ -5,6 +5,7 @@
   
   .sidenav{
     position: fixed;
+    height: 80%;
     width: 200px;
     top: 10%;
     left: 5px;

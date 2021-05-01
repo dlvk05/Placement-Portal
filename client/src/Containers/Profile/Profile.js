@@ -9,6 +9,7 @@ import TechnicalSkills from "./TechnicalSkills/TechnicalSkills";
 import PositionsOfResponsibility from "./PositionsOfResponsibility/PositionsOfResponsibility";
 import Projects from "./Projects/Projects";
 import Accomplishments from "./Accomplishments/Accomplishments";
+import Resumes from "./Resumes/Resumes";
 
 class Profile extends Component {
   render() {
@@ -83,17 +84,24 @@ class Profile extends Component {
             </Card>
             <Card>
               <Card.Header>
-                <Accordion.Toggle as={Button} variant="link" eventKey="1">
+                <Accordion.Toggle as={Button} variant="link" eventKey="3">
                   Accomplishments
                 </Accordion.Toggle>
               </Card.Header>
-              <Accordion.Collapse eventKey="1">
+              <Accordion.Collapse eventKey="3">
                 <Card.Body>
                   <a href="#Awards">Awards</a> <br />
                   <a href="#ContactDetails">Contact Details</a> <br />
                   <a href="#Address">Address</a> <br />
                 </Card.Body>
               </Accordion.Collapse>
+            </Card>
+            <Card>
+              <Card.Header>
+                <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                  <a href="#Resumes">Resumes</a>
+                </Accordion.Toggle>
+              </Card.Header>
             </Card>
           </Accordion>
         </div>
@@ -120,6 +128,9 @@ class Profile extends Component {
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
           <Accomplishments/>
+        </div>
+        <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
+          <Resumes/>
         </div>
       </div>
     );
