@@ -1,5 +1,9 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
+import AwardsModal from "./Awards/AwardsModal";
+import CertificationsModal from "./Certifications/CertificationsModal";
+import CompetitionsModal from "./Competitions/CompetitionsModal";
+import ConferencesModal from "./Conferences/ConferencesModal";
 
 const styles = {
   border: "solid 1px",
@@ -17,7 +21,7 @@ class Accomplishments extends React.Component {
       <div style={styles}>
         <span id="Awards"style={{ fontSize: "20px" }}>Awards</span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          {/* <OverviewModal /> */}
+          <AwardsModal/>
         </span>
         <hr />
         <br />
@@ -60,7 +64,7 @@ class Accomplishments extends React.Component {
           Certifications
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          {/* <ContactDetailsModal /> */}
+          <CertificationsModal/>
         </span>
         <hr />
         <br />
@@ -109,7 +113,7 @@ class Accomplishments extends React.Component {
           Competition Details
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          {/* <ContactDetailsModal /> */}
+          <CompetitionsModal/>
         </span>
         <hr />
         <br />
@@ -146,7 +150,7 @@ class Accomplishments extends React.Component {
           Confrence Details
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          {/* <ContactDetailsModal /> */}
+          <ConferencesModal/>
         </span>
         <hr />
         <br />
