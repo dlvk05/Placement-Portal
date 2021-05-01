@@ -3,21 +3,19 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "../../Utils/setAuthToken";
 import * as actionTypes from "./actionTypes";
 
+export const authErrorReset = () => {
+  return {
+    type: actionTypes.USER_AUTH_ERROR_RESET,
+  };
+};
 
-
-export const authErrorReset=()=>{
-  return{
-    type:actionTypes.USER_AUTH_ERROR_RESET,
-  }
-}
-
-export const authSuccess = (token, userId, isAdmin,profileId) => {
+export const authSuccess = (token, userId, isAdmin, profileId) => {
   return {
     type: actionTypes.USER_AUTH_SUCCESS,
     // idToken: token,
     userId: userId,
     isAdmin: isAdmin,
-    profileId:profileId,
+    profileId: profileId,
   };
 };
 
@@ -110,7 +108,75 @@ export const userLogin = (email, password) => {
           //set axios header
           setAuthToken(token);
 
-          dispatch(authSuccess(token, decoded.id, decoded.isAdmin,decoded.profileId));
+          dispatch(
+            authSuccess(token, decoded.id, decoded.isAdmin, decoded.profileId)
+          );
+
+          dispatch(checkAuthTimeout(decoded.expiresIn));
+        }
+      })
+      .catch((err) => {
+        console.log(err.response.data);
+        dispatch(authFail(err.response.data));
+      });
+  };
+};
+
+//des this action SignsUp the admin
+export const adminSignup = (userData) => {
+  return (dispatch) => {
+    let url = "/api/signupAdmin";
+    axios
+      .post(url, userData)
+      .then((response) => {
+        console.log(response);
+        dispatch(signupDone());
+      })
+      .catch((err) => {
+        dispatch(authFail(err.response.data));
+      });
+  };
+};
+
+//des this action logsIn the admin
+export const adminLogin = (email, password) => {
+  return (dispatch) => {
+    // dispatch(authStart());
+    const authData = {
+      email: email,
+      password: password,
+    };
+    let url = "/api/loginAdmin";
+    axios
+      .post(url, authData)
+      .then((response) => {
+        console.log("got response from /api.loginUser");
+        console.log(response);
+        if (!response.data.token) {
+          dispatch(authFail("error"));
+        } else {
+          const token = response.data.token;
+
+          // Decode token to get user data
+          const decoded = jwt_decode(token);
+          console.log(decoded);
+          //create expirationDate using the expires in payload
+          const expirationDate = new Date(
+            new Date().getTime() + decoded.expiresIn * 1000
+          );
+          console.log(expirationDate);
+
+          //store data in local storage
+          localStorage.setItem("token", token);
+          localStorage.setItem("expirationDate", expirationDate);
+          localStorage.setItem("userId", decoded.id);
+          localStorage.setItem("isAdmin", decoded.isAdmin);
+          localStorage.setItem("profileId", null);
+
+          //set axios header
+          setAuthToken(token);
+
+          dispatch(authSuccess(token, decoded.id, decoded.isAdmin, null));
 
           dispatch(checkAuthTimeout(decoded.expiresIn));
         }
@@ -134,10 +200,10 @@ export const authCheckState = () => {
       } else {
         const userId = localStorage.getItem("userId");
         const isAdmin = localStorage.getItem("isAdmin") == "true";
-        const profileId=localStorage.getItem("profileId");
+        const profileId = localStorage.getItem("profileId");
         //set axios header
         setAuthToken(token);
-        dispatch(authSuccess(token, userId, isAdmin,profileId));
+        dispatch(authSuccess(token, userId, isAdmin, profileId));
         dispatch(
           checkAuthTimeout(
             (expirationDate.getTime() - new Date().getTime()) / 1000
