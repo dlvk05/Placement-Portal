@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Form, Col, Row, InputGroup } from "react-bootstrap";
+import { Modal, Button, Form, Col} from "react-bootstrap";
 
 class ScholarshipsModal extends React.Component {
   state = {

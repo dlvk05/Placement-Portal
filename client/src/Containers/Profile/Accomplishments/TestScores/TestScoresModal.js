@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Form, Col, Row, InputGroup } from "react-bootstrap";
+import { Modal, Button, Form, Col} from "react-bootstrap";
 
 class TestScoresModal extends React.Component {
   state = {
