@@ -1,65 +1,105 @@
 import React from "react";
-import {Form, Button, Col} from 'react-bootstrap';
-import styles from './AdminSignup.module.css';
-
+import { Form, Button, Col } from "react-bootstrap";
+import styles from "./AdminSignup.module.css";
+import { connect } from "react-redux";
+import * as actions from "../../../Redux/actions/index";
 
 class AdminSignup extends React.Component {
-  state ={
-    firstName: {
-      type: "firstName",
-      value: "",
+  state = {
+    formData: {
+      firstName: {
+        type: "firstName",
+        value: "",
+      },
+      lastName: {
+        type: "lastName",
+        value: "",
+      },
+      email: {
+        type: "email",
+        value: "",
+      },
+      password: {
+        type: "password",
+        value: "",
+      },
+      employeeid: {
+        type: "employeeid",
+        value: "",
+      },
+      mobileno: {
+        type: "mobileno",
+        value: "",
+      },
+      department: {
+        type: "department",
+        value: "",
+      },
     },
-    lastName: {
-      type: "lastName",
-      value: "",
-    },
-    email: {
-      type: "email",
-      value: "",
-    },
-    password: {
-      type: "password",
-      value: "",
-    },
-    employeeid: {
-      type: "employeeid",
-      value: "",
-    },
-    mobileno: {
-      type: "mobileno",
-      value: "",
-    },
-    department: {
-      type: "department",
-      value: "",
+    loading: false,
+  };
+
+  componentDidUpdate() {
+    if (this.props.error) {
+      console.log("an error occurred : ");
+      console.log(this.props.error);
     }
   }
 
-  inputChangeHandler = (event, string) => {
-    const input = event.target.value;
-    const updatedState = {
-      ...this.state,
-      [string]: {
-        type: [string],
-        value: input,
-      },
+  inputChangeHandler = (event, inputIdentifier) => {
+    //des resetting error for new input
+    if (this.props.error) {
+      this.props.onErrorReset();
+    }
+
+    if (this.state.loading) {
+      this.setState({
+        ...this.state,
+        loading: false,
+      });
+    }
+
+    const updatedformData = {
+      ...this.state.formData,
     };
+
+    const updatedFormElement = { ...updatedformData[inputIdentifier] };
+
+    //des updating the value in the selected input element
+    updatedFormElement.value = event.target.value;
+    updatedformData[inputIdentifier] = updatedFormElement;
+
     this.setState({
-      ...updatedState,
+      formData: updatedformData,
     });
   };
 
-  onSubmitHandler = () =>{
-    console.log(this.state);    
-  }
+  onSubmitHandler = (event) => {
+    event.preventDefault(); //prevent page reload
 
+    const formData = {};
+    for (let formElementIdentifier in this.state.formData) {
+      formData[formElementIdentifier] = this.state.formData[
+        formElementIdentifier
+      ].value;
+    }
+
+    console.log(formData);
+    this.props.onAdminSignup(formData);
+    this.setState({
+      ...this.state,
+      loading: true,
+    });
+  };
 
   render() {
     return (
       <div className={styles.section3}>
         <div className={styles.section4}>
-        <strong><u>Admin Registration</u></strong>
-            <hr/>
+          <strong>
+            <u>Admin Registration</u>
+          </strong>
+          <hr />
           <Form>
             <Form.Row>
               <Form.Group as={Col} controlId="formGridFirstName">
@@ -167,8 +207,9 @@ class AdminSignup extends React.Component {
           </Form>
         </div>
         <div className={styles.dope}>
-          <h1 className={styles.h1}><u>MUJ</u>  <br/>
-            Inspired  <br/>  by  <br/>  Life.
+          <h1 className={styles.h1}>
+            <u>MUJ</u> <br />
+            Inspired <br /> by <br /> Life.
           </h1>
         </div>
       </div>
@@ -176,4 +217,18 @@ class AdminSignup extends React.Component {
   }
 }
 
-export default AdminSignup;
+const mapStateToProps = (state) => {
+  return {
+    signupDone: state.userAuth.signupDone,
+    error: state.userAuth.error,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAdminSignup: (userData) => dispatch(actions.adminSignup(userData)),
+    onErrorReset: () => dispatch(actions.authErrorReset()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminSignup);

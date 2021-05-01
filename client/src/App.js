@@ -36,7 +36,6 @@ class App extends React.Component {
       routes = (
         <UserLayout>
           <Switch>
-
             <Route path="/Profile" exact component={Profile} />
             <Route path="/Logout" exact component={Logout} />
           </Switch>
