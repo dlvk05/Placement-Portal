@@ -91,7 +91,7 @@ class Profile extends Component {
               <Accordion.Collapse eventKey="3">
                 <Card.Body>
                   <a href="#Awards">Awards</a> <br />
-                  <a href="#Certifications">Contact Details</a> <br />
+                  <a href="#Certifications">Certifications</a> <br />
                   <a href="#Competitions">Competitions</a> <br />
                   <a href="#Confrences">Confrences</a> <br />
                   <a href="#TestScores">TestScores</a> <br />
