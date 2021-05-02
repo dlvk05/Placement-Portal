@@ -93,6 +93,10 @@ class Login extends React.Component {
     return (
       <div className={styles.section1}>
         <div className={styles.section2}>
+        <div>
+                <h4>Student Login</h4>
+                <hr/>
+            </div>
           <Form>
             <Form.Group controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
@@ -124,13 +128,13 @@ class Login extends React.Component {
             </Button>
           </Form>
           <hr /> 
-          <Link to="/AdminSignup">
-          <Button variant="success" className="b1">
+          <Link to="/AdminLogin">
+          <Button variant="success" className={styles.b1}>
             Admin Login
           </Button>
           </Link>
           <Link to="/Signup">
-            <Button variant="info">Sign Up</Button>
+            <Button variant="info">Student Sign Up</Button>
           </Link>
           {spinner}
         </div>

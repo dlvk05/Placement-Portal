@@ -10,6 +10,7 @@ import AdminSignup from "./Containers/Authentication/AdminSignup/AdminSignup";
 import UserLayout from "./HOC/UserLayout/UserLayout";
 import Logout from "./Containers/Authentication/Logout/Logout";
 import Profile from "./Containers/Profile/Profile";
+import AdminLogin from "./Containers/Authentication/AdminLogin/AdminLogin";
 
 class App extends React.Component {
   componentDidMount() {
@@ -20,6 +21,7 @@ class App extends React.Component {
     let routes = (
       <Switch>
         <Route path="/Login" exact component={Login} />
+        <Route path="/AdminLogin" exact component={AdminLogin} />
         <Route path="/Signup" exact component={Signup} />
         <Route path="/AdminSignup" exact component={AdminSignup} />
         <Route path="/Profile" exact component={Profile} />
