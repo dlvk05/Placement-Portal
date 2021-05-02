@@ -24,7 +24,19 @@ class InternshipWorkExperience extends React.Component{
         <hr />
         <br />
         <br />
-        <div style={{display: "flex", justifyContent: "center"}}><p>There is currently no content to display</p></div>
+        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px"}}>
+          <span style={{fontSize: "19px"}}>Title</span><br/>
+          <span>Company Name</span> <br/>
+          <span>Location</span> <br/>
+          <span>Position</span> <br/>
+          <span>Duration (start date --- end date)</span>
+          <br/>
+          <br/>
+          <span>Description</span><br/>
+          <br/>
+          <hr/>
+          <span><i onClick={()=>{alert("waddup it works")}}class="fas fa-pen-square fa-lg"> Edit</i> | <i class="fas fa-trash-alt fa-lg"> Delete</i></span>
+        </div>
         </div>
     );
   }
