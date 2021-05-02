@@ -25,7 +25,7 @@ class Projects extends React.Component {
         <br />
         <br />
         <div
-          style={{ border: "groove 2px", borderRadius: "8px", padding: "10px", marginBottom:"10px" }}
+          style={{ border: "groove 2px", borderRadius: "8px", padding: "10px", marginBottom:"10px", background:"#F8F8FF" }}
         >
           <span style={{ fontSize: "19px" }}>Project Name</span>
           <br />
@@ -51,7 +51,7 @@ class Projects extends React.Component {
           </span>
         </div>
         <div
-          style={{ border: "groove 2px", borderRadius: "8px", padding: "10px", marginBottom:"10px" }}
+          style={{ border: "groove 2px", borderRadius: "8px", padding: "10px", marginBottom:"10px", background:"#F8F8FF" }}
         >
           <span style={{ fontSize: "19px" }}>Project Name</span>
           <br />

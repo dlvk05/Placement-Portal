@@ -25,7 +25,7 @@ class TechnicalSkills extends React.Component{
         <hr />
         <br />
         <br />
-        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px"}}>
+        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px", background:"#F8F8FF"}}>
           <span style={{fontSize: "19px"}}>Skill</span><br/>
           <span>Proficiency</span> <br/>
           <br/>
