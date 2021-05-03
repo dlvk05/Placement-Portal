@@ -1,7 +1,7 @@
 import React from "react";
 import ScholarshipsModal from "../../../../Containers/Profile/Accomplishments/Scholarships/ScholarshipsModal";
 
-const scholarshipsFeed = (scholarships) => {
+const scholarshipsFeed = ({scholarships}) => {
   let feed = scholarships.map((currentScholarship, i) => (
     <div
     key={i}

@@ -5,7 +5,7 @@ import CertificationsFeed from "../../../Components/ProfileComponents/Accomplish
 import CompetitionsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/CompetitionsFeed/CompetitionsFeed";
 import ConferencesFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/ConferencesFeed/ConferencesFeed";
 import PublicationsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/PublicationsFeed/PublicationsFeed";
-import scholarshipsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/ScholarshipsFeed/ScholarshipsFeed";
+import ScholarshipsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/ScholarshipsFeed/ScholarshipsFeed";
 import TestScoresFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/TestScoresFeed/TestScoresFeed";
 import AwardsModal from "./Awards/AwardsModal";
 import CertificationsModal from "./Certifications/CertificationsModal";
@@ -191,7 +191,7 @@ class Accomplishments extends React.Component {
         <hr />
         <br />
         <br />
-        {this.state.Accomplishments.Scholarships!==""? <scholarshipsFeed scholarships={this.state.Accomplishments.Scholarships} /> : "there is nothing to display"}
+        {this.state.Accomplishments.Scholarships!==""? <ScholarshipsFeed scholarships={this.state.Accomplishments.Scholarships} /> : "there is nothing to display"}
         <br />
       </div>
     );
