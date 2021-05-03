@@ -7,16 +7,27 @@ const fs = require("fs-extra");
 //multer config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    let profileId = req.profileId;
-    console.log(req.body);
-    let path = [
-      "../uploads",
-      req.body.folderName,
-      req.body.profileId,
-      req.body.header,
-      req.body.subHeader,
-    ].join("/");
-    // console.log(path);
+    let profileId = req.body.profileId;
+    let path = null;
+    // console.log(req.body);
+    if (req.body.subHeader != "null") {
+      path = [
+        "../uploads",
+        req.body.folderName,
+        req.body.profileId,
+        req.body.header,
+        req.body.subHeader,
+      ].join("/");
+    } else {
+      path = [
+        "../uploads",
+        req.body.folderName,
+        req.body.profileId,
+        req.body.header,
+      ].join("/");
+    }
+
+    console.log(path);
     fs.mkdirsSync(path);
     cb(null, path);
   },
@@ -47,7 +58,7 @@ router.get("/downloadFile", (req, res) => {
     req.body.subHeader,
     req.body.fileName,
   ].join("/");
-  res.download(path,err=>{
+  res.download(path, (err) => {
     console.log(err);
   });
 });
@@ -55,34 +66,37 @@ router.get("/downloadFile", (req, res) => {
 //Load Profile model
 const UserProfile = require("../models/profileModel");
 
-
 //get user profile
 router.get("/userProfile", (req, res) => {
-  UserProfile.findOne(req.profileId)
+  UserProfile.findById(req.body.profileId)
     .populate("userAccount")
     .then((profile) => {
       if (!profile) {
+        console.log('before');
         return res
           .status(404)
           .json({ Error: "profile not found in the database" });
       }
+      console.log('before');
       res.json({
         success: true,
         profile: profile,
       });
     });
+  console.log('after');
 });
 
 //update summary
 router.put("/updateUserProfile/summary", (req, res) => {
   let header = "Summary";
-  let data = req.body.formData.summary;
-  let updatedData = {
-    [header]: data,
-  };
+  let data = req.body.formData.Summary;
+
+  console.log("called for " + header);
 
   UserProfile.findById(req.body.profileId).then((foundProfile) => {
+    console.log(foundProfile);
     foundProfile[header] = data;
+    // foundProfile['Summary'] = data;
     foundProfile.save().then((updatedProfile) => {
       res.json({
         success: true,
@@ -99,15 +113,14 @@ router.put("/updateUserProfile/about", (req, res) => {
   let data = req.body.formData;
   let updatedData = null;
   let options = { new: true };
-  console.log(req.body);
+  // console.log(req.body);
 
-  console.log(subHeader);
-  console.log(data);
+  // console.log(subHeader);
+  // console.log(data);
 
-  
   UserProfile.findById(req.body.profileId).then((foundProfile) => {
-    console.log("called");
-    console.log(foundProfile);
+    console.log(" About called for " + subHeader);
+    // console.log(foundProfile);
     if (subHeader != null) {
       foundProfile[header][subHeader] = data;
     } else {
@@ -145,14 +158,15 @@ router.put("/updateUserProfile/education", (req, res) => {
 
 //update workExp
 
-
 router.put("/updateUserProfile/workExp", (req, res) => {
   let header = "WorkExp";
   let data = req.body.formData;
 
+  console.log("called for " + header);
+
   UserProfile.findById(req.body.profileId).then((foundProfile) => {
     // console.log("called");
-    console.log(foundProfile);
+    // console.log(foundProfile);
     foundProfile[header].push(data);
 
     foundProfile.save().then((updatedProfile) => {
@@ -166,14 +180,13 @@ router.put("/updateUserProfile/workExp", (req, res) => {
 
 //update TechnicalSkills
 
-
 router.put("/updateUserProfile/TechnicalSkills", (req, res) => {
   let header = "TechnicalSkills";
   let data = req.body.formData;
 
   UserProfile.findById(req.body.profileId).then((foundProfile) => {
     // console.log("called");
-    console.log(foundProfile);
+    // console.log(foundProfile);
     foundProfile[header].push(data);
 
     foundProfile.save().then((updatedProfile) => {
@@ -187,14 +200,13 @@ router.put("/updateUserProfile/TechnicalSkills", (req, res) => {
 
 //update PositionsOfResponsibility
 
-
 router.put("/updateUserProfile/PositionsOfResponsibility", (req, res) => {
   let header = "PositionsOfResponsibility";
   let data = req.body.formData;
 
   UserProfile.findById(req.body.profileId).then((foundProfile) => {
     // console.log("called");
-    console.log(foundProfile);
+    // console.log(foundProfile);
     foundProfile[header].push(data);
 
     foundProfile.save().then((updatedProfile) => {
@@ -207,7 +219,6 @@ router.put("/updateUserProfile/PositionsOfResponsibility", (req, res) => {
 });
 
 //update Projects
-
 
 router.put("/updateUserProfile/Projects", (req, res) => {
   let header = "Projects";
@@ -229,11 +240,12 @@ router.put("/updateUserProfile/Projects", (req, res) => {
 
 //update Accomplishments
 
-
 router.put("/updateUserProfile/Accomplishments", (req, res) => {
   let header = "Accomplishments";
   let subHeader = req.body.subHeader;
   let data = req.body.formData;
+
+  console.log(" Accomplishments called for " + subHeader);
 
   UserProfile.findById(req.body.profileId).then((foundProfile) => {
     // console.log("called");
@@ -250,7 +262,6 @@ router.put("/updateUserProfile/Accomplishments", (req, res) => {
 });
 
 //update Resumes
-
 
 router.put("/updateUserProfile/Resumes", (req, res) => {
   let header = "Resumes";

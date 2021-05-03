@@ -15,7 +15,7 @@ const profileSchema = new Schema({
     ContactDetails: {
       ContactNo: {
         value: {
-          type: Number,
+          type: String,
         },
         verified: {
           type: Boolean,
@@ -43,7 +43,7 @@ const profileSchema = new Schema({
     },
     Address: {
       CompleteAddress: String,
-      Pincode: Number,
+      Pincode: String,
       State: String,
       City: String,
     },
@@ -61,20 +61,18 @@ const profileSchema = new Schema({
       Department: String,
       Programme: String,
       RegNo: Number,
-      CurrentSemester: Number,
-      CGPAScore: Number,
-      PercentageScore: Number,
-      Duration: {
-        StartDate: String,
-        EndDate: String,
-      },
+      CurrentSemester: String,
+      CGPAScore: String,
+      PercentageScore: String,
+      StartDate: Date,
+      EndDate: Date,
       Performance: [
         {
-          SemNo: Number,
-          CGPA: Number,
-          SGPA: Number,
-          BacklogTotal: Number,
-          BacklogOngoing: Number,
+          SemNo: String,
+          CGPA: String,
+          SGPA: String,
+          BacklogTotal: String,
+          BacklogOngoing: String,
           MarksheetProvided: {
             type: Boolean,
             default: false,
@@ -89,12 +87,10 @@ const profileSchema = new Schema({
       Board: String,
       Branch: String,
       EducationType: String,
-      Score: Number,
+      Score: String,
       ScoreType: String,
-      Duration: {
-        StartDate: String,
-        EndDate: String,
-      },
+      StartDate: Date,
+      EndDate: Date,
       MarksheetProvided: {
         type: Boolean,
         default: false,
@@ -106,12 +102,10 @@ const profileSchema = new Schema({
       School: String,
       Board: String,
       EducationType: String,
-      Score: Number,
+      Score: String,
       ScoreType: String,
-      Duration: {
-        StartDate: String,
-        EndDate: String,
-      },
+      StartDate: Date,
+      EndDate: Date,
       MarksheetProvided: {
         type: Boolean,
         default: false,
@@ -129,11 +123,9 @@ const profileSchema = new Schema({
       PositionType: String,
       JobFunction: String,
       CompanySector: String,
-      Duration: {
-        StartDate: String,
-        EndDate: String,
-      },
-      MonthlySalary: Number,
+      StartDate: Date,
+      EndDate: Date,
+      MonthlySalary: String,
       Details: String,
     },
   ],
@@ -155,10 +147,8 @@ const profileSchema = new Schema({
     {
       Title: String,
       OrganizationName: String,
-      Duration: {
-        StartDate: String,
-        EndDate: String,
-      },
+      StartDate: Date,
+      EndDate: Date,
       Description: String,
     },
   ],
@@ -167,10 +157,8 @@ const profileSchema = new Schema({
     {
       Title: String,
       ProjectDomain: String,
-      Duration: {
-        StartDate: String,
-        EndDate: String,
-      },
+      StartDate: Date,
+      EndDate: Date,
       Description: String,
       DocumentProvided: {
         type: Boolean,
@@ -195,7 +183,7 @@ const profileSchema = new Schema({
         Issuer: String,
         CertificationURL: String,
         CertificationDate: Date,
-        LicenceNumber: Number,
+        LicenceNumber: String,
         Description: String,
       },
     ],
@@ -218,9 +206,9 @@ const profileSchema = new Schema({
     TestScores: [
       {
         Title: String,
-        ScoreObtained: Number,
-        MaximumPossibleScore: Number,
-        RankObtained: Number,
+        ScoreObtained: String,
+        MaximumPossibleScore: String,
+        RankObtained: String,
         ExamDate: Date,
         Description: String,
       },
@@ -242,10 +230,10 @@ const profileSchema = new Schema({
       },
     ],
   },
-  Resumes: {
+  Resumes: [{
     DocumentName: String,
     // FileLocation: String,
-  },
+  }],
 });
 
 UserProfile = mongoose.model("userProfiles", profileSchema);

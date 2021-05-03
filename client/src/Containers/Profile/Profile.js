@@ -12,6 +12,41 @@ import Accomplishments from "./Accomplishments/Accomplishments";
 import Resumes from "./Resumes/Resumes";
 
 class Profile extends Component {
+  state = {
+    userAccount: null,
+    Summary: null,
+    About: {
+      Overview: null,
+      ContactDetails: null,
+      Address: null,
+      AdditionalInfo: null,
+    },
+    //Education
+    Education: {
+      Current: null,
+      Class12th: null,
+      Class10th: null,
+    },
+    //Internships and Work Exp
+    WorkExp: null,
+    //Technical Skills
+    TechnicalSkills: null,
+    //Positions of Responsibility
+    PositionsOfResponsibility: null,
+    //Projects
+    Projects: null,
+    //Accomplishments
+    Accomplishments: {
+      Certifications: null,
+      Competitions: null,
+      Conferences: null,
+      TestScores: null,
+      Publications: null,
+      Scholarships: null,
+    },
+    Resumes: null,
+  };
+
   render() {
     return (
       <div className={styles.wrapper}>
@@ -106,7 +141,7 @@ class Profile extends Component {
           </Accordion>
         </div>
         <div className={styles.subdiv3}>
-          <PersonalSummary id="Summary" />
+          <PersonalSummary id="Summary" summary={this.state.Summary} />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
           <About id="About" />
@@ -115,22 +150,22 @@ class Profile extends Component {
           <Education />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <InternshipWorkExperience/>
+          <InternshipWorkExperience />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <TechnicalSkills/>
+          <TechnicalSkills />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <PositionsOfResponsibility/>
+          <PositionsOfResponsibility />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <Projects/>
+          <Projects />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <Accomplishments/>
+          <Accomplishments />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <Resumes/>
+          <Resumes />
         </div>
       </div>
     );

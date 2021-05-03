@@ -15,7 +15,7 @@ const adminAuth = require('./routes/adminAuth');
 
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true|false }));
 app.use(express.json());
 app.use(cors()); // this is so that react server can communicate with this server
 
