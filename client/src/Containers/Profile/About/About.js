@@ -3,6 +3,7 @@ import AddressModal from "./Address/AddressModal";
 import ContactDetailsModal from "./ContactDetails/ContactDetailsModal";
 import OverviewModal from "./Overview/OverviewModal";
 import { Row, Col } from "react-bootstrap";
+import AdditionalInformationModal from "./AdditionalInformation/AdditionalInformationModal";
 
 const styles = {
   border: "solid 1px",
@@ -183,6 +184,77 @@ class About extends React.Component {
         </Row>
         <hr />
         <br />
+        <br />
+        <br />
+        <br />
+        {/* ^^^ this is where AdditionalInformation starts */}
+        <span style={{ fontSize: "20px" }} id="Address">
+          Additional Information
+        </span>{" "}
+        <span style={{ float: "right", fontSize: "20px" }}>
+          <AdditionalInformationModal/>
+        </span>
+        <hr />
+        <br />
+        <br />
+        <Row>
+          <Col xs={2}>
+            <span>Student Whatsaap Number:</span>
+          </Col>
+          <Col>
+            <span >
+              "this is where the WhatsAap number is supposed to be"
+            </span>
+          </Col>
+        </Row>
+        <hr />
+        <br />
+        <Row>
+          <Col xs={2}>
+          <span>Father Name:</span>
+          </Col>
+          <Col>
+          <span>
+              "this is where the Father's Name is supposed to be"
+            </span>
+          </Col>
+        </Row>
+        <hr/>
+        <br/>
+        <Row>
+          <Col xs={2}>
+            <span>Father's Contact Number:</span>
+          </Col>
+          <Col>
+            <span >
+              "this is where the Father's Contact Number is supposed to be"
+            </span>
+          </Col>
+        </Row>
+        <hr />
+        <br />
+        <Row>
+          <Col xs={2}>
+            <span>Father's Occupation:</span>
+          </Col>
+          <Col>
+            <span >
+              "this is where the Father's Occupation is supposed to be"
+            </span>
+          </Col>
+        </Row>
+        <hr />
+        <br/>
+        <Row>
+          <Col xs={2}>
+            <span>Father's Email:</span>
+          </Col>
+          <Col>
+            <span >
+              "this is where the Father's Email is supposed to be"
+            </span>
+          </Col>
+        </Row>
       </div>
     );
   }

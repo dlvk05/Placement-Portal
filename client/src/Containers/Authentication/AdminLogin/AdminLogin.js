@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import styles from "./Login.module.css";
+import styles from "./AdminLogin.module.css";
 
 import * as actions from "../../../Redux/actions/index";
 class Login extends React.Component {
@@ -93,8 +93,8 @@ class Login extends React.Component {
     return (
       <div className={styles.section1}>
         <div className={styles.section2}>
-        <div>
-                <h4>Student Login</h4>
+            <div>
+                <h4>Admin Login</h4>
                 <hr/>
             </div>
           <Form>
@@ -123,18 +123,18 @@ class Login extends React.Component {
                 }
               />
             </Form.Group>
-            <Button variant="primary" onClick={this.onSubmitHandler}>
-              Login
-            </Button>
-          </Form>
-          <hr /> 
-          <Link to="/AdminLogin">
-          <Button variant="success" className={styles.b1}>
+            <Button variant="success" onClick={this.onSubmitHandler}>
             Admin Login
           </Button>
+          </Form>
+          <hr /> 
+          <Link to="/AdminSignup">
+          <Button variant="warning" className={styles.b1}>
+            Admin Signup
+          </Button>
           </Link>
-          <Link to="/Signup">
-            <Button variant="info">Student Sign Up</Button>
+          <Link to="/Login">
+            <Button variant="info">Student Login</Button>
           </Link>
           {spinner}
         </div>
