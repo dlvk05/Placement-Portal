@@ -1,5 +1,6 @@
 import React from "react";
-// import { Row, Col } from "react-bootstrap";
+
+//importing Feeds
 import AwardsFeeds from "../../../Components/ProfileComponents/AccomplishmentsFeeds/AwardsFeeds/AwardsFeeds";
 import CertificationsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/CertificationsFeed/CertificationsFeed";
 import CompetitionsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/CompetitionsFeed/CompetitionsFeed";
@@ -7,6 +8,8 @@ import ConferencesFeed from "../../../Components/ProfileComponents/Accomplishmen
 import PublicationsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/PublicationsFeed/PublicationsFeed";
 import ScholarshipsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/ScholarshipsFeed/ScholarshipsFeed";
 import TestScoresFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/TestScoresFeed/TestScoresFeed";
+
+//importin Modals
 import AwardsModal from "./Awards/AwardsModal";
 import CertificationsModal from "./Certifications/CertificationsModal";
 import CompetitionsModal from "./Competitions/CompetitionsModal";
@@ -26,7 +29,6 @@ const styles = {
 };
 
 class Accomplishments extends React.Component {
-
   state = {
     Accomplishments: {
       Awards: [
@@ -88,20 +90,22 @@ class Accomplishments extends React.Component {
           GrantDate: Date,
           Description: String,
         },
-      ]
-    }
-  }
+      ],
+    },
+  };
 
   render() {
     return (
       <div style={styles}>
-        <span id="Awards"style={{ fontSize: "20px" }}>Awards</span>{" "}
+        <span id="Awards" style={{ fontSize: "20px" }}>
+          Awards
+        </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <AwardsModal name="Add Awards Info"/>
+          <AwardsModal name="Add Awards Info" />
         </span>
         <hr />
         <br />
-        <AwardsFeeds awards={this.state.Accomplishments.Awards}/>
+        <AwardsFeeds awards={this.state.Accomplishments.Awards} />
         <br />
         <br />
         <br />
@@ -111,12 +115,18 @@ class Accomplishments extends React.Component {
           Certifications
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <CertificationsModal name="Add Certification Info"/>
+          <CertificationsModal name="Add Certification Info" />
         </span>
         <hr />
         <br />
         <br />
-        {this.state.Accomplishments.Certifications!==""?<CertificationsFeed certs={this.state.Accomplishments.Certifications}/> : "there is nothing to display"}
+        {this.state.Accomplishments.Certifications !== "" ? (
+          <CertificationsFeed
+            certs={this.state.Accomplishments.Certifications}
+          />
+        ) : (
+          "there is nothing to display"
+        )}
         <br />
         <br />
         <br />
@@ -126,12 +136,18 @@ class Accomplishments extends React.Component {
           Competition Details
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <CompetitionsModal name="Add Competitions Info"/>
+          <CompetitionsModal name="Add Competitions Info" />
         </span>
         <hr />
         <br />
         <br />
-        {this.state.Accomplishments.Competitions!==""?<CompetitionsFeed competitions={this.state.Accomplishments.Competitions}/> : "there is nothing to display"}
+        {this.state.Accomplishments.Competitions !== "" ? (
+          <CompetitionsFeed
+            competitions={this.state.Accomplishments.Competitions}
+          />
+        ) : (
+          "there is nothing to display"
+        )}
         <br />
         <br />
         <br />
@@ -141,12 +157,18 @@ class Accomplishments extends React.Component {
           Confrence Details
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <ConferencesModal name="Add Conferences Info"/>
+          <ConferencesModal name="Add Conferences Info" />
         </span>
         <hr />
         <br />
         <br />
-        {this.state.Accomplishments.Conferences!==""?<ConferencesFeed conferences={this.state.Accomplishments.Conferences} /> : "there is nothing to dispaly"}
+        {this.state.Accomplishments.Conferences !== "" ? (
+          <ConferencesFeed
+            conferences={this.state.Accomplishments.Conferences}
+          />
+        ) : (
+          "there is nothing to dispaly"
+        )}
         <br />
         <br />
         <br />
@@ -156,42 +178,56 @@ class Accomplishments extends React.Component {
           Test Scores
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <TestScoresModal name="Add Test Score Info"/>
+          <TestScoresModal name="Add Test Score Info" />
         </span>
         <hr />
         <br />
         <br />
-        {this.state.Accomplishments.TestScores!==""?<TestScoresFeed testscores={this.state.Accomplishments.TestScores}/> : "there is nothing to display"}
+        {this.state.Accomplishments.TestScores !== "" ? (
+          <TestScoresFeed testscores={this.state.Accomplishments.TestScores} />
+        ) : (
+          "there is nothing to display"
+        )}
         <br />
         <br />
         <br />
         <br />
         {/* ^^^ this is where Publications start */}
         <span style={{ fontSize: "20px" }} id="Publications">
-        Publications
+          Publications
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <PublicationsModal name="Add Publications Info"/>
+          <PublicationsModal name="Add Publications Info" />
         </span>
         <hr />
         <br />
         <br />
-        {this.state.Accomplishments.Publications!==""? <PublicationsFeed pubs={this.state.Accomplishments.Publications}/> : "there is nothing to display"}
+        {this.state.Accomplishments.Publications !== "" ? (
+          <PublicationsFeed pubs={this.state.Accomplishments.Publications} />
+        ) : (
+          "there is nothing to display"
+        )}
         <br />
         <br />
         <br />
         <br />
         {/* ^^^ this is where Scholarships start */}
         <span style={{ fontSize: "20px" }} id="Scholarships">
-            Scholarships
+          Scholarships
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <ScholarshipsModal name="Add Scholarship Info"/>
+          <ScholarshipsModal name="Add Scholarship Info" />
         </span>
         <hr />
         <br />
         <br />
-        {this.state.Accomplishments.Scholarships!==""? <ScholarshipsFeed scholarships={this.state.Accomplishments.Scholarships} /> : "there is nothing to display"}
+        {this.state.Accomplishments.Scholarships !== "" ? (
+          <ScholarshipsFeed
+            scholarships={this.state.Accomplishments.Scholarships}
+          />
+        ) : (
+          "there is nothing to display"
+        )}
         <br />
       </div>
     );
