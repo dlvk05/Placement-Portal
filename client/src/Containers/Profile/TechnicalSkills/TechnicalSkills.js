@@ -1,4 +1,5 @@
 import React from "react";
+import TechnicalSkillsFeed from "../../../Components/ProfileComponents/TechnicalSkillsFeed/TechnicalSkillsFeed";
 import AddTechnicalSkillsModal from "./AddTechnicalSkillsModal/AddTechnicalSkillsModal";
 // import { Row, Col } from "react-bootstrap";
 // import AddWorkExperienceModal from "./AddWorkExperience/AddWorkExperienceModal";
@@ -14,24 +15,32 @@ const styles = {
 };
 
 class TechnicalSkills extends React.Component{
+  state={
+    TechnicalSkills: [
+      {
+        Skill: "React",
+        Proficiency: "Advanced",
+        DocumentProvided: {
+          type: Boolean,
+          default: false,
+        },
+        FileName: String,
+        // FileLocation: String,
+      },
+    ]
+  }
 
   render(){
     return(
         <div style={styles}>
         <span id="TechnicalSkills"style={{ fontSize: "20px" }}>Technical Skills</span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-            <AddTechnicalSkillsModal/>
+            <AddTechnicalSkillsModal name="Add Skills"/>
         </span>
         <hr />
         <br />
         <br />
-        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px", background:"#F8F8FF"}}>
-          <span style={{fontSize: "19px"}}>Skill</span><br/>
-          <span>Proficiency</span> <br/>
-          <br/>
-          <hr/>
-          <span><i onClick={()=>{alert("waddup it works")}}class="fas fa-pen-square fa-lg"> Edit</i> | <i class="fas fa-trash-alt fa-lg"> Delete</i></span>
-        </div>
+        {this.state.TechnicalSkills!==""?<TechnicalSkillsFeed technicalSkills={this.state.TechnicalSkills}/>:"there are no skills to display"}
         </div>
     );
   }

@@ -1,4 +1,5 @@
 import React from "react";
+import InternshipWorkExperienceFeed from "../../../Components/ProfileComponents/InternshipWorkExperienceFeed/InternshipWorkExperienceFeed";
 // import { Row, Col } from "react-bootstrap";
 import AddWorkExperienceModal from "./AddWorkExperience/AddWorkExperienceModal";
 
@@ -13,7 +14,22 @@ const styles = {
 };
 
 class InternshipWorkExperience extends React.Component{
-
+  state={
+    WorkExp: [
+      {
+        Company: String,
+        JobTitle: String,
+        Location: String,
+        PositionType: String,
+        JobFunction: String,
+        CompanySector: String,
+        StartDate: Date,
+        EndDate: Date,
+        MonthlySalary: String,
+        Details: String,
+      },
+    ]
+  }
   render(){
     return(
         <div style={styles}>
@@ -24,19 +40,7 @@ class InternshipWorkExperience extends React.Component{
         <hr />
         <br />
         <br />
-        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px", background:"#F8F8FF"}}>
-          <span style={{fontSize: "19px"}}>Title</span><br/>
-          <span>Company Name</span> <br/>
-          <span>Location</span> <br/>
-          <span>Position</span> <br/>
-          <span>Duration (start date --- end date)</span>
-          <br/>
-          <br/>
-          <span>Description</span><br/>
-          <br/>
-          <hr/>
-          <span><i onClick={()=>{alert("waddup it works")}}class="fas fa-pen-square fa-lg"> Edit</i> | <i class="fas fa-trash-alt fa-lg"> Delete</i></span>
-        </div>
+        {this.state.WorkExp!=={}?<InternshipWorkExperienceFeed workfeed={this.state.WorkExp}/> : "there is no content to display"}
         </div>
     );
   }

@@ -98,7 +98,7 @@ class AwardsModal extends React.Component {
     return (
       <div>
         <a href="#empty" onClick={this.handleShow}>
-          <i class="fas fa-plus"> Add Awards Info</i>
+          <i class="fas fa-plus"> {this.props.name}</i>
         </a>
 
         <Modal show={this.state.show} onHide={this.handleShow}>

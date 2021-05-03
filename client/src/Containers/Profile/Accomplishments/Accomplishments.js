@@ -1,5 +1,7 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
+import AwardsFeeds from "../../../Components/ProfileComponents/AccomplishmentsFeeds/AwardsFeeds/AwardsFeeds";
+import CertificationsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/CertificationsFeed/CertificationsFeed";
 import AwardsModal from "./Awards/AwardsModal";
 import CertificationsModal from "./Certifications/CertificationsModal";
 import CompetitionsModal from "./Competitions/CompetitionsModal";
@@ -19,27 +21,82 @@ const styles = {
 };
 
 class Accomplishments extends React.Component {
+
+  state = {
+    Accomplishments: {
+      Awards: [
+        {
+          Title: String,
+          Issuer: String,
+          IssueDate: Date,
+          Description: String,
+        },
+      ],
+      Certifications: [
+        {
+          Title: String,
+          Issuer: String,
+          CertificationURL: String,
+          CertificationDate: Date,
+          LicenceNumber: String,
+          Description: String,
+        },
+      ],
+      Competitions: [
+        {
+          Title: String,
+          Position: String,
+          CompetitionDate: Date,
+          Description: String,
+        },
+      ],
+      Conferences: [
+        {
+          Title: String,
+          Organizer: String,
+          EventDate: Date,
+          Description: String,
+        },
+      ],
+      TestScores: [
+        {
+          Title: String,
+          ScoreObtained: String,
+          MaximumPossibleScore: String,
+          RankObtained: String,
+          ExamDate: Date,
+          Description: String,
+        },
+      ],
+      Publications: [
+        {
+          Title: String,
+          Publisher: String,
+          PublicationDate: Date,
+          PublicationURL: String,
+          Description: String,
+        },
+      ],
+      Scholarships: [
+        {
+          Title: String,
+          GrantDate: Date,
+          Description: String,
+        },
+      ]
+    }
+  }
+
   render() {
     return (
       <div style={styles}>
         <span id="Awards"style={{ fontSize: "20px" }}>Awards</span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <AwardsModal/>
+          <AwardsModal name="Add Awards Info"/>
         </span>
         <hr />
         <br />
-
-        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px", background:"#F8F8FF"}}>
-          <span style={{fontSize: "19px"}}>Title</span><br/>
-          <span>Issuer</span> <br/>
-          <span>Issue Date</span>
-          <br/>
-          <br/>
-          <span>Description</span><br/>
-          <br/>
-          <hr/>
-          <span><i onClick={()=>{alert("waddup it works")}}class="fas fa-pen-square fa-lg"> Edit</i> | <i class="fas fa-trash-alt fa-lg"> Delete</i></span>
-        </div>
+        <AwardsFeeds awards={this.state.Accomplishments.Awards}/>
         <br />
         <br />
         <br />
@@ -49,22 +106,12 @@ class Accomplishments extends React.Component {
           Certifications
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <CertificationsModal/>
+          <CertificationsModal name="Add Certification Info"/>
         </span>
         <hr />
         <br />
         <br />
-        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px", background:"#F8F8FF"}}>
-          <span style={{fontSize: "19px"}}>Title</span><br/>
-          <span>Issuer</span> <br/>
-          <span>Certification Date</span>
-          <br/>
-          <br/>
-          <span>Description</span><br/>
-          <br/>
-          <hr/>
-          <span><i onClick={()=>{alert("waddup it works")}}class="fas fa-pen-square fa-lg"> Edit</i> | <i class="fas fa-trash-alt fa-lg"> Delete</i></span>
-        </div>
+        {this.state.Accomplishments.Certifications!==""?<CertificationsFeed certs={this.state.Accomplishments.Certifications}/> : "there is nothing to display"}
         <br />
         <br />
         <br />

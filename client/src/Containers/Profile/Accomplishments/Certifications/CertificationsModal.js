@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Form, Col, Row, InputGroup } from "react-bootstrap";
+import { Modal, Button, Form, Col} from "react-bootstrap";
 import axios from "axios";
 import { connect } from "react-redux";
 class CertificationsModal extends React.Component {
@@ -104,7 +104,7 @@ class CertificationsModal extends React.Component {
     return (
       <div>
         <a href="#empty" onClick={this.handleShow}>
-          <i class="fas fa-plus"> Add Certification Info</i>
+          <i class="fas fa-plus">{this.props.name} </i>
         </a>
 
         <Modal show={this.state.show} onHide={this.handleShow}>
