@@ -1,7 +1,12 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+// import { Row, Col } from "react-bootstrap";
 import AwardsFeeds from "../../../Components/ProfileComponents/AccomplishmentsFeeds/AwardsFeeds/AwardsFeeds";
 import CertificationsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/CertificationsFeed/CertificationsFeed";
+import CompetitionsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/CompetitionsFeed/CompetitionsFeed";
+import ConferencesFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/ConferencesFeed/ConferencesFeed";
+import PublicationsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/PublicationsFeed/PublicationsFeed";
+import scholarshipsFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/ScholarshipsFeed/ScholarshipsFeed";
+import TestScoresFeed from "../../../Components/ProfileComponents/AccomplishmentsFeeds/TestScoresFeed/TestScoresFeed";
 import AwardsModal from "./Awards/AwardsModal";
 import CertificationsModal from "./Certifications/CertificationsModal";
 import CompetitionsModal from "./Competitions/CompetitionsModal";
@@ -121,22 +126,12 @@ class Accomplishments extends React.Component {
           Competition Details
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <CompetitionsModal/>
+          <CompetitionsModal name="Add Competitions Info"/>
         </span>
         <hr />
         <br />
         <br />
-        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px", background:"#F8F8FF"}}>
-          <span style={{fontSize: "19px"}}>Title</span><br/>
-          <span>Position</span> <br/>
-          <span>Competition Date</span>
-          <br/>
-          <br/>
-          <span>Description</span><br/>
-          <br/>
-          <hr/>
-          <span><i onClick={()=>{alert("waddup it works")}}class="fas fa-pen-square fa-lg"> Edit</i> | <i class="fas fa-trash-alt fa-lg"> Delete</i></span>
-        </div>
+        {this.state.Accomplishments.Competitions!==""?<CompetitionsFeed competitions={this.state.Accomplishments.Competitions}/> : "there is nothing to display"}
         <br />
         <br />
         <br />
@@ -146,22 +141,12 @@ class Accomplishments extends React.Component {
           Confrence Details
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <ConferencesModal/>
+          <ConferencesModal name="Add Conferences Info"/>
         </span>
         <hr />
         <br />
         <br />
-        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px", background:"#F8F8FF"}}>
-          <span style={{fontSize: "19px"}}>Title</span><br/>
-          <span>Organizer</span> <br/>
-          <span>Event Date</span>
-          <br/>
-          <br/>
-          <span>Description</span><br/>
-          <br/>
-          <hr/>
-          <span><i onClick={()=>{alert("waddup it works")}}class="fas fa-pen-square fa-lg"> Edit</i> | <i class="fas fa-trash-alt fa-lg"> Delete</i></span>
-        </div>
+        {this.state.Accomplishments.Conferences!==""?<ConferencesFeed conferences={this.state.Accomplishments.Conferences} /> : "there is nothing to dispaly"}
         <br />
         <br />
         <br />
@@ -171,29 +156,12 @@ class Accomplishments extends React.Component {
           Test Scores
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <TestScoresModal/>
+          <TestScoresModal name="Add Test Score Info"/>
         </span>
         <hr />
         <br />
         <br />
-        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px", background:"#F8F8FF"}}>
-          <Row>
-            <Col>
-          <span style={{fontSize: "19px"}}>Title</span><br/>
-            </Col>
-            <Col>
-          <span style={{fontSize: "19px"}}>Score Obtained</span><br/>
-            </Col>
-            </Row>
-          <span>Rank Obtained</span> <br/>
-          <span>Exam Date</span>
-          <br/>
-          <br/>
-          <span>Description</span><br/>
-          <br/>
-          <hr/>
-          <span><i onClick={()=>{alert("waddup it works")}}class="fas fa-pen-square fa-lg"> Edit</i> | <i class="fas fa-trash-alt fa-lg"> Delete</i></span>
-        </div>
+        {this.state.Accomplishments.TestScores!==""?<TestScoresFeed testscores={this.state.Accomplishments.TestScores}/> : "there is nothing to display"}
         <br />
         <br />
         <br />
@@ -203,22 +171,12 @@ class Accomplishments extends React.Component {
         Publications
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <PublicationsModal/>
+          <PublicationsModal name="Add Publications Info"/>
         </span>
         <hr />
         <br />
         <br />
-        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px", background:"#F8F8FF"}}>
-          <span style={{fontSize: "19px"}}>Title</span><br/>
-          <span>Publisher</span> <br/>
-          <span>Publication Date</span>
-          <br/>
-          <br/>
-          <span>Description</span><br/>
-          <br/>
-          <hr/>
-          <span><i onClick={()=>{alert("waddup it works")}}class="fas fa-pen-square fa-lg"> Edit</i> | <i class="fas fa-trash-alt fa-lg"> Delete</i></span>
-        </div>
+        {this.state.Accomplishments.Publications!==""? <PublicationsFeed pubs={this.state.Accomplishments.Publications}/> : "there is nothing to display"}
         <br />
         <br />
         <br />
@@ -228,21 +186,12 @@ class Accomplishments extends React.Component {
             Scholarships
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <ScholarshipsModal/>
+          <ScholarshipsModal name="Add Scholarship Info"/>
         </span>
         <hr />
         <br />
         <br />
-        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px", background:"#F8F8FF"}}>
-          <span style={{fontSize: "19px"}}>Title</span><br/>
-          <span>Grant Date</span>
-          <br/>
-          <br/>
-          <span>Description</span><br/>
-          <br/>
-          <hr/>
-          <span><i onClick={()=>{alert("waddup it works")}}class="fas fa-pen-square fa-lg"> Edit</i> | <i class="fas fa-trash-alt fa-lg"> Delete</i></span>
-        </div>
+        {this.state.Accomplishments.Scholarships!==""? <scholarshipsFeed scholarships={this.state.Accomplishments.Scholarships} /> : "there is nothing to display"}
         <br />
       </div>
     );

@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Form, Col, Row, InputGroup } from "react-bootstrap";
+import { Modal, Button, Form, Col} from "react-bootstrap";
 
 class PublicationsModal extends React.Component {
   state = {
@@ -20,12 +20,12 @@ class PublicationsModal extends React.Component {
     return (
       <div>
         <a href="#empty" onClick={this.handleShow}>
-          <i class="fas fa-plus"> Add Test Score Info</i>
+          <i class="fas fa-plus"> {this.props.name}</i>
         </a>
 
         <Modal show={this.state.show} onHide={this.handleShow}>
           <Modal.Header closeButton>
-            <Modal.Title>Add Test Score Info</Modal.Title>
+            <Modal.Title>Add Publication Info</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
