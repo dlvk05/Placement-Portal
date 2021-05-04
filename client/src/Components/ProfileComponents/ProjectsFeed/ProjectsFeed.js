@@ -1,13 +1,14 @@
 import React from "react";
-import AddProjectsModal from "../../../Containers/Profile/Projects/AddProjects/AddProjectsModal";
+// import AddProjectsModal from "../../../Containers/Profile/Projects/AddProjects/AddProjectsModal";
 
-const projectsFeed = ({ projects }) => {
+const projectsFeed = (props) => {
   // let editIndividalProjectModal = "Edit";
   // var x = document.getElementById("AddProjectsModal").handleShow()
   // console.log(rootElement.getElementsByClassName(AddProjectsModal));
   // var ele = React.renderComponet(AddProjectsModal);
-
-  var feed = projects.map((currentProject, i) => (
+let feed = "no data to display"
+if(props.projects!=null){
+  feed = props.projects.map((currentProject, i) => (
     <div
       key={i}
       style={{
@@ -32,11 +33,17 @@ const projectsFeed = ({ projects }) => {
       <br />
       <hr />
       <span>
-        <AddProjectsModal style={{ size: "10px" }} name="edit" /> |{" "}
+      <i
+            class="fas fa-pen-square fa-lg"
+          >
+            {" "}
+            Edit
+          </i>{" "}
         <i className="fas fa-trash-alt fa-lg"> Delete</i>
       </span>
     </div>
   ));
+}
   return feed;
 };
 

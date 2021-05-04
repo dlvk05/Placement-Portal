@@ -16,37 +16,6 @@ const styles = {
 
 
 class Projects extends React.Component {
-  state={
-    projects: [
-     {
-       Title: "lol",
-       ProjectDomain: "Machine Learning",
-       StartDate: "20-5-2021",
-       EndDate: "30-5-2021",
-       Description: "pee pee poo poo ",
-       DocumentProvided: {
-         type: Boolean,
-         default: false,
-       },
-       FileName: String,
-       // FileLocation: String,
-     },
-     {
-       Title: "project 2",
-       ProjectDomain: "Web Dev",
-       StartDate: "20-12-2021",
-       EndDate: "30-12-2021",
-       Description: "this is supposed to be a long ass description",
-       DocumentProvided: {
-         type: Boolean,
-         default: false,
-       },
-       FileName: String,
-       // FileLocation: String,
-     }
-   ]
-  }
-  
   render() {
     return (
       <div style={styles}>
@@ -54,12 +23,12 @@ class Projects extends React.Component {
           Past Projects
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <AddProjectsModal name="Add New Project"/>
+          <AddProjectsModal name="Add New Project" forceReload={this.props.forceReload}/>
         </span>
         <hr />
         <br />
         <br />        
-        <ProjectsFeed projects={this.state.projects}/>
+        {this.props.data!=null?<ProjectsFeed projects={this.props.data}/>:"no data to display"}
       </div>
     );
   }

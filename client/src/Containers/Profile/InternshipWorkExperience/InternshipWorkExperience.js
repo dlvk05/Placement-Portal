@@ -15,33 +15,17 @@ const styles = {
 };
 
 class InternshipWorkExperience extends React.Component{
-  state={
-    WorkExp: [
-      {
-        Company: String,
-        JobTitle: String,
-        Location: String,
-        PositionType: String,
-        JobFunction: String,
-        CompanySector: String,
-        StartDate: Date,
-        EndDate: Date,
-        MonthlySalary: String,
-        Details: String,
-      },
-    ]
-  }
   render(){
     return(
         <div style={styles}>
         <span id="InternshipWorkExp"style={{ fontSize: "20px" }}>Internships & Work Experience</span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <AddWorkExperienceModal/>
+          <AddWorkExperienceModal forceReload={this.props.forceReload}/>
         </span>
         <hr />
         <br />
         <br />
-        {this.state.WorkExp!=={}?<InternshipWorkExperienceFeed workfeed={this.state.WorkExp}/> : "there is no content to display"}
+        {this.props.data!=={}?<InternshipWorkExperienceFeed workfeed={this.props.data}/> : "there is no content to display"}
         </div>
     );
   }
