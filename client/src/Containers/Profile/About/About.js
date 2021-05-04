@@ -49,7 +49,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-            {this.props.data.Overview!=null?this.props.data.Overview.DateOfBirth:"No data "}
+            {this.props.data.Overview!=null?this.props.data.Overview.DateOfBirth.slice(0,10):"No data "}
             </span>
           </Col>
         </Row>
@@ -87,7 +87,7 @@ class About extends React.Component {
           Contact Details
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <ContactDetailsModal />
+          <ContactDetailsModal data={this.props.data.ContactDetails} forceReload={this.props.forceReload}/>
         </span>
         <hr />
         <br />
@@ -98,7 +98,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the Contact Number is supposed to be"
+              {this.props.data.ContactDetails!=null?this.props.data.ContactDetails.ContactNo.value:"No data "}
             </span>
           </Col>
         </Row>
@@ -110,7 +110,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the email is supposed to be"
+              {this.props.data.ContactDetails!=null?this.props.data.ContactDetails.Email.value:"No data "}
             </span>
           </Col>
         </Row>
@@ -122,7 +122,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the Personal Email is supposed to be"
+              {this.props.data.ContactDetails!=null?this.props.data.ContactDetails.PersonalEmail.value:"No data "}
             </span>
           </Col>
         </Row>
@@ -136,7 +136,7 @@ class About extends React.Component {
           Address
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <AddressModal />
+          <AddressModal data={this.props.data.Address} forceReload={this.props.forceReload}/>
         </span>
         <hr />
         <br />
@@ -147,7 +147,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the Address is supposed to be"
+              {this.props.data.Address!=null?this.props.data.Address.CompleteAddress: "No data"}
             </span>
           </Col>
         </Row>
@@ -159,7 +159,7 @@ class About extends React.Component {
           </Col>
           <Col>
           <span>
-              "this is where the Pincode is supposed to be"
+              {this.props.data.Address!=null?this.props.data.Address.Pincode: "No data"}
             </span>
           </Col>
         </Row>
@@ -171,7 +171,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the State is supposed to be"
+              {this.props.data.Address!=null?this.props.data.Address.State: "No data"}
             </span>
           </Col>
         </Row>
@@ -183,7 +183,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the City is supposed to be"
+              {this.props.data.Address!=null?this.props.data.Address.City: "No data"}
             </span>
           </Col>
         </Row>
@@ -197,7 +197,7 @@ class About extends React.Component {
           Additional Information
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <AdditionalInformationModal/>
+          <AdditionalInformationModal data={this.props.data.AdditionalInfo} forceReload={this.props.forceReload}/>
         </span>
         <hr />
         <br />
@@ -208,7 +208,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the WhatsAap number is supposed to be"
+              {this.props.data.AdditionalInfo!=null?this.props.data.AdditionalInfo.StudentWhatsappNo:"no data"}
             </span>
           </Col>
         </Row>
@@ -220,7 +220,7 @@ class About extends React.Component {
           </Col>
           <Col>
           <span>
-              "this is where the Father's Name is supposed to be"
+              {this.props.data.AdditionalInfo!=null?this.props.data.AdditionalInfo.FatherName:"no data"}
             </span>
           </Col>
         </Row>
@@ -232,7 +232,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the Father's Contact Number is supposed to be"
+              {this.props.data.AdditionalInfo!=null?this.props.data.AdditionalInfo.FatherContactNo:"no data"}
             </span>
           </Col>
         </Row>
@@ -244,7 +244,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the Father's Occupation is supposed to be"
+              {this.props.data.AdditionalInfo!=null?this.props.data.AdditionalInfo.FatherOccupation:"no data"}
             </span>
           </Col>
         </Row>
@@ -256,7 +256,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the Father's Email is supposed to be"
+              {this.props.data.AdditionalInfo!=null?this.props.data.AdditionalInfo.FatherEmail:"no data"}
             </span>
           </Col>
         </Row>

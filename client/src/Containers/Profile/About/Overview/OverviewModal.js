@@ -145,7 +145,7 @@ class OverviewModal extends React.Component {
                   <Form.Control
                     type="date"
                     placeholder="Enter DOB"
-                    value={this.state.formData.Name.value}
+                    value={this.state.formData.DateOfBirth.value}
                     required
                     onChange={(event, string) => {
                       this.inputChangeHandler(event, "DateOfBirth");
@@ -154,35 +154,40 @@ class OverviewModal extends React.Component {
                 </Form.Group>
               </Form.Row>
 
-              <Form.Row>
-                <Form.Group as={Col} controlId="formGridGender">
-                  <Form.Label>Gender</Form.Label>
-                  <Form.Control
-                    type="Gender"
-                    placeholder="Enter Gender"
-                    required
-                    value={this.state.formData.Gender.value}
-                    onChange={(event, string) => {
-                      this.inputChangeHandler(event, "Gender");
-                    }}
-                  />
-                </Form.Group>
-              </Form.Row>
+              <Form.Group controlId="exampleForm.SelectCustom">
+              <Form.Label>Gender</Form.Label>
+              <Form.Control
+                as="select"
+                custom
+                // value={this.state.formData.Gender.value}
+                onChange={(event, string) => {
+                  this.inputChangeHandler(event, "Gender");
+                  console.log("drop down is being read");
+                }}
+              >
+                <option eventkey="NULL" selected disabled hidden>Please select an option</option>
+                <option eventkey="Male">Male</option>
+                <option eventkey="Female">Female</option>
+                <option eventkey="Non-Binary">Non-Binary</option>
+              </Form.Control>
+            </Form.Group>
 
-              <Form.Row>
-                <Form.Group as={Col} controlId="formGridCategory">
-                  <Form.Label>Category</Form.Label>
-                  <Form.Control
-                    type="Category"
-                    placeholder="Enter Category"
-                    required
-                    value={this.state.formData.Category.value}
-                    onChange={(event, string) => {
-                      this.inputChangeHandler(event, "Category");
-                    }}
-                  />
-                </Form.Group>
-              </Form.Row>
+            <Form.Group controlId="exampleForm.SelectCustom">
+              <Form.Label>Categroy</Form.Label>
+              <Form.Control
+                as="select"
+                custom
+                onChange={(event, string) => {
+                  this.inputChangeHandler(event, "Category");
+                  console.log("drop down is being read");
+                }}
+              >
+                <option value="" selected disabled hidden>Please select an option</option>
+                <option eventkey="6"  >General</option>
+                <option eventkey="7">SC/St</option>
+                <option eventkey="8">OBC</option>
+              </Form.Control>
+            </Form.Group>
             </Form>
           </Modal.Body>
           <Modal.Footer>{Loading}</Modal.Footer>

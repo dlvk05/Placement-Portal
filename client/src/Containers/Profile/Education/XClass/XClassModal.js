@@ -240,7 +240,7 @@ class XClassModal extends React.Component {
               <Form.Group as={Col}>
                 <Form.Row>
                   <Form.File
-                    label="Upload XII Marksheet"
+                    label="Upload X Marksheet"
                     onChange={this.onFileChange}
                   />
                 </Form.Row>
