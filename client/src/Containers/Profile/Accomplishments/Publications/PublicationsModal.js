@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Form, Col, Row, InputGroup } from "react-bootstrap";
+import { Modal, Button, Form, Col} from "react-bootstrap";
 import axios from "axios";
 import { connect } from "react-redux";
 class PublicationsModal extends React.Component {
@@ -87,6 +87,7 @@ class PublicationsModal extends React.Component {
           loading: false,
           // show: !this.state.show,
         });
+        this.props.forceReload();
       });
   };
 
@@ -140,9 +141,9 @@ class PublicationsModal extends React.Component {
 
               <Form.Group as={Col}>
                 <Form.Row>
-                  <Form.Label column="sm">Publication Date</Form.Label>
+                  <Form.Label column="sm">Date of Publication</Form.Label>
                   <Form.Control
-                    type="PublicaionDate"
+                    type="Date"
                     placeholder="Publication Date"
                     required
                     size="sm"

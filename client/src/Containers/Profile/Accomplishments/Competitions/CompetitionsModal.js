@@ -75,6 +75,7 @@ class CompetitionsModal extends React.Component {
           loading: false,
           show: !this.state.show,
         });
+        this.props.forceReload();
       })
       .catch((err) => {
         console.log(err);

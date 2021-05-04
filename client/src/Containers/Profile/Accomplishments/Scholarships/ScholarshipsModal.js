@@ -71,6 +71,7 @@ class ScholarshipsModal extends React.Component {
           loading: false,
           show: !this.state.show,
         });
+        this.props.forceReload();
       })
       .catch((err) => {
         console.log(err);
@@ -120,7 +121,7 @@ class ScholarshipsModal extends React.Component {
                 <Form.Row>
                   <Form.Label column="sm">Grant Date</Form.Label>
                   <Form.Control
-                    type="GrantDate"
+                    type="date"
                     placeholder="Grant Date"
                     required
                     size="sm"
