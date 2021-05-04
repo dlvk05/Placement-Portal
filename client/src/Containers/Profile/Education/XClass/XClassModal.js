@@ -161,20 +161,26 @@ class XClassModal extends React.Component {
           </Modal.Header>
           <Modal.Body>
             <Form>
-              <Form.Group as={Col} controlId="formGridEducationType">
-                <Form.Row>
-                  <Form.Label column="sm">Education Type</Form.Label>
-                  <Form.Control
-                    type="educationType"
-                    placeholder="Enter Education Type"
-                    required
-                    size="sm"
-                    onChange={(event, string) => {
-                      this.inputChangeHandler(event, "EducationType");
-                    }}
-                  />
-                </Form.Row>
-              </Form.Group>
+            <Form.Group as={Col} controlId="exampleForm.SelectCustom">
+              <Form.Row>
+                <Form.Label column="sm">Education Type</Form.Label>
+                <Form.Control
+                  as="select"
+                  custom
+                  size="sm"
+                  onChange={(event, string) => {
+                    this.inputChangeHandler(event, "EducationType");
+                    console.log("drop down is being read");
+                  }}
+                >
+                  <option eventkey="none" selected disabled hidden>Please Select an Option</option>
+                  <option eventkey="6">Home Schooled</option>
+                  <option eventkey="7">Full Time Student</option>
+                  <option eventkey="8">Distance Learning</option>
+                  <option eventkey="9">Lateral Entry</option>
+                </Form.Control>
+              </Form.Row>
+            </Form.Group>
               <Form.Group as={Col} controlId="formGridSchoolName">
                 <Form.Row>
                   <Form.Label column="sm">School Name</Form.Label>
@@ -216,6 +222,7 @@ class XClassModal extends React.Component {
                       this.inputChangeHandler(event, "ScoreType");
                     }}
                   >
+                    <option eventkey="none" selected disabled hidden>Please Select an Option</option>
                     <option eventkey="CGPA">CGPA</option>
                     <option eventkey="Percentage">Percentage</option>
                   </Form.Control>
