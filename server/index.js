@@ -3,7 +3,8 @@ const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const cors = require("cors");
-
+const dotenv = require('dotenv');
+dotenv.config();//reads the .env file and imports the values
 
 //importing utilities
 const checkAdmin=require('./utills/checkAdmin');

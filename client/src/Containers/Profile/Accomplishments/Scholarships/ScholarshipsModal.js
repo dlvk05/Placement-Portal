@@ -1,13 +1,85 @@
 import React from "react";
-import { Modal, Button, Form, Col} from "react-bootstrap";
-
+import { Modal, Button, Form, Col } from "react-bootstrap";
+import axios from "axios";
+import { connect } from "react-redux";
 class ScholarshipsModal extends React.Component {
   state = {
     show: false,
-    about: {
-      firstName: "",
-      lastName: "",
+    formData: {
+      Title: {
+        type: "Title",
+        value: "",
+      },
+      GrantDate: {
+        type: "GrantDate",
+        value: "",
+      },
+      Description: {
+        type: "Description",
+        value: "",
+      },
     },
+    loading: false,
+  };
+
+  inputChangeHandler = (event, inputIdentifier) => {
+    const updatedformData = {
+      ...this.state.formData,
+    };
+
+    const updatedFormElement = { ...updatedformData[inputIdentifier] };
+
+    //des updating the value in the selected input element
+    updatedFormElement.value = event.target.value;
+    updatedformData[inputIdentifier] = updatedFormElement;
+
+    this.setState({
+      formData: updatedformData,
+    });
+  };
+
+  onSubmitHandler = (event) => {
+    event.preventDefault(); //prevent page reload
+
+    const formData = {};
+    for (let formElementIdentifier in this.state.formData) {
+      formData[formElementIdentifier] = this.state.formData[
+        formElementIdentifier
+      ].value;
+    }
+
+    console.log(formData);
+
+    this.setState({
+      ...this.state,
+      loading: true,
+    });
+
+    let postData = {
+      formData: formData,
+      subHeader: "Scholarships",
+      profileId: this.props.profileId,
+    };
+
+    let url = "/api/updateUserProfile/Accomplishments";
+    axios
+      .put(url, postData)
+      .then((res) => {
+        console.log(res.data);
+
+        this.setState({
+          loading: false,
+          show: !this.state.show,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+
+        this.setState({
+          loading: false,
+          // show: !this.state.show,
+        });
+      });
   };
 
   handleShow = () => {
@@ -63,7 +135,15 @@ class ScholarshipsModal extends React.Component {
                   <Form.Label htmlFor="" column="sm">
                     Scholarship Details/Description
                   </Form.Label>
-                  <textarea name="" id="" cols="60" rows="10"></textarea>
+                  <textarea
+                    name=""
+                    id=""
+                    cols="60"
+                    rows="10"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "Description");
+                    }}
+                  ></textarea>
                 </Form.Row>
               </Form.Group>
             </Form>
@@ -72,7 +152,7 @@ class ScholarshipsModal extends React.Component {
             <Button variant="secondary" onClick={this.handleShow}>
               Close
             </Button>
-            <Button variant="primary" onClick={this.handleShow}>
+            <Button variant="primary" onClick={this.onSubmitHandler}>
               Save Changes
             </Button>
           </Modal.Footer>
@@ -82,4 +162,10 @@ class ScholarshipsModal extends React.Component {
   }
 }
 
-export default ScholarshipsModal;
+const mapStateToProps = (state) => {
+  return {
+    profileId: state.userAuth.profileId,
+  };
+};
+
+export default connect(mapStateToProps)(ScholarshipsModal);

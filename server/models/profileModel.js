@@ -78,7 +78,7 @@ const profileSchema = new Schema({
             default: false,
           },
           FileName: String,
-          FileLocation: String,
+          // FileLocation: String,
         },
       ],
     },

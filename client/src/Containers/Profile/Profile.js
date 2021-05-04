@@ -10,9 +10,11 @@ import PositionsOfResponsibility from "./PositionsOfResponsibility/PositionsOfRe
 import Projects from "./Projects/Projects";
 import Accomplishments from "./Accomplishments/Accomplishments";
 import Resumes from "./Resumes/Resumes";
-
+import axios from "axios";
+import { connect } from "react-redux";
 class Profile extends Component {
   state = {
+    toggleRerender: false,
     userAccount: null,
     Summary: null,
     About: {
@@ -46,6 +48,44 @@ class Profile extends Component {
     },
     Resumes: null,
   };
+
+  forceRerender = () => {
+    console.log("force Rerender called");
+    let url = ["/api/userProfile", this.props.profileId].join("/");
+    // console.log(this.props.profileId);
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data.profile);
+
+        this.setState({
+          ...this.state,
+          ...res.data.profile,
+          toggleRerender: !this.state.toggleRerender,
+        });
+      })
+      .catch((err) => {
+        console.log(err.data);
+      });
+  };
+
+  componentDidMount() {
+    // console.log("component DId mount called");
+    let url = ["/api/userProfile", this.props.profileId].join("/");
+    // console.log(this.props.profileId);
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data.profile);
+
+        this.setState({
+          ...res.data.profile,
+        });
+      })
+      .catch((err) => {
+        console.log(err.data);
+      });
+  }
 
   render() {
     return (
@@ -145,35 +185,68 @@ class Profile extends Component {
           </Accordion>
         </div>
         <div className={styles.subdiv3}>
-          <PersonalSummary id="Summary" summary={this.state.Summary} />
+          <PersonalSummary
+            id="Summary"
+            userAccountInfo={this.state.userAccount}
+            data={this.state.Summary}
+            forceReload={this.forceRerender}
+          />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <About id="About" />
+          <About
+            id="About"
+            data={this.state.About}
+            forceReload={this.forceRerender}
+          />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <Education />
+          <Education
+            data={this.state.Education}
+            forceReload={this.forceRerender}
+          />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <InternshipWorkExperience />
+          <InternshipWorkExperience
+            data={this.state.WorkExp}
+            forceReload={this.forceRerender}
+          />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <TechnicalSkills />
+          <TechnicalSkills
+            data={this.state.TechnicalSkills}
+            forceReload={this.forceRerender}
+          />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <PositionsOfResponsibility />
+          <PositionsOfResponsibility
+            data={this.state.PositionsOfResponsibility}
+            forceReload={this.forceRerender}
+          />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <Projects />
+          <Projects
+            data={this.state.Projects}
+            forceReload={this.forceRerender}
+          />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <Accomplishments />
+          <Accomplishments
+            data={this.state.Accomplishments}
+            forceReload={this.forceRerender}
+          />
         </div>
         <div className={styles.subdiv3} style={{ marginTop: "20px" }}>
-          <Resumes />
+          <Resumes data={this.state.Resumes} forceReload={this.forceRerender} />
         </div>
       </div>
     );
   }
 }
 
-export default Profile;
+const mapStateToProps = (state) => {
+  return {
+    profileId: state.userAuth.profileId,
+  };
+};
+
+export default connect(mapStateToProps)(Profile);

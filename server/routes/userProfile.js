@@ -67,23 +67,24 @@ router.get("/downloadFile", (req, res) => {
 const UserProfile = require("../models/profileModel");
 
 //get user profile
-router.get("/userProfile", (req, res) => {
-  UserProfile.findById(req.body.profileId)
+router.get("/userProfile/:id", (req, res) => {
+  console.log('get profile route contacted');
+  console.log(req.params.id);
+  UserProfile.findById(req.params.id)
     .populate("userAccount")
     .then((profile) => {
       if (!profile) {
-        console.log('before');
+        console.log('profile not found');
         return res
           .status(404)
           .json({ Error: "profile not found in the database" });
       }
-      console.log('before');
+      console.log('profile  found');
       res.json({
         success: true,
         profile: profile,
       });
     });
-  console.log('after');
 });
 
 //update summary

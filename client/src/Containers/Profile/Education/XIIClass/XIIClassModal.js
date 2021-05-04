@@ -1,14 +1,145 @@
 import React from "react";
 import { Modal, Button, Form, Row, Col, InputGroup } from "react-bootstrap";
-
+import axios from "axios";
+import { connect } from "react-redux";
 class XIIClassModal extends React.Component {
   state = {
     show: false,
-    about: {
-      firstName: "",
-      lastName: "",
+    formData: {
+      School: {
+        type: "School",
+        value: "",
+      },
+      Board: {
+        type: "Board",
+        value: "",
+      },
+      EducationType: {
+        type: "EducationType",
+        value: "",
+      },
+      Score: {
+        type: "Score",
+        value: "",
+      },
+      ScoreType: {
+        type: "ScoreType",
+        value: "",
+      },
+      StartDate: {
+        type: "StartDate",
+        value: "",
+      },
+      EndDate: {
+        type: "EndDate",
+        value: "",
+      },
+      MarksheetProvided: {
+        type: "DocumentProvided",
+        value: false,
+      },
+      FileName: {
+        type: "FileName",
+        value: "",
+      },
     },
+    selectedFile: null,
+    loading: false,
   };
+
+  // On file select (from the pop up)
+  onFileChange = (event) => {
+    // Update the state
+    this.setState({ selectedFile: event.target.files[0] });
+  };
+
+  inputChangeHandler = (event, inputIdentifier) => {
+    const updatedformData = {
+      ...this.state.formData,
+    };
+
+    const updatedFormElement = { ...updatedformData[inputIdentifier] };
+
+    //des updating the value in the selected input element
+    updatedFormElement.value = event.target.value;
+    updatedformData[inputIdentifier] = updatedFormElement;
+
+    this.setState({
+      formData: updatedformData,
+    });
+  };
+
+  onSubmitHandler = (event) => {
+    event.preventDefault(); //prevent page reload
+
+    //creating formData to send to Resume put route
+    const formData = {};
+    for (let formElementIdentifier in this.state.formData) {
+      formData[formElementIdentifier] = this.state.formData[
+        formElementIdentifier
+      ].value;
+    }
+
+    if (this.state.selectedFile !== null) {
+      formData.MarksheetProvided = true;
+      formData.FileName = this.state.selectedFile.name;
+    }
+
+    console.log(formData);
+
+    //creating fileFormData to send to uploadFile route
+    const fileFormData = new FormData();
+    // Update the formData object
+    fileFormData.append("folderName", "Profile");
+    fileFormData.append("profileId", this.props.profileId);
+    fileFormData.append("header", "Education");
+    fileFormData.append("subHeader", "Class12th");
+    fileFormData.append("file", this.state.selectedFile);
+
+    //creating config for axios
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+    };
+
+    this.setState({
+      ...this.state,
+      loading: true,
+    });
+
+    let postData = {
+      formData: formData,
+      subHeader: "Class12th",
+      profileId: this.props.profileId,
+    };
+
+    let url = "/api/updateUserProfile/education";
+    axios
+      .all([
+        axios.put(url, postData),
+        axios.post("api/uploadFile", fileFormData, config),
+      ])
+      .then(
+        axios.spread((res1, res2) => {
+          this.setState({
+            loading: false,
+            show: !this.state.show,
+          });
+          console.log(res1);
+          console.log(res2);
+        })
+      )
+      .catch(
+        axios.spread((err1, err2) => {
+          console.log(err1);
+          console.log(err2);
+          this.setState({
+            loading: false,
+            // show: !this.state.show,
+          });
+        })
+      );
+  };
+
 
   handleShow = () => {
     this.setState({
@@ -40,7 +171,7 @@ class XIIClassModal extends React.Component {
                     required
                     size="sm"
                     onChange={(event, string) => {
-                      this.inputChangeHandler(event, "educationType");
+                      this.inputChangeHandler(event, "EducationType");
                     }}
                   />
                 </Form.Row>
@@ -54,7 +185,7 @@ class XIIClassModal extends React.Component {
                     required
                     size="sm"
                     onChange={(event, string) => {
-                      this.inputChangeHandler(event, "SchoolName");
+                      this.inputChangeHandler(event, "School");
                     }}
                   />
                 </Form.Row>
@@ -97,10 +228,10 @@ class XIIClassModal extends React.Component {
                     as="select"
                     custom
                     size="sm"
-                    /* onChange={(event, string) => {
-                  this.inputChangeHandler(event, "semester");
+                     onChange={(event, string) => {
+                  this.inputChangeHandler(event, "ScoreType");
                   console.log("drop down is being read");
-                }} */
+                }} 
                   >
                     <option eventkey="CGPA">CGPA</option>
                     <option eventkey="Percentage">Percentage</option>
@@ -125,7 +256,7 @@ class XIIClassModal extends React.Component {
 
                 <Form.Group as={Col}>
                     <Form.Row>
-                        <Form.File label="Upload XII Marksheet"/>
+                        <Form.File label="Upload XII Marksheet"  onChange={this.onFileChange}/>
                     </Form.Row>
                 </Form.Group>
 
@@ -154,7 +285,7 @@ class XIIClassModal extends React.Component {
                             required
                             size="sm"
                             onChange={(event, string) => {
-                              this.inputChangeHandler(event, "courseStartDate");
+                              this.inputChangeHandler(event, "StartDate");
                             }}
                           />
                         </InputGroup.Append>
@@ -171,7 +302,7 @@ class XIIClassModal extends React.Component {
                             required
                             size="sm"
                             onChange={(event, string) => {
-                              this.inputChangeHandler(event, "courseEndDate");
+                              this.inputChangeHandler(event, "EndDate");
                             }}
                           />
                         </InputGroup.Append>
@@ -186,7 +317,7 @@ class XIIClassModal extends React.Component {
             <Button variant="secondary" onClick={this.handleShow}>
               Close
             </Button>
-            <Button variant="primary" onClick={this.handleShow}>
+            <Button variant="primary" onClick={this.onSubmitHandler}>
               Save Changes
             </Button>
           </Modal.Footer>
@@ -196,4 +327,10 @@ class XIIClassModal extends React.Component {
   }
 }
 
-export default XIIClassModal;
+const mapStateToProps = (state) => {
+  return {
+    profileId: state.userAuth.profileId,
+  };
+};
+
+export default connect(mapStateToProps)(XIIClassModal);

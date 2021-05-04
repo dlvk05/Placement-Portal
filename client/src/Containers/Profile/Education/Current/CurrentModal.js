@@ -8,14 +8,298 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
+import axios from "axios";
+import { connect } from "react-redux";
 
 class CurrentModal extends React.Component {
   state = {
     show: false,
-    about: {
-      firstName: "",
-      lastName: "",
+    formData: {
+      Department: {
+        type: "Department",
+        value: "",
+      },
+      Programme: {
+        type: "Programme",
+        value: "",
+      },
+      RegNo: {
+        type: "RegNo",
+        value: "",
+      },
+      CurrentSemester: {
+        type: "CurrentSemester",
+        value: "",
+      },
+      CGPAScore: {
+        type: "CGPAScore",
+        value: "",
+      },
+      PercentageScore: {
+        type: "PercentageScore",
+        value: "",
+      },
+      StartDate: {
+        type: "StartDate",
+        value: "",
+      },
+      EndDate: {
+        type: "EndDate",
+        value: "",
+      },
     },
+    performance: [
+      {
+        SemNo: 1,
+        CGPA: "",
+        SGPA: "",
+        BacklogTotal: "",
+        BacklogOngoing: "",
+        MarksheetProvided: false,
+        FileName: "",
+      },
+      {
+        SemNo: 2,
+        CGPA: "",
+        SGPA: "",
+        BacklogTotal: "",
+        BacklogOngoing: "",
+        MarksheetProvided: false,
+        FileName: "",
+      },
+      {
+        SemNo: 3,
+        CGPA: "",
+        SGPA: "",
+        BacklogTotal: "",
+        BacklogOngoing: "",
+        MarksheetProvided: false,
+        FileName: "",
+      },
+      {
+        SemNo: 4,
+        CGPA: "",
+        SGPA: "",
+        BacklogTotal: "",
+        BacklogOngoing: "",
+        MarksheetProvided: false,
+        FileName: "",
+      },
+      {
+        SemNo: 5,
+        CGPA: "",
+        SGPA: "",
+        BacklogTotal: "",
+        BacklogOngoing: "",
+        MarksheetProvided: false,
+        FileName: "",
+      },
+      {
+        SemNo: 6,
+        CGPA: "",
+        SGPA: "",
+        BacklogTotal: "",
+        BacklogOngoing: "",
+        MarksheetProvided: false,
+        FileName: "",
+      },
+      {
+        SemNo: 7,
+        CGPA: "",
+        SGPA: "",
+        BacklogTotal: "",
+        BacklogOngoing: "",
+        MarksheetProvided: false,
+        FileName: "",
+      },
+      {
+        SemNo: 8,
+        CGPA: "",
+        SGPA: "",
+        BacklogTotal: "",
+        BacklogOngoing: "",
+        MarksheetProvided: false,
+        FileName: "",
+      },
+    ],
+    selectedFiles: [
+      {
+        sem: 1,
+        file: null,
+      },
+      {
+        sem: 2,
+        file: null,
+      },
+      {
+        sem: 3,
+        file: null,
+      },
+      {
+        sem: 4,
+        file: null,
+      },
+      {
+        sem: 5,
+        file: null,
+      },
+      {
+        sem: 6,
+        file: null,
+      },
+      {
+        sem: 7,
+        file: null,
+      },
+      {
+        sem: 8,
+        file: null,
+      },
+    ],
+    loading: false,
+  };
+
+  // On file select (from the pop up)
+  onFileChange = (event, semNo) => {
+    let index = [semNo];
+    index = index - 1;
+    let updatedFilesArray = [...this.state.selectedFiles];
+    updatedFilesArray[index].file = event.target.files[0];
+    console.log("file uploaded");
+    console.log(updatedFilesArray);
+
+    // Update the state
+    this.setState({
+      ...this.state,
+      selectedFiles: updatedFilesArray,
+    });
+  };
+
+  inputChangeHandler = (event, inputIdentifier) => {
+    const updatedformData = {
+      ...this.state.formData,
+    };
+
+    const updatedFormElement = { ...updatedformData[inputIdentifier] };
+
+    //des updating the value in the selected input element
+    updatedFormElement.value = event.target.value;
+    updatedformData[inputIdentifier] = updatedFormElement;
+    console.log("inputChangeHandler");
+    console.log(updatedformData);
+
+    this.setState({
+      formData: updatedformData,
+    });
+  };
+
+  performanceInputHandler(event, inputIdentifier, semNo) {
+    const updatedValue = event.target.value;
+    let index = [semNo];
+    index = index - 1;
+
+    let updatedPerformanceArray = [...this.state.performance];
+    let updatedSemPerformance = { ...updatedPerformanceArray[index] };
+    updatedSemPerformance[inputIdentifier] = updatedValue;
+    updatedPerformanceArray[index] = updatedSemPerformance;
+
+    console.log("performanceInputHandler");
+    console.log(updatedPerformanceArray);
+
+    this.setState({
+      ...this.state,
+      performance: updatedPerformanceArray,
+    });
+  }
+
+  onSubmitHandler = (event) => {
+    event.preventDefault(); //prevent page reload
+
+    //creating formData to send to Resume put route
+    const formData = {};
+    for (let formElementIdentifier in this.state.formData) {
+      formData[formElementIdentifier] = this.state.formData[
+        formElementIdentifier
+      ].value;
+    }
+
+    //adding performance array to formData
+    formData.Performance = this.state.performance;
+    let selectedFile;
+    // loop to add fileNames in formData
+    this.state.selectedFiles.forEach((selectedFile) => {
+      console.log(selectedFile);
+      if (selectedFile.file !== null) {
+        let index = [selectedFile.sem] - 1;
+        formData.Performance[index].MarksheetProvided = true;
+        formData.Performance[index].FileName = selectedFile.file.name;
+      }
+    });
+
+    console.log("formData after adding fileNames");
+    console.log(formData);
+
+    let fileFormDatas = [];
+    let i;
+    for (i = 0; i < 8; i++) {
+      const fileFormData = new FormData();
+      fileFormData.append("folderName", "Profile");
+      fileFormData.append("profileId", this.props.profileId);
+      fileFormData.append("header", "Education");
+      fileFormData.append("subHeader", "Current");
+      fileFormData.append("file", this.state.selectedFiles[i].file);
+      fileFormDatas.push(fileFormData);
+    }
+
+    //creating config for axios
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+    };
+
+    this.setState({
+      ...this.state,
+      loading: true,
+    });
+
+    let postData = {
+      formData: formData,
+      subHeader: "Current",
+      profileId: this.props.profileId,
+    };
+
+    let url = "/api/updateUserProfile/education";
+    axios
+      .all([
+        axios.put(url, postData),
+        axios.post("api/uploadFile", fileFormDatas[0], config),
+        axios.post("api/uploadFile", fileFormDatas[1], config),
+        axios.post("api/uploadFile", fileFormDatas[2], config),
+        axios.post("api/uploadFile", fileFormDatas[3], config),
+        axios.post("api/uploadFile", fileFormDatas[4], config),
+        axios.post("api/uploadFile", fileFormDatas[5], config),
+        axios.post("api/uploadFile", fileFormDatas[6], config),
+        axios.post("api/uploadFile", fileFormDatas[7], config),
+      ])
+      .then(
+        axios.spread((res1, res2, res3, res4, res5, res6, res7, res8, res9) => {
+          this.setState({
+            loading: false,
+            show: !this.state.show,
+          });
+          console.log(res1);
+          console.log(res2);
+        })
+      )
+      .catch(
+        axios.spread((err1, err2, err3, err4, err5, err6, err7, err8, err9) => {
+          console.log(err1);
+          console.log(err2);
+          this.setState({
+            loading: false,
+            // show: !this.state.show,
+          });
+        })
+      );
   };
 
   handleShow = () => {
@@ -45,6 +329,9 @@ class CurrentModal extends React.Component {
                     placeholder="17930XXXX"
                     required
                     size="sm"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "RegNo");
+                    }}
                   />
                 </Form.Group>
               </Form.Row>
@@ -55,10 +342,10 @@ class CurrentModal extends React.Component {
                     as="select"
                     custom
                     size="sm"
-                    /* onChange={(event, string) => {
-                  this.inputChangeHandler(event, "semester");
-                  console.log("drop down is being read");
-                }} */
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "CurrentSemester");
+                      console.log("drop down is being read");
+                    }}
                   >
                     <option eventkey="1">1</option>
                     <option eventkey="2">2</option>
@@ -79,7 +366,12 @@ class CurrentModal extends React.Component {
                       Score
                     </label>
                     <InputGroup className="mb-3" size="sm">
-                      <Form.Control size="sm" />
+                      <Form.Control
+                        size="sm"
+                        onChange={(event, string) => {
+                          this.inputChangeHandler(event, "CGPAScore");
+                        }}
+                      />
                       <InputGroup.Append>
                         <InputGroup.Text id="inputGroup-sizing-sm">
                           CGPA
@@ -92,7 +384,11 @@ class CurrentModal extends React.Component {
                       Percentage Equivalent
                     </label>
                     <InputGroup className="mb-3" size="sm">
-                      <Form.Control />
+                      <Form.Control
+                        onChange={(event, string) => {
+                          this.inputChangeHandler(event, "PercentageScore");
+                        }}
+                      />
                       <InputGroup.Append>
                         <InputGroup.Text id="basic-addon2">%</InputGroup.Text>
                       </InputGroup.Append>
@@ -113,7 +409,7 @@ class CurrentModal extends React.Component {
                           required
                           size="sm"
                           onChange={(event, string) => {
-                            this.inputChangeHandler(event, "courseStartDate");
+                            this.inputChangeHandler(event, "StartDate");
                           }}
                         />
                       </InputGroup.Append>
@@ -129,7 +425,7 @@ class CurrentModal extends React.Component {
                           required
                           size="sm"
                           onChange={(event, string) => {
-                            this.inputChangeHandler(event, "courseEndDate");
+                            this.inputChangeHandler(event, "EndDate");
                           }}
                         />
                       </InputGroup.Append>
@@ -201,19 +497,52 @@ class CurrentModal extends React.Component {
                           <Form.Label column="sm">1</Form.Label>
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "CGPA", 1);
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "SGPA", 1);
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogTotal",
+                                1
+                              );
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogOngoing",
+                                1
+                              );
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.File id="exampleFormControlFile1" />
+                          <Form.File
+                            id="exampleFormControlFile1"
+                            onChange={(event, string) => {
+                              this.onFileChange(event, 1);
+                            }}
+                          />
                         </td>
                       </tr>
                     </Col>
@@ -223,19 +552,52 @@ class CurrentModal extends React.Component {
                           <Form.Label column="sm">2</Form.Label>
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "CGPA", 2);
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "SGPA", 2);
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogTotal",
+                                2
+                              );
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogOngoing",
+                                2
+                              );
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.File id="exampleFormControlFile1" />
+                          <Form.File
+                            id="exampleFormControlFile1"
+                            onChange={(event, string) => {
+                              this.onFileChange(event, 2);
+                            }}
+                          />
                         </td>
                       </tr>
                     </Col>
@@ -245,19 +607,52 @@ class CurrentModal extends React.Component {
                           <Form.Label column="sm">3</Form.Label>
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "CGPA", 3);
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "SGPA", 3);
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogTotal",
+                                3
+                              );
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogOngoing",
+                                3
+                              );
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.File id="exampleFormControlFile1" />
+                          <Form.File
+                            id="exampleFormControlFile1"
+                            onChange={(event, string) => {
+                              this.onFileChange(event, 3);
+                            }}
+                          />
                         </td>
                       </tr>
                     </Col>
@@ -267,19 +662,52 @@ class CurrentModal extends React.Component {
                           <Form.Label column="sm">4</Form.Label>
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "CGPA", 4);
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "SGPA", 4);
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogTotal",
+                                4
+                              );
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogOngoing",
+                                4
+                              );
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.File id="exampleFormControlFile1" />
+                          <Form.File
+                            id="exampleFormControlFile1"
+                            onChange={(event, string) => {
+                              this.onFileChange(event, 4);
+                            }}
+                          />
                         </td>
                       </tr>
                     </Col>
@@ -289,85 +717,217 @@ class CurrentModal extends React.Component {
                           <Form.Label column="sm">5</Form.Label>
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "CGPA", 5);
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "SGPA", 5);
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogTotal",
+                                5
+                              );
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogOngoing",
+                                5
+                              );
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.File id="exampleFormControlFile1" />
-                        </td>
-                      </tr>
-                    </Col>
-                    <Col>
-                      <tr>
-                        <td>
-                          <Form.Label column="sm">6</Form.Label>{" "}
-                        </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                        <td>
-                          <Form.File id="exampleFormControlFile1" />
-                        </td>
-                      </tr>
-                    </Col>
-                    <Col>
-                      <tr>
-                        <td>
-                          <Form.Label column="sm">7</Form.Label>{" "}
-                        </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                        <td>
-                          <Form.Control size="sm" />
-                        </td>
-                        <td>
-                          <Form.File id="exampleFormControlFile1" />
+                          <Form.File
+                            id="exampleFormControlFile1"
+                            onChange={(event, string) => {
+                              this.onFileChange(event, 5);
+                            }}
+                          />
                         </td>
                       </tr>
                     </Col>
                     <Col>
                       <tr>
                         <td>
-                          <Form.Label column="sm">8</Form.Label>{" "}
+                          <Form.Label column="sm">6</Form.Label>
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "CGPA", 6);
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "SGPA", 6);
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogTotal",
+                                6
+                              );
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.Control size="sm" />
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogOngoing",
+                                6
+                              );
+                            }}
+                          />
                         </td>
                         <td>
-                          <Form.File id="exampleFormControlFile1" />
+                          <Form.File
+                            id="exampleFormControlFile1"
+                            onChange={(event, string) => {
+                              this.onFileChange(event, 6);
+                            }}
+                          />
+                        </td>
+                      </tr>
+                    </Col>
+                    <Col>
+                      <tr>
+                        <td>
+                          <Form.Label column="sm">7</Form.Label>
+                        </td>
+                        <td>
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "CGPA", 7);
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "SGPA", 7);
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogTotal",
+                                7
+                              );
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogOngoing",
+                                7
+                              );
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <Form.File
+                            id="exampleFormControlFile1"
+                            onChange={(event, string) => {
+                              this.onFileChange(event, 7);
+                            }}
+                          />
+                        </td>
+                      </tr>
+                    </Col>
+                    <Col>
+                      <tr>
+                        <td>
+                          <Form.Label column="sm">8</Form.Label>
+                        </td>
+                        <td>
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "CGPA", 8);
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(event, "SGPA", 8);
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogTotal",
+                                8
+                              );
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <Form.Control
+                            size="sm"
+                            onChange={(event, string) => {
+                              this.performanceInputHandler(
+                                event,
+                                "BacklogOngoing",
+                                8
+                              );
+                            }}
+                          />
+                        </td>
+                        <td>
+                          <Form.File
+                            id="exampleFormControlFile1"
+                            onChange={(event, string) => {
+                              this.onFileChange(event, 8);
+                            }}
+                          />
                         </td>
                       </tr>
                     </Col>
@@ -380,7 +940,7 @@ class CurrentModal extends React.Component {
             <Button variant="secondary" onClick={this.handleShow}>
               Close
             </Button>
-            <Button variant="primary" onClick={this.handleShow}>
+            <Button variant="primary" onClick={this.onSubmitHandler}>
               Save Changes
             </Button>
           </Modal.Footer>
@@ -390,4 +950,10 @@ class CurrentModal extends React.Component {
   }
 }
 
-export default CurrentModal;
+const mapStateToProps = (state) => {
+  return {
+    profileId: state.userAuth.profileId,
+  };
+};
+
+export default connect(mapStateToProps)(CurrentModal);

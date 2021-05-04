@@ -9,7 +9,8 @@ class PersonalSummaryModal extends React.Component {
     formData: {
       Summary: {
         type: "Summary",
-        value: "",
+        // value: "",
+        value: this.props.currentSummary,
       },
     },
     loading: false,
@@ -59,10 +60,14 @@ class PersonalSummaryModal extends React.Component {
       .then((res) => {
         console.log(res.data);
 
+        //trigger rerender of profile component
+        this.props.forceReload();
+        //set state here
         this.setState({
           loading: false,
           show: !this.state.show,
         });
+
       })
       .catch((err) => {
         console.log(err);
@@ -94,7 +99,7 @@ class PersonalSummaryModal extends React.Component {
             <Modal.Title>Modal heading</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <textarea name="" id="" cols="60" rows="10" onChange={(event, string) => {
+            <textarea name="" id="" cols="60" rows="10" value={this.state.formData.Summary.value} onChange={(event, string) => {
                       this.inputChangeHandler(event, "Summary");
                     }}></textarea>
           </Modal.Body>

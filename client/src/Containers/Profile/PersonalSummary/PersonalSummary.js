@@ -3,7 +3,9 @@ import styles from './PersonalSummary.module.css';
 import PersonalSummaryModal from "./PersonalSummaryModal/PersonalSummaryModal";
 
 class PersonalSummary extends React.Component {
+  
   render() {
+    // console.log(this.props.summary);
     return (
         <div className={styles.wrapper} id="Summary">
             <div className={styles.halfcolor}>
@@ -18,9 +20,9 @@ class PersonalSummary extends React.Component {
             <br/>
             <i>this is where the college name goes</i>
             <hr/>
-            <i>this is where the personal summary goes</i>
+            <i>{this.props.data!=null?this.props.data:"this is where the personal summary goes"}</i>
             <hr/>
-            <PersonalSummaryModal/>
+            <PersonalSummaryModal currentSummary={this.props.data} forceReload={this.props.forceReload}/>
         </div>
     );
   }

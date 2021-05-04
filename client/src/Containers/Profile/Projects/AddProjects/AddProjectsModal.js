@@ -1,13 +1,134 @@
 import React from "react";
 import { Modal, Button, Form, Row, Col, InputGroup } from "react-bootstrap";
-
+import axios from "axios";
+import { connect } from "react-redux";
 class AddProjectsModal extends React.Component {
   state = {
     show: false,
-    about: {
-      firstName: "",
-      lastName: "",
+    formData: {
+      Title: {
+        type: "Title",
+        value: "",
+      },
+      ProjectDomain: {
+        type: "ProjectDomain",
+        value: "",
+      },
+      StartDate: {
+        type: "StartDate",
+        value: "",
+      },
+      EndDate: {
+        type: "EndDate",
+        value: "",
+      },
+      Description: {
+        type: "Description",
+        value: "",
+      },
+      DocumentProvided: {
+        type: "DocumentProvided",
+        value: false,
+      },
+      FileName: {
+        type: "FileName",
+        value: "",
+      },
     },
+    selectedFile: null,
+    loading: false,
+  };
+
+  // On file select (from the pop up)
+  onFileChange = (event) => {
+    // Update the state
+    this.setState({ selectedFile: event.target.files[0] });
+  };
+
+  inputChangeHandler = (event, inputIdentifier) => {
+    const updatedformData = {
+      ...this.state.formData,
+    };
+
+    const updatedFormElement = { ...updatedformData[inputIdentifier] };
+
+    //des updating the value in the selected input element
+    updatedFormElement.value = event.target.value;
+    updatedformData[inputIdentifier] = updatedFormElement;
+
+    this.setState({
+      formData: updatedformData,
+    });
+  };
+
+  onSubmitHandler = (event) => {
+    event.preventDefault(); //prevent page reload
+
+    //creating formData to send to Resume put route
+    const formData = {};
+    for (let formElementIdentifier in this.state.formData) {
+      formData[formElementIdentifier] = this.state.formData[
+        formElementIdentifier
+      ].value;
+    }
+
+    if (this.state.selectedFile !== null) {
+      formData.DocumentProvided = true;
+      formData.FileName = this.state.selectedFile.name;
+    }
+
+    console.log(formData);
+
+    //creating fileFormData to send to uploadFile route
+    const fileFormData = new FormData();
+    // Update the formData object
+    fileFormData.append("folderName", "Profile");
+    fileFormData.append("profileId", this.props.profileId);
+    fileFormData.append("header", "Projects");
+    fileFormData.append("subHeader", null);
+    fileFormData.append("file", this.state.selectedFile);
+
+    //creating config for axios
+    const config = {
+      headers: { "content-type": "multipart/form-data" },
+    };
+
+    this.setState({
+      ...this.state,
+      loading: true,
+    });
+
+    let postData = {
+      formData: formData,
+      profileId: this.props.profileId,
+    };
+
+    let url = "/api/updateUserProfile/Projects";
+    axios
+      .all([
+        axios.put(url, postData),
+        axios.post("api/uploadFile", fileFormData, config),
+      ])
+      .then(
+        axios.spread((res1, res2) => {
+          this.setState({
+            loading: false,
+            show: !this.state.show,
+          });
+          console.log(res1);
+          console.log(res2);
+        })
+      )
+      .catch(
+        axios.spread((err1, err2) => {
+          console.log(err1);
+          console.log(err2);
+          this.setState({
+            loading: false,
+            // show: !this.state.show,
+          });
+        })
+      );
   };
 
   handleShow = () => {
@@ -38,7 +159,7 @@ class AddProjectsModal extends React.Component {
                     required
                     size="sm"
                     onChange={(event, string) => {
-                      this.inputChangeHandler(event, "projectTitle");
+                      this.inputChangeHandler(event, "Title");
                     }}
                   />
                 </Form.Row>
@@ -52,7 +173,7 @@ class AddProjectsModal extends React.Component {
                     required
                     size="sm"
                     onChange={(event, string) => {
-                      this.inputChangeHandler(event, "projectDomain");
+                      this.inputChangeHandler(event, "ProjectDomain");
                     }}
                   />
                 </Form.Row>
@@ -107,7 +228,15 @@ class AddProjectsModal extends React.Component {
                   <Form.Label htmlFor="" column="sm">
                     Project Details
                   </Form.Label>
-                  <textarea name="" id="" cols="60" rows="10"></textarea>
+                  <textarea
+                    name=""
+                    id=""
+                    cols="60"
+                    rows="10"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "Description");
+                    }}
+                  ></textarea>
                 </Form.Row>
               </Form.Group>
               <Form.Group as={Col}>
@@ -115,7 +244,7 @@ class AddProjectsModal extends React.Component {
                   <Form.Label column="sm">
                     Upload Project Certification
                   </Form.Label>
-                  <Form.File as={Col} />
+                  <Form.File as={Col} onChange={this.onFileChange} />
                 </Form.Row>
               </Form.Group>
             </Form>
@@ -124,7 +253,7 @@ class AddProjectsModal extends React.Component {
             <Button variant="secondary" onClick={this.handleShow}>
               Close
             </Button>
-            <Button variant="primary" onClick={this.handleShow}>
+            <Button variant="primary" onClick={this.onSubmitHandler}>
               Save Changes
             </Button>
           </Modal.Footer>
@@ -134,4 +263,10 @@ class AddProjectsModal extends React.Component {
   }
 }
 
-export default AddProjectsModal;
+const mapStateToProps = (state) => {
+  return {
+    profileId: state.userAuth.profileId,
+  };
+};
+
+export default connect(mapStateToProps)(AddProjectsModal);
