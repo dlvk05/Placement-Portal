@@ -29,6 +29,7 @@ class AddTechnicalSkillsModal extends React.Component {
 
   // On file select (from the pop up)
   onFileChange = (event) => {
+    console.log('file added');
     // Update the state
     this.setState({ selectedFile: event.target.files[0] });
   };

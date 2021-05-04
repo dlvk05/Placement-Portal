@@ -102,11 +102,11 @@ class Accomplishments extends React.Component {
           Awards
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <AwardsModal name="Add Awards Info" />
+          <AwardsModal awards={this.props.data.Awards} forceReload={this.props.forceReload} name="Add Awards Info" />
         </span>
         <hr />
         <br />
-        <AwardsFeeds awards={this.state.Accomplishments.Awards} />
+        <AwardsFeeds awards={this.props.data.Awards} forceReload={this.props.forceReload}  />
         <br />
         <br />
         <br />

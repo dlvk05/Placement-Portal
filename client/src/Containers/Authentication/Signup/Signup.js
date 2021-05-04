@@ -6,6 +6,7 @@ import styles from "./Signup.module.css";
 import * as actions from "../../../Redux/actions/index";
 
 class Signup extends React.Component {
+
   state = {
     formData: {
       firstName: {
@@ -24,20 +25,20 @@ class Signup extends React.Component {
         type: "password",
         value: "",
       },
-      regno: {
-        type: "regno",
+      regNo: {
+        type: "regNo",
         value: "",
       },
-      mobileno: {
-        type: "mobileno",
+      mobileNo: {
+        type: "mobileNo",
         value: "",
       },
       department: {
         type: "department",
         value: "",
       },
-      program: {
-        type: "program",
+      programme: {
+        type: "programme",
         value: "",
       },
       semester: {
@@ -203,7 +204,7 @@ class Signup extends React.Component {
                 placeholder="17930XXXX"
                 required
                 onChange={(event, string) => {
-                  this.inputChangeHandler(event, "regno");
+                  this.inputChangeHandler(event, "regNo");
                 }}
               />
             </Form.Group>
@@ -214,7 +215,7 @@ class Signup extends React.Component {
                 placeholder="Mobile Number"
                 required
                 onChange={(event, string) => {
-                  this.inputChangeHandler(event, "mobileno");
+                  this.inputChangeHandler(event, "mobileNo");
                 }}
               />
               <Form.Control.Feedback type="invalid">
@@ -226,7 +227,7 @@ class Signup extends React.Component {
               <Form.Group as={Col} controlId="formGridBranch">
                 <Form.Label>Department</Form.Label>
                 <Form.Control
-                  placeholder="department"
+                  placeholder="Department"
                   required
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "department");
@@ -238,10 +239,10 @@ class Signup extends React.Component {
               <Form.Group as={Col} controlId="formGridProgram">
                 <Form.Label>Program</Form.Label>
                 <Form.Control
-                  placeholder="Program"
+                  placeholder="Programme"
                   required
                   onChange={(event, string) => {
-                    this.inputChangeHandler(event, "program");
+                    this.inputChangeHandler(event, "programme");
                   }}
                 />
               </Form.Group>

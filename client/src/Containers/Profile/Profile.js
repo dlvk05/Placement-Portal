@@ -39,6 +39,7 @@ class Profile extends Component {
     Projects: null,
     //Accomplishments
     Accomplishments: {
+      Awards:null,
       Certifications: null,
       Competitions: null,
       Conferences: null,
@@ -70,12 +71,13 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    // console.log("component DId mount called");
+    console.log("component DId mount called");
     let url = ["/api/userProfile", this.props.profileId].join("/");
     // console.log(this.props.profileId);
     axios
       .get(url)
       .then((res) => {
+        console.log('profile loaded');
         console.log(res.data.profile);
 
         this.setState({

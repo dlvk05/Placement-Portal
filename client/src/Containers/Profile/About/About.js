@@ -17,12 +17,16 @@ const styles = {
 };
 
 class About extends React.Component {
+
+
   render() {
+  console.log(this.props.data);
+
     return (
       <div style={styles}>
         <span id="Overview"style={{ fontSize: "20px" }}>Overview</span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <OverviewModal />
+          <OverviewModal data={this.props.data.Overview} forceReload={this.props.forceReload}/>
         </span>
         <hr />
         <br />
@@ -33,7 +37,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the name is supposed to be"
+              {this.props.data.Overview!=null?this.props.data.Overview.Name:"No data "}
             </span>
           </Col>
         </Row>
@@ -45,7 +49,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the Date of Birth is supposed to be"
+            {this.props.data.Overview!=null?this.props.data.Overview.DateOfBirth:"No data "}
             </span>
           </Col>
         </Row>
@@ -57,7 +61,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the gender is supposed to be"
+            {this.props.data.Overview!=null?this.props.data.Overview.Gender:"No data "}
             </span>
           </Col>
         </Row>
@@ -69,7 +73,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              "this is where the category is supposed to be"
+            {this.props.data.Overview!=null?this.props.data.Overview.Category:"No data "}
             </span>
           </Col>
         </Row>
