@@ -26,6 +26,7 @@ const styles = {
   background: "white",
   padding: "5%",
   marginBottom: "30px",
+  borderRadius: "10px"
 };
 
 class Accomplishments extends React.Component {
