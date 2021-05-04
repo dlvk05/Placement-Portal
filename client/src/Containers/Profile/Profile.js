@@ -91,8 +91,8 @@ class Profile extends Component {
     return (
       <div className={styles.wrapper}>
         <div className={styles.sidenav}>
-          <h4>Navigation Options</h4>
-          <hr />
+          <h4 style={{color: "#EBEBF2", marginTop: "10px"}}><center>Navigation</center></h4>
+          <hr style={{border: "2px solid #EBEBF2"}}/>
           <Accordion defaultActiveKey="">
             <Card>
               <Card.Header>

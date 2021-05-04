@@ -1,4 +1,5 @@
 import React from "react";
+import PositionsOfResponsibilityFeed from "../../../Components/ProfileComponents/PositionsOfResponsibilityFeed/PositionsOfResponsibilityFeed";
 import AddPositionsOfResponsibilityModal from "./AddPositionsOfResponsibility/AddPositionsOfResponsibilityModal";
 
 
@@ -10,31 +11,40 @@ const styles = {
   background: "white",
   padding: "5%",
   marginBottom: "30px",
+  borderRadius: "10px"
 };
 
 class PositionsOfResponsibility extends React.Component{
+  state = {
+    PositionsOfResponsibility: [
+      {
+        Title: "CEO",
+        OrganizationName: "Google",
+        StartDate: "20.03.2021",
+        EndDate: "12.04.2021",
+        Description: "I was the CEO of google mah man! bow before me",
+      },
+      {
+        Title: "CFO",
+        OrganizationName: "Apple",
+        StartDate: "20.09.2021",
+        EndDate: "10.10.2021",
+        Description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, deleniti. Debitis assumenda, nulla obcaecati veniam enim modi quis, quo deleniti libero nisi sunt animi at tempora consequatur nihil repellendus natus?", 
+      }
+    ]
+  }
 
   render(){
     return(
         <div style={styles}>
         <span id="PositionsOfResponsibility"style={{ fontSize: "20px" }}>Positions Of Responsibility</span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-            <AddPositionsOfResponsibilityModal/>
+            <AddPositionsOfResponsibilityModal name="Add Info"/>
         </span>
         <hr />
         <br />
         <br />
-        <div style={{border: "groove 2px", borderRadius:"8px",padding:"10px", marginBottom:"10px", background:"#F8F8FF"}}>
-          <span style={{fontSize: "19px"}}>Position Title</span><br/>
-          <span>Organization Name</span> <br/>
-          <span>Duration (start date --- end date)</span>
-          <br/>
-          <br/>
-          <span>Description</span><br/>
-          <br/>
-          <hr/>
-          <span><i onClick={()=>{alert("waddup it works")}}class="fas fa-pen-square fa-lg"> Edit</i> | <i class="fas fa-trash-alt fa-lg"> Delete</i></span>
-        </div>
+        <PositionsOfResponsibilityFeed PositionsOfResponsibility={this.state.PositionsOfResponsibility}/>
         </div>
     );
   }

@@ -1,5 +1,6 @@
 import React from "react";
 import AddProjectsModal from "./AddProjects/AddProjectsModal";
+import ProjectsFeed from "../../../Components/ProfileComponents/ProjectsFeed/ProjectsFeed";
 
 const styles = {
   border: "solid 1px",
@@ -9,9 +10,43 @@ const styles = {
   background: "white",
   padding: "5%",
   marginBottom: "30px",
+  borderRadius: "10px"
 };
 
+
+
 class Projects extends React.Component {
+  state={
+    projects: [
+     {
+       Title: "lol",
+       ProjectDomain: "Machine Learning",
+       StartDate: "20-5-2021",
+       EndDate: "30-5-2021",
+       Description: "pee pee poo poo ",
+       DocumentProvided: {
+         type: Boolean,
+         default: false,
+       },
+       FileName: String,
+       // FileLocation: String,
+     },
+     {
+       Title: "project 2",
+       ProjectDomain: "Web Dev",
+       StartDate: "20-12-2021",
+       EndDate: "30-12-2021",
+       Description: "this is supposed to be a long ass description",
+       DocumentProvided: {
+         type: Boolean,
+         default: false,
+       },
+       FileName: String,
+       // FileLocation: String,
+     }
+   ]
+  }
+  
   render() {
     return (
       <div style={styles}>
@@ -19,63 +54,12 @@ class Projects extends React.Component {
           Past Projects
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <AddProjectsModal />
+          <AddProjectsModal name="Add New Project"/>
         </span>
         <hr />
         <br />
-        <br />
-        <div
-          style={{ border: "groove 2px", borderRadius: "8px", padding: "10px", marginBottom:"10px", background:"#F8F8FF" }}
-        >
-          <span style={{ fontSize: "19px" }}>Project Name</span>
-          <br />
-          <span>Project Domain</span> <br />
-          <span>Project Duration (start date --- end date)</span>
-          <br />
-          <br />
-          <span>Description</span>
-          <br />
-          <br />
-          <hr />
-          <span>
-            <i
-              onClick={() => {
-                alert("waddup it works");
-              }}
-              class="fas fa-pen-square fa-lg"
-            >
-              {" "}
-              Edit
-            </i>{" "}
-            | <i class="fas fa-trash-alt fa-lg"> Delete</i>
-          </span>
-        </div>
-        <div
-          style={{ border: "groove 2px", borderRadius: "8px", padding: "10px", marginBottom:"10px", background:"#F8F8FF" }}
-        >
-          <span style={{ fontSize: "19px" }}>Project Name</span>
-          <br />
-          <span>Project Domain</span> <br />
-          <span>Project Duration (start date --- end date)</span>
-          <br />
-          <br />
-          <span>Description</span>
-          <br />
-          <br />
-          <hr />
-          <span>
-            <i
-              onClick={() => {
-                alert("waddup it works");
-              }}
-              class="fas fa-pen-square fa-lg"
-            >
-              {" "}
-              Edit
-            </i>{" "}
-            | <i class="fas fa-trash-alt fa-lg"> Delete</i>
-          </span>
-        </div>
+        <br />        
+        <ProjectsFeed projects={this.state.projects}/>
       </div>
     );
   }
