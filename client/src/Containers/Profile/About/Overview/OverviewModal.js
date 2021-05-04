@@ -9,19 +9,19 @@ class OverviewModal extends React.Component {
     formData: {
       Name: {
         type: "Name",
-        value: "",
+        value: this.props.data!=null?this.props.data.Name:"",
       },
       DateOfBirth: {
         type: "DateOfBirth",
-        value: "",
+        value: this.props.data!=null?this.props.data.DateOfBirth:"",
       },
       Gender: {
         type: "Gender",
-        value: "",
+        value: this.props.data!=null?this.props.data.Gender:"",
       },
       Category: {
         type: "Category",
-        value: "",
+        value: this.props.data!=null?this.props.data.Category:"",
       },
     },
     loading: false,
@@ -72,10 +72,13 @@ class OverviewModal extends React.Component {
       .then((res) => {
         console.log(res.data);
 
+
         this.setState({
           loading: false,
           show: !this.state.show,
         });
+
+        this.props.forceReload();
       })
       .catch((err) => {
         console.log(err);
@@ -94,6 +97,7 @@ class OverviewModal extends React.Component {
   };
 
   render() {
+    console.log(this.props.data);
     let Loading = <Spinner/>;
     if (!this.state.loading) {
       Loading = (
@@ -126,6 +130,7 @@ class OverviewModal extends React.Component {
                   <Form.Control
                     type="Name"
                     placeholder="Enter Name"
+                    value={this.state.formData.Name.value}
                     required
                     onChange={(event, string) => {
                       this.inputChangeHandler(event, "Name");
@@ -140,6 +145,7 @@ class OverviewModal extends React.Component {
                   <Form.Control
                     type="date"
                     placeholder="Enter DOB"
+                    value={this.state.formData.Name.value}
                     required
                     onChange={(event, string) => {
                       this.inputChangeHandler(event, "DateOfBirth");
@@ -155,6 +161,7 @@ class OverviewModal extends React.Component {
                     type="Gender"
                     placeholder="Enter Gender"
                     required
+                    value={this.state.formData.Gender.value}
                     onChange={(event, string) => {
                       this.inputChangeHandler(event, "Gender");
                     }}
@@ -169,6 +176,7 @@ class OverviewModal extends React.Component {
                     type="Category"
                     placeholder="Enter Category"
                     required
+                    value={this.state.formData.Category.value}
                     onChange={(event, string) => {
                       this.inputChangeHandler(event, "Category");
                     }}

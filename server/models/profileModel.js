@@ -232,6 +232,10 @@ const profileSchema = new Schema({
   },
   Resumes: [{
     DocumentName: String,
+    dateOfCreation: {
+      type: Date,
+      default: Date.now,
+    },
     // FileLocation: String,
   }],
 });

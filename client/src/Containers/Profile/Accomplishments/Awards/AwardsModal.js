@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Form, Col, Row, InputGroup} from "react-bootstrap";
+import { Modal, Button, Form, Col, Row, InputGroup } from "react-bootstrap";
 import axios from "axios";
 import { connect } from "react-redux";
 
@@ -9,19 +9,19 @@ class AwardsModal extends React.Component {
     formData: {
       Title: {
         type: "Title",
-        value: "",
+        value: this.props.awards != null ? this.props.awards.Title : "",
       },
       Issuer: {
         type: "Issuer",
-        value: "",
+        value: this.props.awards != null ? this.props.awards.Issuer : "",
       },
       IssueDate: {
         type: "IssueDate",
-        value: "",
+        value: this.props.awards != null ? this.props.awards.IssueDate : "",
       },
       Description: {
         type: "Description",
-        value: "",
+        value: this.props.awards != null ? this.props.awards.Description : "",
       },
     },
     loading: false,
@@ -62,7 +62,7 @@ class AwardsModal extends React.Component {
 
     let postData = {
       formData: formData,
-      subHeader:'Awards',
+      subHeader: "Awards",
       profileId: this.props.profileId,
     };
 
@@ -76,6 +76,7 @@ class AwardsModal extends React.Component {
           loading: false,
           show: !this.state.show,
         });
+        this.props.forceReload();
       })
       .catch((err) => {
         console.log(err);
@@ -86,7 +87,6 @@ class AwardsModal extends React.Component {
         });
       });
   };
-
 
   handleShow = () => {
     this.setState({
@@ -108,32 +108,32 @@ class AwardsModal extends React.Component {
           <Modal.Body>
             <Form>
               <Form.Group as={Col} controlId="formGridAwardTitle">
-                  <Form.Row>
+                <Form.Row>
                   <Form.Label column="sm">Enter Award Title</Form.Label>
                   <Form.Control
-                      type="awardTitle"
-                      placeholder="Award Title"
-                      required
-                      size="sm"
-                      onChange={(event, string) => {
-                      this.inputChangeHandler(event, "awardTitle");
-                      }}
+                    type="awardTitle"
+                    placeholder="Award Title"
+                    required
+                    size="sm"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "Title");
+                    }}
                   />
-                  </Form.Row>
+                </Form.Row>
               </Form.Group>
               <Form.Group as={Col} controlId="formGridIssuerName">
-                  <Form.Row>
+                <Form.Row>
                   <Form.Label column="sm">Enter Issuer Name</Form.Label>
                   <Form.Control
-                      type="issuerName"
-                      placeholder="Enter Issuer Name"
-                      required
-                      size="sm"
-                      onChange={(event, string) => {
-                      this.inputChangeHandler(event, "issuerName");
-                      }}
+                    type="issuerName"
+                    placeholder="Enter Issuer Name"
+                    required
+                    size="sm"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "Issuer");
+                    }}
                   />
-                  </Form.Row>
+                </Form.Row>
               </Form.Group>
               <Form.Row>
                 <Row>
@@ -150,7 +150,7 @@ class AwardsModal extends React.Component {
                             required
                             size="sm"
                             onChange={(event, string) => {
-                              this.inputChangeHandler(event, "issueDate");
+                              this.inputChangeHandler(event, "IssueDate");
                             }}
                           />
                         </InputGroup.Append>
@@ -164,9 +164,15 @@ class AwardsModal extends React.Component {
                   <Form.Label htmlFor="" column="sm">
                     Project Details
                   </Form.Label>
-                  <textarea name="" id="" cols="60" rows="10" onChange={(event, string) => {
+                  <textarea
+                    name=""
+                    id=""
+                    cols="60"
+                    rows="10"
+                    onChange={(event, string) => {
                       this.inputChangeHandler(event, "Description");
-                    }}></textarea>
+                    }}
+                  ></textarea>
                 </Form.Row>
               </Form.Group>
             </Form>
