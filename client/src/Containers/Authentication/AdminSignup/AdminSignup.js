@@ -189,18 +189,24 @@ class AdminSignup extends React.Component {
               />
             </Form.Group>
 
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridBranch">
+            <Form.Group controlId="exampleForm.SelectCustom">
                 <Form.Label>Department</Form.Label>
                 <Form.Control
-                  placeholder="department"
-                  required
+                  as="select"
+                  custom
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "department");
+                    console.log("drop down is being read");
                   }}
-                />
+                >
+                  <option selected disabled hidden>
+                    Please Select an Option
+                  </option>
+                  <option eventkey="6">Infromation Technology</option>
+                  <option eventkey="7">Computer Science Engineering</option>
+                  <option eventkey="8">Computer Communication Engineering</option>
+                </Form.Control>
               </Form.Group>
-            </Form.Row>
             <Button variant="primary" onClick={this.onSubmitHandler}>
               Submit
             </Button>
