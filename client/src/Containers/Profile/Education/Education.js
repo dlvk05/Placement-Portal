@@ -65,8 +65,9 @@ class Education extends React.Component {
             </tr>
           </thead>
           <tr>
+            {/* {console.log(this.props.data.Current.Performance.[0].CGPA)} */}
             <td>CGPA</td>
-            <td>num1</td>
+            <td>num1 {/* {this.props.data.Current.Performance[0].CGPA} */}</td>
             <td>num2</td>
             <td>num3</td>
             <td>num4</td>
@@ -77,14 +78,14 @@ class Education extends React.Component {
           </tr>
           <tr>
             <td>SGPA</td>
-            <td>num1</td>
-            <td>num2</td>
-            <td>num3</td>
-            <td>num4</td>
-            <td>num5</td>
-            <td>num6</td>
-            <td>num7</td>
-            <td>num8</td>
+            <td>num9</td>
+            <td>num10</td>
+            <td>num11</td>
+            <td>num12</td>
+            <td>num13</td>
+            <td>num14</td>
+            <td>num15</td>
+            <td>num16</td>
           </tr>
           <tr>
             <td>Ongoing Backlogs</td>

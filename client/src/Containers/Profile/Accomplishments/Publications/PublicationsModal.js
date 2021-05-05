@@ -79,6 +79,7 @@ class PublicationsModal extends React.Component {
           loading: false,
           show: !this.state.show,
         });
+        this.props.forceReload();
       })
       .catch((err) => {
         console.log(err);
@@ -87,7 +88,6 @@ class PublicationsModal extends React.Component {
           loading: false,
           // show: !this.state.show,
         });
-        this.props.forceReload();
       });
   };
 
