@@ -71,7 +71,7 @@ class Profile extends Component {
   };
 
   componentDidMount() {
-    console.log("component DId mount called");
+    // console.log("component DId mount called");
     let url = ["/api/userProfile", this.props.profileId].join("/");
     // console.log(this.props.profileId);
     axios
@@ -85,6 +85,7 @@ class Profile extends Component {
         });
       })
       .catch((err) => {
+        console.log("error in loading ");
         console.log(err.data);
       });
   }

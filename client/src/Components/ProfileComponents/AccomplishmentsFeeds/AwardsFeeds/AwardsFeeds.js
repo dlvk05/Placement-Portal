@@ -2,7 +2,7 @@ import React from "react";
 // import AwardsModal from "../../../../Containers/Profile/Accomplishments/Awards/AwardsModal";
 
 const awardsFeeds = ( props ) => {
-  console.log(props.awards);
+  // console.log(props.awards);
   let feed = (
     <div>
       "No data"

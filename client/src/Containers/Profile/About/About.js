@@ -20,7 +20,7 @@ class About extends React.Component {
 
 
   render() {
-  console.log(this.props.data);
+  // console.log(this.props.data);
 
     return (
       <div style={styles}>
@@ -98,7 +98,8 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              {this.props.ContactDetails!=null?this.props.data.ContactDetails.ContactNo.value:"No data "}
+              {this.props.data.ContactDetails!=null && this.props.data.ContactNo !== undefined
+              ?this.props.data.ContactDetails.ContactNo.value:"No data "}
             </span>
           </Col>
         </Row>
@@ -110,7 +111,8 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              {this.props.ContactDetails!=null?this.props.data.ContactDetails.Email.value:"No data "}
+              {this.props.data.ContactDetails!=null && this.props.data.Email !== undefined
+              ?this.props.data.ContactDetails.Email.value:"No data "}
             </span>
           </Col>
         </Row>
@@ -122,7 +124,8 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              {this.props.ContactDetails!=null?this.props.data.ContactDetails.PersonalEmail.value:"No data "}
+              {this.props.data.ContactDetails!=null && this.props.data.PersonalEmail !== undefined
+              ?this.props.data.ContactDetails.PersonalEmail.value:"No data "}
             </span>
           </Col>
         </Row>

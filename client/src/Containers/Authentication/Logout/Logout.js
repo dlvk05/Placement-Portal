@@ -5,6 +5,7 @@ import * as actions from '../../../Redux/actions/index';
 
 class Logout extends Component {
     componentDidMount () {
+        console.log('logout loaded')
         this.props.onLogout();
     }
 

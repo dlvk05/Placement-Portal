@@ -165,8 +165,8 @@ class CurrentModal extends React.Component {
     index = index - 1;
     let updatedFilesArray = [...this.state.selectedFiles];
     updatedFilesArray[index].file = event.target.files[0];
-    console.log("file uploaded");
-    console.log(updatedFilesArray);
+    // console.log("file uploaded");
+    // console.log(updatedFilesArray);
 
     // Update the state
     this.setState({
@@ -185,8 +185,8 @@ class CurrentModal extends React.Component {
     //des updating the value in the selected input element
     updatedFormElement.value = event.target.value;
     updatedformData[inputIdentifier] = updatedFormElement;
-    console.log("inputChangeHandler");
-    console.log(updatedformData);
+    // console.log("inputChangeHandler");
+    // console.log(updatedformData);
 
     this.setState({
       formData: updatedformData,
@@ -203,8 +203,8 @@ class CurrentModal extends React.Component {
     updatedSemPerformance[inputIdentifier] = updatedValue;
     updatedPerformanceArray[index] = updatedSemPerformance;
 
-    console.log("performanceInputHandler");
-    console.log(updatedPerformanceArray);
+    // console.log("performanceInputHandler");
+    // console.log(updatedPerformanceArray);
 
     this.setState({
       ...this.state,
@@ -225,7 +225,6 @@ class CurrentModal extends React.Component {
 
     //adding performance array to formData
     formData.Performance = this.state.performance;
-    let selectedFile;
     // loop to add fileNames in formData
     this.state.selectedFiles.forEach((selectedFile) => {
       console.log(selectedFile);
@@ -236,7 +235,7 @@ class CurrentModal extends React.Component {
       }
     });
 
-    console.log("formData after adding fileNames");
+    // console.log("formData after adding fileNames");
     console.log(formData);
 
     let fileFormDatas = [];

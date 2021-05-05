@@ -53,7 +53,7 @@ class OverviewModal extends React.Component {
       ].value;
     }
 
-    console.log(formData);
+    // console.log(formData);
 
     this.setState({
       ...this.state,
@@ -97,7 +97,7 @@ class OverviewModal extends React.Component {
   };
 
   render() {
-    console.log(this.props.data);
+    // console.log(this.props.data);
     let Loading = <Spinner/>;
     if (!this.state.loading) {
       Loading = (
@@ -162,7 +162,7 @@ class OverviewModal extends React.Component {
                 // value={this.state.formData.Gender.value}
                 onChange={(event, string) => {
                   this.inputChangeHandler(event, "Gender");
-                  console.log("drop down is being read");
+                  // console.log("drop down is being read");
                 }}
               >
                 <option eventkey="NULL" selected disabled hidden>Please select an option</option>
@@ -179,7 +179,7 @@ class OverviewModal extends React.Component {
                 custom
                 onChange={(event, string) => {
                   this.inputChangeHandler(event, "Category");
-                  console.log("drop down is being read");
+                  // console.log("drop down is being read");
                 }}
               >
                 <option value="" selected disabled hidden>Please select an option</option>

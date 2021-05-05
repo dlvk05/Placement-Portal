@@ -12,16 +12,19 @@ const styles = {
   background: "white",
   padding: "5%",
   marginBottom: "30px",
-  borderRadius: "10px"
+  borderRadius: "10px",
 };
 
 class Education extends React.Component {
   render() {
+    console.log(this.props.data);
     return (
       <div style={styles}>
-        <span id="Current" style={{ fontSize: "20px" }}>Current</span>{" "}
+        <span id="Current" style={{ fontSize: "20px" }}>
+          Current
+        </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-            <CurrentModal/>
+          <CurrentModal forceReload={this.props.forceReload} />
         </span>
         <hr />
         <br />
@@ -29,19 +32,61 @@ class Education extends React.Component {
         {/* ^^^ this is where the Current Education subsection starts */}
         <Row>
           <Col xs={5}>
-            <span>Semester: {this.props.Current!=null?this.props.data.CurrentSemester:"not known"}</span> <br/>
-            <span>Registration Number: {this.props.Current!=null?this.props.data.RegNo:"not known"}</span> <br/>
-            <span>Department: {this.props.Current!=null?this.props.data.Department:"not known"}</span> <br/>
-            <span>Programme: {this.props.Current!=null?this.props.data.Programme:"not known"}</span> <br/>
-            <span>Start Date: {this.props.Current!=null?this.props.data.StartDate:"not known"}-- End Date: {this.props.Current!=null?this.props.data.EndDate:"not known"}</span> <br/>
+            <span>
+              Semester:{" "}
+              {this.props.data.Current != null
+                ? this.props.data.Current.CurrentSemester
+                : "not known"}
+            </span>{" "}
+            <br />
+            <span>
+              Registration Number:{" "}
+              {this.props.data.Current != null
+                ? this.props.data.Current.RegNo
+                : "not known"}
+            </span>{" "}
+            <br />
+            <span>
+              Department:{" "}
+              {this.props.data.Current != null
+                ? this.props.data.Current.Department
+                : "not known"}
+            </span>{" "}
+            <br />
+            <span>
+              Programme:{" "}
+              {this.props.data.Current != null
+                ? this.props.data.Current.Programme
+                : "not known"}
+            </span>{" "}
+            <br />
+            <span>
+              Start Date:{" "}
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.StartDate.slice(0, 10)
+                : "not known"}{" "}
+              -- End Date:{" "}
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.EndDate.slice(0, 10)
+                : "not known"}
+            </span>{" "}
+            <br />
           </Col>
           <Col>
-            <span style={{fontSize: "25px"}}>
-              CGPA: {this.props.Current!=null?this.props.data.CGPAScore:"not known"}
+            <span style={{ fontSize: "25px" }}>
+              CGPA:{" "}
+              {this.props.data.Current != null
+                ? this.props.data.Current.CGPAScore
+                : "not known"}
             </span>
-            <br/>
-            <span style={{fontSize: "25px"}}>
-              PERCENTAGE: {this.props.Current!=null?this.props.data.PercentageScore:"not known"}
+            <br />
+            <span style={{ fontSize: "25px" }}>
+              PERCENTAGE:{" "}
+              {this.props.data.Current != null
+                ? this.props.data.Current.PercentageScore
+                : "not known"}
             </span>
           </Col>
         </Row>
@@ -67,88 +112,304 @@ class Education extends React.Component {
           <tr>
             {/* {console.log(this.props.data.Current.Performance.[0].CGPA)} */}
             <td>CGPA</td>
-            <td>num1 {/* {this.props.data.Current.Performance[0].CGPA} */}</td>
-            <td>num2</td>
-            <td>num3</td>
-            <td>num4</td>
-            <td>num5</td>
-            <td>num6</td>
-            <td>num7</td>
-            <td>num8</td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[0].CGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[1].CGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[2].CGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[3].CGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[4].CGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[5].CGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[6].CGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[7].CGPA
+                : ""}
+            </td>
           </tr>
           <tr>
             <td>SGPA</td>
-            <td>num9</td>
-            <td>num10</td>
-            <td>num11</td>
-            <td>num12</td>
-            <td>num13</td>
-            <td>num14</td>
-            <td>num15</td>
-            <td>num16</td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[0].SGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[1].SGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[2].SGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[3].SGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[4].SGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[5].SGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[6].SGPA
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[7].SGPA
+                : ""}
+            </td>
           </tr>
           <tr>
             <td>Ongoing Backlogs</td>
-            <td>num</td>
-            <td>num</td>
-            <td>num</td>
-            <td>num</td>
-            <td>num</td>
-            <td>num</td>
-            <td>num</td>
-            <td>num</td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[0].BacklogOngoing
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[1].BacklogOngoing
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[2].BacklogOngoing
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[3].BacklogOngoing
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[4].BacklogOngoing
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[5].BacklogOngoing
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[6].BacklogOngoing
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[7].BacklogOngoing
+                : ""}
+            </td>
           </tr>
           <tr>
             <td>Total Backlogs</td>
-            <td>num</td>
-            <td>num</td>
-            <td>num</td>
-            <td>num</td>
-            <td>num</td>
-            <td>num</td>
-            <td>num</td>
-            <td>num</td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[0].BacklogTotal
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[1].BacklogTotal
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[2].BacklogTotal
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[3].BacklogTotal
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[4].BacklogTotal
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[5].BacklogTotal
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[6].BacklogTotal
+                : ""}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0
+                ? this.props.data.Current.Performance[7].BacklogTotal
+                : ""}
+            </td>
           </tr>
         </Table>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <span id="ClassXII" style={{ fontSize: "20px" }}>XII <sup>th</sup> Class / Equivalent</span>{" "}
+        <br />
+        <br />
+        <br />
+        <br />
+        <span id="ClassXII" style={{ fontSize: "20px" }}>
+          XII <sup>th</sup> Class / Equivalent
+        </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-            <XIIClassModal forceReload={this.props.forceReload}/>
+          <XIIClassModal forceReload={this.props.forceReload} />
         </span>
-        <hr/>
-        <br/>
+        <hr />
+        <br />
         <Row>
           <Col>
-            school Name: {this.props.Class12th!=null?this.props.data.School: "no data"} <br/>
-            Board: {this.props.Class12th!=null?this.props.data.Board: "no data"} <br/>
-            Subjects: {this.props.Class12th!=null?this.props.data.Branch: "no data"} <br/>
-            start Date: {this.props.Class12th!=null?this.props.data.StartDate: "no data"} --- End Date: {this.props.Class12th!=null?this.props.data.EndDate: "no data"}<br/>
+            School Name:
+            {this.props.data.Class12th != null &&
+            this.props.data.Class12th.School !== undefined
+              ? this.props.data.Class12th.School
+              : "no data"}
+            <br />
+            Board:
+            {this.props.data.Class12th != null &&
+            this.props.data.Class12th.Board !== undefined
+              ? this.props.data.Class12th.Board
+              : "no data"}
+            <br />
+            Branch:
+            {this.props.data.Class12th != null &&
+            this.props.data.Class12th.Branch !== undefined
+              ? this.props.data.Class12th.Branch
+              : "no data"}
+            <br />
+            start Date:
+            {this.props.data.Class12th != null &&
+            this.props.data.Class12th.StartDate !== undefined
+              ? this.props.data.Class12th.StartDate.slice(0, 10)
+              : "no data"}
+            --- End Date:
+            {this.props.data.Class12th != null &&
+            this.props.data.Class12th.EndDate !== undefined
+              ? this.props.data.Class12th.EndDate.slice(0, 10)
+              : "no data"}
+            <br />
           </Col>
-          <Col style={{fontSize: "25px"}}>
-            Score: {this.props.Class12th!=null?this.props.data.Score: "no data"}
+          <Col style={{ fontSize: "25px" }}>
+            Score:{" "}
+            {this.props.data.Class12th != null &&
+            this.props.data.Class12th.Score !== undefined
+              ? this.props.data.Class12th.Score
+              : "no data"}
           </Col>
         </Row>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <span id="ClassX" style={{ fontSize: "20px" }}>X <sup>th</sup> Class / Equivalent</span>{" "}
+        <br />
+        <br />
+        <br />
+        <br />
+        <span id="ClassX" style={{ fontSize: "20px" }}>
+          X <sup>th</sup> Class / Equivalent
+        </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-            <XClassModal/>
+          <XClassModal forceReload={this.props.forceReload}/>
         </span>
-        <hr/>
-        <br/>
+        <hr />
+        <br />
         <Row>
           <Col>
-            School Name: {this.props.Class10th!=null?this.props.data.School: "no data"} <br/>
-            Board: {this.props.Class10th!=null?this.props.data.Board: "no data"}<br/>
-            Start Date: {this.props.Class10th!=null?this.props.data.StartDate: "no data"} --- End Date: {this.props.Class10th!=null?this.props.data.EndDate: "no data"} <br/>
+            School Name:
+            {this.props.data.Class10th != null &&
+            this.props.data.Class10th.School !== undefined
+              ? this.props.data.Class10th.School
+              : "no data"}
+            <br />
+            Board:
+            {this.props.data.Class10th != null &&
+            this.props.data.Class10th.Board !== undefined
+              ? this.props.data.Class10th.Board
+              : "no data"}
+            <br />
+            Start Date:
+            {this.props.data.Class10th != null &&
+            this.props.data.Class10th.StartDate !== undefined
+              ? this.props.data.Class10th.StartDate.slice(0, 10)
+              : "no data"}
+            --- End Date:
+            {this.props.data.Class10th != null &&
+            this.props.data.Class10th.EndDate !== undefined
+              ? this.props.data.Class10th.EndDate.slice(0, 10)
+              : "no data"}
+            <br />
           </Col>
-          <Col style={{fontSize: "25px"}}>
-            Score: {this.props.Class10th!=null?this.props.data.Score: "no data"}
+          <Col style={{ fontSize: "25px" }}>
+            Score:{this.props.data.Class10th != null &&
+            this.props.data.Class10th.Score !== undefined
+              ? this.props.data.Class10th.Score
+              : "no data"}
           </Col>
         </Row>
       </div>
