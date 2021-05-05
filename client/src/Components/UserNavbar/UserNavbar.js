@@ -21,7 +21,7 @@ const userNavbar = () => {
           <Nav.Link href="/Profile" style={{ color: "#F2E7C4" }}>
             Profile
           </Nav.Link>
-          <Nav.Link href="/logout" style={{ color: "#F2E7C4" }}>
+          <Nav.Link href="/Logout" style={{ color: "#F2E7C4" }}>
             Logout
           </Nav.Link>
         </Nav>

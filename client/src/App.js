@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Route, Switch,Redirect } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "./Redux/actions/index";
 //Custom Components import
@@ -11,6 +11,7 @@ import UserLayout from "./HOC/UserLayout/UserLayout";
 import Logout from "./Containers/Authentication/Logout/Logout";
 import Profile from "./Containers/Profile/Profile";
 import AdminLogin from "./Containers/Authentication/AdminLogin/AdminLogin";
+import AdminLayout from "./HOC/AdminLayout/AdminLayout";
 
 class App extends React.Component {
   componentDidMount() {
@@ -30,7 +31,15 @@ class App extends React.Component {
 
     //des user is admin
     if (this.props.isAuthenticated && this.props.isAdmin) {
-      routes = <h1>Admin Logged In</h1>;
+      routes = (
+        <AdminLayout>
+          <Switch>
+
+            <Route path="/something" exact render={()=><h1>This is render</h1> }/>
+            <Route path="/Logout" exact component={Logout} />
+          </Switch>
+        </AdminLayout>
+      );
     }
 
     //des user is student

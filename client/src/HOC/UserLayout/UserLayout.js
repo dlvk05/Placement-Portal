@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import UserNavbar from "../../Components/UserNavbar/UserNavbar";
+
 class UserLayout extends Component {
   render() {
     return (

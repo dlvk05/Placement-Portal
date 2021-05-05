@@ -33,6 +33,7 @@ export const signupDone = () => {
 };
 
 export const logout = () => {
+  console.log('logout action called')
   //remove data in local storage
   localStorage.removeItem("token");
   localStorage.removeItem("expirationDate");
