@@ -9,19 +9,19 @@ class AddressModal extends React.Component {
     formData: {
       CompleteAddress: {
         type: "CompleteAddress",
-        value: "",
+        value: this.props.data!=null?this.props.data.CompleteAddress:"",
       },
       Pincode: {
         type: "Pincode",
-        value: "",
+        value: this.props.data!=null?this.props.data.Pincode:"",
       },
       State: {
         type: "State",
-        value: "",
+        value: this.props.data!=null?this.props.data.State:"",
       },
       City: {
         type: "City",
-        value: "",
+        value: this.props.data!=null?this.props.data.City:"",
       },
     },
     loading: false,
@@ -76,6 +76,7 @@ class AddressModal extends React.Component {
           loading: false,
           show: !this.state.show,
         });
+        this.props.forceReload();
       })
       .catch((err) => {
         console.log(err);
@@ -113,6 +114,7 @@ class AddressModal extends React.Component {
                     type="CompleteAddress"
                     placeholder="Enter CompleteAddress"
                     required
+                    value={this.state.formData.CompleteAddress.value}
                     onChange={(event, string) => {
                       this.inputChangeHandler(event, "CompleteAddress");
                     }}
@@ -127,6 +129,7 @@ class AddressModal extends React.Component {
                     type="Pincode"
                     placeholder="Enter Pincode"
                     required
+                    value={this.state.formData.Pincode.value}
                     onChange={(event, string) => {
                       this.inputChangeHandler(event, "Pincode");
                     }}
@@ -141,6 +144,7 @@ class AddressModal extends React.Component {
                     type="State"
                     placeholder="Enter State"
                     required
+                    value={this.state.formData.State.value}
                     onChange={(event, string) => {
                       this.inputChangeHandler(event, "State");
                     }}
@@ -155,6 +159,7 @@ class AddressModal extends React.Component {
                     type="City"
                     placeholder="Enter City"
                     required
+                    value={this.state.formData.City.value}
                     onChange={(event, string) => {
                       this.inputChangeHandler(event, "City");
                     }}

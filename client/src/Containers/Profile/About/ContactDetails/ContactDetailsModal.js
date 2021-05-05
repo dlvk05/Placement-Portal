@@ -9,15 +9,15 @@ class ContactDetailsModal extends React.Component {
     formData: {
       ContactNo: {
         type: "ContactNo",
-        value: "",
+        value: this.props.data!=null?this.props.data.ContactNo:"",
       },
       Email: {
         type: "Email",
-        value: "",
+        value: this.props.data!=null?this.props.data.Email:"",
       },
       PersonalEmail: {
         type: "PersonalEmail",
-        value: "",
+        value: this.props.data!=null?this.props.data.PersonalEmail:"",
       },
     },
     loading: false,
@@ -72,6 +72,7 @@ class ContactDetailsModal extends React.Component {
           loading: false,
           show: !this.state.show,
         });
+        this.props.forceReload();
       })
       .catch((err) => {
         console.log(err);
@@ -110,6 +111,7 @@ class ContactDetailsModal extends React.Component {
                     type="ContactNumber"
                     placeholder="Enter Contact Number"
                     required
+                    value={this.state.formData.ContactNo.value.value}
                     onChange={(event, string) => {
                       this.inputChangeHandler(event, "ContactNo");
                     }}
@@ -123,6 +125,7 @@ class ContactDetailsModal extends React.Component {
                   <Form.Control
                     type="Email"
                     placeholder="Enter Email"
+                    value={this.state.formData.Email.value.value}
                     required
                     onChange={(event, string) => {
                       this.inputChangeHandler(event, "Email");
@@ -138,6 +141,7 @@ class ContactDetailsModal extends React.Component {
                     type="PersonalEmail"
                     placeholder="Enter Personal Email"
                     required
+                    value={this.state.formData.PersonalEmail.value.value}
                     onChange={(event, string) => {
                       this.inputChangeHandler(event, "PersonalEmail");
                     }}

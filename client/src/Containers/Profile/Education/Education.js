@@ -29,19 +29,19 @@ class Education extends React.Component {
         {/* ^^^ this is where the Current Education subsection starts */}
         <Row>
           <Col xs={5}>
-            <span>Current Semester</span> <br/>
-            <span>Registration Number</span> <br/>
-            <span>Branch Name</span> <br/>
-            <span>Department</span> <br/>
-            <span>Duration 2017-2021</span> <br/>
+            <span>Semester: {this.props.Current!=null?this.props.data.CurrentSemester:"not known"}</span> <br/>
+            <span>Registration Number: {this.props.Current!=null?this.props.data.RegNo:"not known"}</span> <br/>
+            <span>Department: {this.props.Current!=null?this.props.data.Department:"not known"}</span> <br/>
+            <span>Programme: {this.props.Current!=null?this.props.data.Programme:"not known"}</span> <br/>
+            <span>Start Date: {this.props.Current!=null?this.props.data.StartDate:"not known"}-- End Date: {this.props.Current!=null?this.props.data.EndDate:"not known"}</span> <br/>
           </Col>
           <Col>
             <span style={{fontSize: "25px"}}>
-              "CGPA: NUMBER.NUMBER"
+              CGPA: {this.props.Current!=null?this.props.data.CGPAScore:"not known"}
             </span>
             <br/>
             <span style={{fontSize: "25px"}}>
-              "PERCENTAGE: NUMBER.NUMBER%"
+              PERCENTAGE: {this.props.Current!=null?this.props.data.PercentageScore:"not known"}
             </span>
           </Col>
         </Row>
@@ -65,8 +65,9 @@ class Education extends React.Component {
             </tr>
           </thead>
           <tr>
+            {/* {console.log(this.props.data.Current.Performance.[0].CGPA)} */}
             <td>CGPA</td>
-            <td>num1</td>
+            <td>num1 {/* {this.props.data.Current.Performance[0].CGPA} */}</td>
             <td>num2</td>
             <td>num3</td>
             <td>num4</td>
@@ -77,14 +78,14 @@ class Education extends React.Component {
           </tr>
           <tr>
             <td>SGPA</td>
-            <td>num1</td>
-            <td>num2</td>
-            <td>num3</td>
-            <td>num4</td>
-            <td>num5</td>
-            <td>num6</td>
-            <td>num7</td>
-            <td>num8</td>
+            <td>num9</td>
+            <td>num10</td>
+            <td>num11</td>
+            <td>num12</td>
+            <td>num13</td>
+            <td>num14</td>
+            <td>num15</td>
+            <td>num16</td>
           </tr>
           <tr>
             <td>Ongoing Backlogs</td>
@@ -115,19 +116,19 @@ class Education extends React.Component {
         <br/>
         <span id="ClassXII" style={{ fontSize: "20px" }}>XII <sup>th</sup> Class / Equivalent</span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-            <XIIClassModal/>
+            <XIIClassModal forceReload={this.props.forceReload}/>
         </span>
         <hr/>
         <br/>
         <Row>
           <Col>
-            *School Name* <br/>
-            *Board e.g. CBSE* <br/>
-            *Subjects e.g. Physics-Chemistry-Maths* <br/>
-            *duration e.g. 2016-2017* <br/>
+            school Name: {this.props.Class12th!=null?this.props.data.School: "no data"} <br/>
+            Board: {this.props.Class12th!=null?this.props.data.Board: "no data"} <br/>
+            Subjects: {this.props.Class12th!=null?this.props.data.Branch: "no data"} <br/>
+            start Date: {this.props.Class12th!=null?this.props.data.StartDate: "no data"} --- End Date: {this.props.Class12th!=null?this.props.data.EndDate: "no data"}<br/>
           </Col>
           <Col style={{fontSize: "25px"}}>
-            *Percentage Scored or CGPA*
+            Score: {this.props.Class12th!=null?this.props.data.Score: "no data"}
           </Col>
         </Row>
         <br/>
@@ -142,12 +143,12 @@ class Education extends React.Component {
         <br/>
         <Row>
           <Col>
-            *School Name* <br/>
-            *Board e.g. CBSE* <br/>
-            *duration e.g. 2014-2015* <br/>
+            School Name: {this.props.Class10th!=null?this.props.data.School: "no data"} <br/>
+            Board: {this.props.Class10th!=null?this.props.data.Board: "no data"}<br/>
+            Start Date: {this.props.Class10th!=null?this.props.data.StartDate: "no data"} --- End Date: {this.props.Class10th!=null?this.props.data.EndDate: "no data"} <br/>
           </Col>
           <Col style={{fontSize: "25px"}}>
-            *Percentage Scored*
+            Score: {this.props.Class10th!=null?this.props.data.Score: "no data"}
           </Col>
         </Row>
       </div>

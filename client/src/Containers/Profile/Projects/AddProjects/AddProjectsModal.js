@@ -117,6 +117,7 @@ class AddProjectsModal extends React.Component {
           });
           console.log(res1);
           console.log(res2);
+          this.props.forceReload();
         })
       )
       .catch(

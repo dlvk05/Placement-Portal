@@ -1,5 +1,5 @@
 import React from "react";
-import AwardsModal from "../../../../Containers/Profile/Accomplishments/Awards/AwardsModal";
+// import AwardsModal from "../../../../Containers/Profile/Accomplishments/Awards/AwardsModal";
 
 const awardsFeeds = ( props ) => {
   console.log(props.awards);
@@ -33,7 +33,8 @@ const awardsFeeds = ( props ) => {
         <span>
           <i class="fas fa-pen-square fa-lg">
             {" "}
-            <AwardsModal awards={props.awards}name="edit" forceReload={props.forceReload} />
+            EDIT
+            {/* <AwardsModal awards={props.awards}name="edit" forceReload={props.forceReload} /> */}
           </i>{" "}
           | <i class="fas fa-trash-alt fa-lg"> Delete</i>
         </span>

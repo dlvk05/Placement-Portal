@@ -223,18 +223,22 @@ class Signup extends React.Component {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridBranch">
-                <Form.Label>Department</Form.Label>
-                <Form.Control
-                  placeholder="Department"
-                  required
-                  onChange={(event, string) => {
-                    this.inputChangeHandler(event, "department");
-                  }}
-                />
-              </Form.Group>
-            </Form.Row>
+            <Form.Group controlId="exampleForm.SelectCustom">
+              <Form.Label>Department</Form.Label>
+              <Form.Control
+                as="select"
+                custom
+                onChange={(event, string) => {
+                  this.inputChangeHandler(event, "department");
+                  console.log("drop down is being read");
+                }}
+              >
+                <option selected disabled hidden>Please Select an Option</option>
+                <option eventkey="6">IT</option>
+                <option eventkey="7">CSE</option>
+                <option eventkey="8">CCE</option>
+              </Form.Control>
+            </Form.Group>
             <Form.Row>
               <Form.Group as={Col} controlId="formGridProgram">
                 <Form.Label>Program</Form.Label>
@@ -248,7 +252,7 @@ class Signup extends React.Component {
               </Form.Group>
             </Form.Row>
             <Form.Group controlId="exampleForm.SelectCustom">
-              <Form.Label>Custom select</Form.Label>
+              <Form.Label>Semester</Form.Label>
               <Form.Control
                 as="select"
                 custom
@@ -257,6 +261,7 @@ class Signup extends React.Component {
                   console.log("drop down is being read");
                 }}
               >
+                <option eventkey="6" selected disabled hidden>Please Select an Option</option>
                 <option eventkey="6">6</option>
                 <option eventkey="7">7</option>
                 <option eventkey="8">8</option>

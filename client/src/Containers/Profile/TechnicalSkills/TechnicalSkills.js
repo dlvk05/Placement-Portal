@@ -16,6 +16,8 @@ const styles = {
 };
 
 class TechnicalSkills extends React.Component{
+  
+
   state={
     TechnicalSkills: [
       {
@@ -36,12 +38,12 @@ class TechnicalSkills extends React.Component{
         <div style={styles}>
         <span id="TechnicalSkills"style={{ fontSize: "20px" }}>Technical Skills</span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-            <AddTechnicalSkillsModal name="Add Skills"/>
+            <AddTechnicalSkillsModal name="Add Skills" forceReload={this.props.forceReload}/>
         </span>
         <hr />
         <br />
         <br />
-        {this.state.TechnicalSkills!==""?<TechnicalSkillsFeed technicalSkills={this.state.TechnicalSkills}/>:"there are no skills to display"}
+        {this.props.data!==""?<TechnicalSkillsFeed technicalSkills={this.props.data}/>: "there are no skills to display"}
         </div>
     );
   }

@@ -110,6 +110,7 @@ class AddTechnicalSkillsModal extends React.Component {
           });
           console.log(res1);
           console.log(res2);
+          this.props.forceReload();
         })
       )
       .catch(
@@ -170,6 +171,7 @@ class AddTechnicalSkillsModal extends React.Component {
                       console.log("drop down is being read");
                     }}
                   >
+                    <option selected disabled hidden>Please Choose an Option</option>
                     <option eventkey="Beginner">Beginner</option>
                     <option eventkey="Novice">Novice</option>
                     <option eventkey="Intermediate">Intermediate</option>

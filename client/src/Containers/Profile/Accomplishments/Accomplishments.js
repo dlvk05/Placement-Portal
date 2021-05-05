@@ -116,14 +116,14 @@ class Accomplishments extends React.Component {
           Certifications
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <CertificationsModal name="Add Certification Info" />
+          <CertificationsModal certs={this.props.data.Certifications} forceReload={this.props.forceReload} name="Add Certification Info" />
         </span>
         <hr />
         <br />
         <br />
         {this.state.Accomplishments.Certifications !== "" ? (
           <CertificationsFeed
-            certs={this.state.Accomplishments.Certifications}
+          certs={this.props.data.Certifications}
           />
         ) : (
           "there is nothing to display"
@@ -137,14 +137,14 @@ class Accomplishments extends React.Component {
           Competition Details
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <CompetitionsModal name="Add Competitions Info" />
+          <CompetitionsModal name="Add Competitions Info" forceReload={this.props.forceReload} />
         </span>
         <hr />
         <br />
         <br />
         {this.state.Accomplishments.Competitions !== "" ? (
           <CompetitionsFeed
-            competitions={this.state.Accomplishments.Competitions}
+            competitions={this.props.data.Competitions}
           />
         ) : (
           "there is nothing to display"
@@ -158,14 +158,14 @@ class Accomplishments extends React.Component {
           Confrence Details
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <ConferencesModal name="Add Conferences Info" />
+          <ConferencesModal name="Add Conferences Info" forceReload={this.props.forceReload}/>
         </span>
         <hr />
         <br />
         <br />
         {this.state.Accomplishments.Conferences !== "" ? (
           <ConferencesFeed
-            conferences={this.state.Accomplishments.Conferences}
+            conferences={this.props.data.Conferences}
           />
         ) : (
           "there is nothing to dispaly"
@@ -179,13 +179,13 @@ class Accomplishments extends React.Component {
           Test Scores
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <TestScoresModal name="Add Test Score Info" />
+          <TestScoresModal forceReload={this.props.forceReload} name="Add Test Score Info" />
         </span>
         <hr />
         <br />
         <br />
         {this.state.Accomplishments.TestScores !== "" ? (
-          <TestScoresFeed testscores={this.state.Accomplishments.TestScores} />
+          <TestScoresFeed testscores={this.props.data.TestScores} />
         ) : (
           "there is nothing to display"
         )}
@@ -198,13 +198,13 @@ class Accomplishments extends React.Component {
           Publications
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <PublicationsModal name="Add Publications Info" />
+          <PublicationsModal forceReload={this.props.forceReload} name="Add Publications Info" />
         </span>
         <hr />
         <br />
         <br />
         {this.state.Accomplishments.Publications !== "" ? (
-          <PublicationsFeed pubs={this.state.Accomplishments.Publications} />
+          <PublicationsFeed pubs={this.props.data.Publications} />
         ) : (
           "there is nothing to display"
         )}
@@ -217,14 +217,14 @@ class Accomplishments extends React.Component {
           Scholarships
         </span>{" "}
         <span style={{ float: "right", fontSize: "20px" }}>
-          <ScholarshipsModal name="Add Scholarship Info" />
+          <ScholarshipsModal forceReload={this.props.forceReload} name="Add Scholarship Info" />
         </span>
         <hr />
         <br />
         <br />
         {this.state.Accomplishments.Scholarships !== "" ? (
           <ScholarshipsFeed
-            scholarships={this.state.Accomplishments.Scholarships}
+            scholarships={this.props.data.Scholarships}
           />
         ) : (
           "there is nothing to display"

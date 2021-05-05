@@ -121,6 +121,7 @@ class AddResumesModal extends React.Component {
           });
           console.log(res1);
           console.log(res2);
+          this.props.forceReload();
         })
       )
       .catch(
@@ -156,10 +157,10 @@ class AddResumesModal extends React.Component {
             <Form>
               <Form.Group as={Col} controlId="formGridResumeTitle">
                 <Form.Row>
-                  <Form.Label column="sm">Enter Resume Title</Form.Label>
+                  <Form.Label column="sm">Enter Resume Title With its File Extension</Form.Label>
                   <Form.Control
                     type="resumeTitle"
-                    placeholder="Resume Title"
+                    placeholder="e.g. Resume1.pdf"
                     required
                     size="sm"
                     onChange={(event, string) => {

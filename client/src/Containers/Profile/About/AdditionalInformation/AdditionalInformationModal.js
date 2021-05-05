@@ -7,24 +7,24 @@ class AdditionalInformationModal extends React.Component {
     show: false,
     formData: {
       StudentWhatsappNo: {
-        type: "CompleteAddress",
-        value: "",
+        type: "StudentWhatsappNo",
+        value: this.props.data!=null?this.props.data.StudentWhatsappNo:"",
       },
       FatherName: {
         type: "FatherName",
-        value: "",
+        value: this.props.data!=null?this.props.data.FatherName:"",
       },
       FatherContactNo: {
         type: "FatherContactNo",
-        value: "",
+        value: this.props.data!=null?this.props.data.FatherContactNo:"",
       },
       FatherOccupation: {
         type: "FatherOccupation",
-        value: "",
+        value: this.props.data!=null?this.props.data.FatherOccupation:"",
       },
       FatherEmail: {
         type: "FatherEmail",
-        value: "",
+        value: this.props.data!=null?this.props.data.FatherEmail:"",
       },
     },
     loading: false,
@@ -79,6 +79,7 @@ class AdditionalInformationModal extends React.Component {
           loading: false,
           show: !this.state.show,
         });
+        this.props.forceReload()
       })
       .catch((err) => {
         console.log(err);
@@ -117,6 +118,7 @@ class AdditionalInformationModal extends React.Component {
                       type="StudentWhatsaapNumber"
                       placeholder="WhatsAap Number"
                       required
+                      value={this.state.formData.StudentWhatsappNo.value}
                       size="sm"
                       onChange={(event, string) => {
                       this.inputChangeHandler(event, "StudentWhatsappNo");
@@ -131,6 +133,7 @@ class AdditionalInformationModal extends React.Component {
                       type="FatherName"
                       placeholder="Enter Father's Name"
                       required
+                      value={this.state.formData.FatherName.value}
                       size="sm"
                       onChange={(event, string) => {
                       this.inputChangeHandler(event, "FatherName");
@@ -144,6 +147,7 @@ class AdditionalInformationModal extends React.Component {
                   <Form.Control
                       type="FatherContactNumber"
                       placeholder="Contact Number"
+                      value={this.state.formData.FatherContactNo.value}
                       required
                       size="sm"
                       onChange={(event, string) => {
@@ -158,6 +162,7 @@ class AdditionalInformationModal extends React.Component {
                   <Form.Control
                       type="FatherOccupation"
                       placeholder="Occupation"
+                      value={this.state.formData.FatherOccupation.value}
                       required
                       size="sm"
                       onChange={(event, string) => {
@@ -173,6 +178,7 @@ class AdditionalInformationModal extends React.Component {
                       type="FatherEmail"
                       placeholder="Email Address"   
                       required
+                      value={this.state.formData.FatherEmail.value}
                       size="sm"
                       onChange={(event, string) => {
                       this.inputChangeHandler(event, "FatherEmail");
