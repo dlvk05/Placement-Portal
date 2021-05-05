@@ -5,7 +5,7 @@ import PersonalSummaryModal from "./PersonalSummaryModal/PersonalSummaryModal";
 class PersonalSummary extends React.Component {
   render() {
     // console.log(this.props.summary);
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <div className={styles.wrapper} id="Summary">
         <div className={styles.halfcolor}>

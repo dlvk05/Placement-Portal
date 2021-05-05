@@ -85,6 +85,7 @@ class Profile extends Component {
         });
       })
       .catch((err) => {
+        console.log("error in loading ");
         console.log(err.data);
       });
   }

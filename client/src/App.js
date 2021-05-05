@@ -25,7 +25,6 @@ class App extends React.Component {
         <Route path="/Signup" exact component={Signup} />
         <Route path="/AdminSignup" exact component={AdminSignup} />
         <Route path="/Profile" exact component={Profile} />
-        <Redirect to="/Login"/>
       </Switch>
     );
 
