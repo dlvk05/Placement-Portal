@@ -12,6 +12,7 @@ const Admin=require("../models/adminModel");
 // @desc Register admin
 // @access Public
 router.post("/signupAdmin", (req, res) => {
+  console.log('signupAdmin called');
     Admin.findOne({ email: req.body.email }).then((admin) => {
     if (admin) {
       //des email already exists
@@ -54,6 +55,7 @@ router.post("/signupAdmin", (req, res) => {
 // @desc Login admin and return JWT token
 // @access Public
 router.post("/loginAdmin", (req, res) => {
+  console.log('loginAdmin called');
   const email = req.body.email;
   const password = req.body.password;
   console.log(email);

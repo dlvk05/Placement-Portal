@@ -68,7 +68,7 @@ class Login extends React.Component {
     }
 
     console.log(formData);
-    this.props.onUserLogin(formData);
+    this.props.onAdminLogin(formData);
     this.setState({
       ...this.state,
       loading: true,
@@ -152,8 +152,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onUserLogin: (userData) =>
-      dispatch(actions.userLogin(userData.email, userData.password)),
+    onAdminLogin: (userData) =>
+      dispatch(actions.adminLogin(userData.email, userData.password)),
     onErrorReset: () => dispatch(actions.authErrorReset()),
   };
 };
