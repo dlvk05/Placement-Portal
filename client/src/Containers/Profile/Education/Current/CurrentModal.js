@@ -338,6 +338,46 @@ class CurrentModal extends React.Component {
               </Form.Row>
               <Form.Row>
                 <Form.Group controlId="exampleForm.SelectCustom">
+                  <Form.Label column="sm">Department</Form.Label>
+                  <Form.Control
+                    as="select"
+                    custom
+                    size="sm"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "Department");
+                      console.log("drop down is being read");
+                    }}
+                  >
+                    <option eventkey="none" selected disabled hidden>Please select an Option</option>
+                    <option eventkey="2">Infromation Technology</option>
+                    <option eventkey="3">Computer Science Engineering</option>
+                    <option eventkey="4">Computer Communication Engineering</option>
+                    
+                  </Form.Control>
+                </Form.Group>
+              </Form.Row>
+              <Form.Row>
+                <Form.Group controlId="exampleForm.SelectCustom">
+                  <Form.Label column="sm">Programme</Form.Label>
+                  <Form.Control
+                    as="select"
+                    custom
+                    size="sm"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "Programme");
+                      console.log("drop down is being read");
+                    }}
+                  >
+                    <option eventkey="none" selected disabled hidden>Please Select an Option</option>
+                    <option eventkey="2">Bachlor of Technology</option>
+                    <option eventkey="3">Master Technology</option>
+                    <option eventkey="3">Master of Business Administration</option>
+                  </Form.Control>
+                </Form.Group>
+              </Form.Row>
+
+              <Form.Row>
+                <Form.Group controlId="exampleForm.SelectCustom">
                   <Form.Label column="sm">Current Semester</Form.Label>
                   <Form.Control
                     as="select"
@@ -348,6 +388,7 @@ class CurrentModal extends React.Component {
                       console.log("drop down is being read");
                     }}
                   >
+                    <option eventkey="1" selected disabled hidden>Please select an Option</option>
                     <option eventkey="1">1</option>
                     <option eventkey="2">2</option>
                     <option eventkey="3">3</option>

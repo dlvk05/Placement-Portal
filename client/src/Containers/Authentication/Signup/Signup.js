@@ -6,7 +6,6 @@ import styles from "./Signup.module.css";
 import * as actions from "../../../Redux/actions/index";
 
 class Signup extends React.Component {
-
   state = {
     formData: {
       firstName: {
@@ -62,11 +61,11 @@ class Signup extends React.Component {
       this.props.onErrorReset();
     }
 
-    if(this.state.loading){
+    if (this.state.loading) {
       this.setState({
         ...this.state,
         loading: false,
-      })
+      });
     }
 
     const updatedformData = {
@@ -129,151 +128,164 @@ class Signup extends React.Component {
       <div className={styles.section3}>
         <div className={styles.section4}>
           <div>
-            <strong><u>Student Registration</u></strong>
-            <hr/>
-          <Form>
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridFirstName">
-                <Form.Label>First Name</Form.Label>
+            <strong>
+              <u>Student Registration</u>
+            </strong>
+            <hr />
+            <Form>
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridFirstName">
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control
+                    type="FirstName"
+                    placeholder="Enter FirstName"
+                    required
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "firstName");
+                    }}
+                  />
+                </Form.Group>
+
+                <Form.Group as={Col} controlId="formGridLastName">
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control
+                    type="LastName"
+                    placeholder="LastName"
+                    required
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "lastName");
+                    }}
+                  />
+                </Form.Group>
+              </Form.Row>
+
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridEmail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    as="input"
+                    type="email"
+                    placeholder="Enter email"
+                    required
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "email");
+                    }}
+                  />
+                </Form.Group>
+              </Form.Row>
+
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    required
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "password");
+                    }}
+                  />
+                </Form.Group>
+              </Form.Row>
+
+              <Form.Row>
+                <Form.Group as={Col} controlId="formGridConfirmPassword">
+                  <Form.Label>Confirm Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    required
+                    placeholder="Confirm Password"
+                  />
+                </Form.Group>
+              </Form.Row>
+
+              <Form.Group controlId="formGridRegistrationNumber">
+                <Form.Label>RegistrationNumber</Form.Label>
                 <Form.Control
-                  type="FirstName"
-                  placeholder="Enter FirstName"
+                  placeholder="17930XXXX"
                   required
                   onChange={(event, string) => {
-                    this.inputChangeHandler(event, "firstName");
+                    this.inputChangeHandler(event, "regNo");
                   }}
                 />
               </Form.Group>
 
-              <Form.Group as={Col} controlId="formGridLastName">
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  type="LastName"
-                  placeholder="LastName"
+              <Form.Group controlId="formGridMobileNumber">
+                <Form.Label>Mobile Number</Form.Label>
+                <Form.Control /* ^^^ fix this weird invalid/valid problem */
+                  placeholder="Mobile Number"
                   required
                   onChange={(event, string) => {
-                    this.inputChangeHandler(event, "lastName");
+                    this.inputChangeHandler(event, "mobileNo");
                   }}
                 />
+                <Form.Control.Feedback type="invalid">
+                  Please enter a valid mobile no.
+                </Form.Control.Feedback>
               </Form.Group>
-            </Form.Row>
 
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridEmail">
-                <Form.Label>Email</Form.Label>
+              <Form.Group controlId="exampleForm.SelectCustom">
+                <Form.Label>Department</Form.Label>
                 <Form.Control
-                  as="input"
-                  type="email"
-                  placeholder="Enter email"
-                  required
+                  as="select"
+                  custom
                   onChange={(event, string) => {
-                    this.inputChangeHandler(event, "email");
+                    this.inputChangeHandler(event, "department");
+                    console.log("drop down is being read");
                   }}
-                />
+                >
+                  <option selected disabled hidden>
+                    Please Select an Option
+                  </option>
+                  <option eventkey="6">Infromation Technology</option>
+                  <option eventkey="7">Computer Science Engineering</option>
+                  <option eventkey="8">Computer Communication Engineering</option>
+                </Form.Control>
               </Form.Group>
-            </Form.Row>
-
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>Password</Form.Label>
+              <Form.Group controlId="exampleForm.SelectCustom">
+                <Form.Label>Programme</Form.Label>
                 <Form.Control
-                  type="password"
-                  placeholder="Password"
-                  required
+                  as="select"
+                  custom
                   onChange={(event, string) => {
-                    this.inputChangeHandler(event, "password");
+                    this.inputChangeHandler(event, "Programme");
+                    console.log("drop down is being read");
                   }}
-                />
+                >
+                  <option eventkey="none" selected disabled hidden>
+                    Please Select an Option
+                  </option>
+                  <option eventkey="2">Bachlor of Technology</option>
+                  <option eventkey="3">Master Technology</option>
+                  <option eventkey="3">Master of Business Administration</option>
+                </Form.Control>
               </Form.Group>
-            </Form.Row>
-
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridConfirmPassword">
-                <Form.Label>Confirm Password</Form.Label>
+              <Form.Group controlId="exampleForm.SelectCustom">
+                <Form.Label>Semester</Form.Label>
                 <Form.Control
-                  type="password"
-                  required
-                  placeholder="Confirm Password"
-                />
-              </Form.Group>
-            </Form.Row>
-
-            <Form.Group controlId="formGridRegistrationNumber">
-              <Form.Label>RegistrationNumber</Form.Label>
-              <Form.Control
-                placeholder="17930XXXX"
-                required
-                onChange={(event, string) => {
-                  this.inputChangeHandler(event, "regNo");
-                }}
-              />
-            </Form.Group>
-
-            <Form.Group controlId="formGridMobileNumber">
-              <Form.Label>Mobile Number</Form.Label>
-              <Form.Control /* ^^^ fix this weird invalid/valid problem */
-                placeholder="Mobile Number"
-                required
-                onChange={(event, string) => {
-                  this.inputChangeHandler(event, "mobileNo");
-                }}
-              />
-              <Form.Control.Feedback type="invalid">
-                Please enter a valid mobile no.
-              </Form.Control.Feedback>
-            </Form.Group>
-
-            <Form.Group controlId="exampleForm.SelectCustom">
-              <Form.Label>Department</Form.Label>
-              <Form.Control
-                as="select"
-                custom
-                onChange={(event, string) => {
-                  this.inputChangeHandler(event, "department");
-                  console.log("drop down is being read");
-                }}
-              >
-                <option selected disabled hidden>Please Select an Option</option>
-                <option eventkey="6">IT</option>
-                <option eventkey="7">CSE</option>
-                <option eventkey="8">CCE</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Row>
-              <Form.Group as={Col} controlId="formGridProgram">
-                <Form.Label>Program</Form.Label>
-                <Form.Control
-                  placeholder="Programme"
-                  required
+                  as="select"
+                  custom
                   onChange={(event, string) => {
-                    this.inputChangeHandler(event, "programme");
+                    this.inputChangeHandler(event, "semester");
+                    console.log("drop down is being read");
                   }}
-                />
+                >
+                  <option eventkey="6" selected disabled hidden>
+                    Please Select an Option
+                  </option>
+                  <option eventkey="6">6</option>
+                  <option eventkey="7">7</option>
+                  <option eventkey="8">8</option>
+                </Form.Control>
               </Form.Group>
-            </Form.Row>
-            <Form.Group controlId="exampleForm.SelectCustom">
-              <Form.Label>Semester</Form.Label>
-              <Form.Control
-                as="select"
-                custom
-                onChange={(event, string) => {
-                  this.inputChangeHandler(event, "semester");
-                  console.log("drop down is being read");
-                }}
-              >
-                <option eventkey="6" selected disabled hidden>Please Select an Option</option>
-                <option eventkey="6">6</option>
-                <option eventkey="7">7</option>
-                <option eventkey="8">8</option>
-              </Form.Control>
-            </Form.Group>
-            {spinner}
-          </Form>
+              {spinner}
+            </Form>
           </div>
         </div>
         <div className={styles.dope}>
-          <h1 className={styles.h1}><u>MUJ</u>  <br/>
-            Inspired  <br/>  by  <br/>  Life.
+          <h1 className={styles.h1}>
+            <u>MUJ</u> <br />
+            Inspired <br /> by <br /> Life.
           </h1>
         </div>
       </div>
