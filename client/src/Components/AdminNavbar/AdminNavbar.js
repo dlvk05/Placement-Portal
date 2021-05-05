@@ -1,7 +1,7 @@
 import React from "react";
 import { Nav, Navbar, NavDropdown } from "react-bootstrap";
 
-const userNavbar = () => {
+const adminNavbar = () => {
   let x = (<i class="far fa-user-circle fa-2x"></i>)
   return (
     <div>
@@ -16,10 +16,10 @@ const userNavbar = () => {
             Home
           </Nav.Link>
           <Nav.Link href="#JobProfiles" style={{ color: "#F2E7C4" }}>
-            Job Profiles
+            Job Profile Form
           </Nav.Link>
           <Nav.Link href="/Profile" style={{ color: "#F2E7C4" }}>
-            Profile
+            Reports
           </Nav.Link>
           <Nav.Link href="/logout" style={{ color: "#F2E7C4" }}>
             Logout
@@ -28,7 +28,7 @@ const userNavbar = () => {
         <div style={{ color: "white", marginRight: "70px" }}>
           {/* ^^^ you have to edit this dropdown properly later */}
         <NavDropdown title={x} style={{color: "white"}}>
-        <NavDropdown.Item href="#action/3.1">Acount Info</NavDropdown.Item>
+        <NavDropdown.Item href="#action/3.1">Account Info</NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item href="/Logout">Logout</NavDropdown.Item>
       </NavDropdown>
@@ -38,4 +38,4 @@ const userNavbar = () => {
   );
 };
 
-export default userNavbar;
+export default adminNavbar;

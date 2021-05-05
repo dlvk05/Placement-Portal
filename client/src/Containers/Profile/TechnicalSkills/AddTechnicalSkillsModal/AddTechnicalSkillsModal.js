@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, Form, Row, Col, InputGroup } from "react-bootstrap";
+import { Modal, Button, Form,Col} from "react-bootstrap";
 import axios from "axios";
 import { connect } from "react-redux";
 class AddTechnicalSkillsModal extends React.Component {

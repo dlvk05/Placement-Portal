@@ -1,5 +1,5 @@
 import React from "react";
-import AddPositionsOfResponsibilityModal from "../../../Containers/Profile/PositionsOfResponsibility/AddPositionsOfResponsibility/AddPositionsOfResponsibilityModal";
+// import AddPositionsOfResponsibilityModal from "../../../Containers/Profile/PositionsOfResponsibility/AddPositionsOfResponsibility/AddPositionsOfResponsibilityModal";
 
 const positionsOfResponsibilityFeed = (props) => {
   let feed = "there is no data"

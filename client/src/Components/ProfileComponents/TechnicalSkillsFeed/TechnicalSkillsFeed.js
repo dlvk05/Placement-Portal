@@ -1,5 +1,5 @@
 import React from "react";
-import AddTechnicalSkillsModal from "../../../Containers/Profile/TechnicalSkills/AddTechnicalSkillsModal/AddTechnicalSkillsModal";
+// import AddTechnicalSkillsModal from "../../../Containers/Profile/TechnicalSkills/AddTechnicalSkillsModal/AddTechnicalSkillsModal";
 
 const technicalSkillsFeed = (props) => {
   let feed = "nothing to display"
