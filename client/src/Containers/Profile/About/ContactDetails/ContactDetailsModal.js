@@ -9,15 +9,15 @@ class ContactDetailsModal extends React.Component {
     formData: {
       ContactNo: {
         type: "ContactNo",
-        value: this.props.data!=null?this.props.data.ContactNo:"",
+        value: this.props.data!=null?this.props.data.ContactNo.value:"",
       },
       Email: {
         type: "Email",
-        value: this.props.data!=null?this.props.data.Email:"",
+        value: this.props.data!=null?this.props.data.Email.value:"",
       },
       PersonalEmail: {
         type: "PersonalEmail",
-        value: this.props.data!=null?this.props.data.PersonalEmail:"",
+        value: this.props.data!=null?this.props.data.PersonalEmail.value:"",
       },
     },
     loading: false,
