@@ -13,6 +13,7 @@ import Profile from "./Containers/Profile/Profile";
 import AdminLogin from "./Containers/Authentication/AdminLogin/AdminLogin";
 import AdminLayout from "./HOC/AdminLayout/AdminLayout";
 import Updates from "./Containers/Adminfunctionalities/Updates/Updates";
+import JobProfileForm from "./Containers/Adminfunctionalities/JobProfileForm/JobProfileForm";
 
 class App extends React.Component {
   componentDidMount() {
@@ -38,6 +39,7 @@ class App extends React.Component {
 
             <Route path="/something" exact render={()=><h1>This is render</h1> }/>
             <Route path="/Updates" exact component={Updates}/>
+            <Route path="/JobProfileForm" exact component={JobProfileForm}/>
             <Route path="/Logout" exact component={Logout} />
           </Switch>
         </AdminLayout>

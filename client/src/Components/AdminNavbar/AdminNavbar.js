@@ -14,7 +14,7 @@ const adminNavbar = (props) => {
           <Nav.Link href="/Updates" style={{ color: "#F2E7C4" }}>
             Updates
           </Nav.Link>
-          <Nav.Link href="#JobProfiles" style={{ color: "#F2E7C4" }}>
+          <Nav.Link href="/JobProfileForm" style={{ color: "#F2E7C4" }}>
             Job Profile Form
           </Nav.Link>
           <Nav.Link href="/Profile" style={{ color: "#F2E7C4" }}>
