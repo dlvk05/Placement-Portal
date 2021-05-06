@@ -58,7 +58,7 @@ router.get("/downloadFile", (req, res) => {
   let header = req.query.header;
   let subHeader = req.query.subHeader;
   let fileName = req.query.fileName;
-  if (subHeader != "null") {
+  if (subHeader != null) {
     path = [
       "../uploads",
       folderName,

@@ -2,12 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 //Schema
-const jpbProfileSchema = new Schema({
+const jobProfileSchema = new Schema({
   createdOn: {
     type: Date,
     default: Date.now,
   },
   adminAccount: { type: Schema.Types.ObjectId, ref: "adminAccounts" },
+  ApplicationDeadLine: Date,
   JobProfileTitle: String,
   CompanyName: String,
   Location: String,
@@ -53,12 +54,12 @@ const jpbProfileSchema = new Schema({
     Backlogs: Number,
     ProgrammesAllowed: [
       {
-        ProgrammeName: String,
+        type: String,
       },
     ],
     BranchesAllowed: [
       {
-        BranchName: String,
+        type: String,
       },
     ],
     UGScoreRequired: Number, //in CGPA
@@ -88,6 +89,6 @@ const jpbProfileSchema = new Schema({
   ],
 });
 
-JobProfile = mongoose.model("jobProfiles", jonProfileSchema);
+JobProfile = mongoose.model("jobProfiles", jobProfileSchema);
 
 module.exports = JobProfile;

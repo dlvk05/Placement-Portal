@@ -20,6 +20,8 @@ const styles = {
 
 class Education extends React.Component {
   onFileDownload = (subHeader, fileName) => {
+    console.log("onFileDownload called");
+
     axios({
       url: "/api/downloadFile",
       method: "GET",
