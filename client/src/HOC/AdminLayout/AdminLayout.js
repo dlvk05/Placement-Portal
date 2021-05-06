@@ -5,7 +5,7 @@ class AdminLayout extends Component {
     return (
       <Fragment>
         <AdminNavbar/>
-          <main>{this.props.children}</main>;
+          <main>{this.props.children}</main>
       </Fragment>
     );
   }

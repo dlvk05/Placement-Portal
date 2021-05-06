@@ -248,7 +248,7 @@ class Signup extends React.Component {
                   as="select"
                   custom
                   onChange={(event, string) => {
-                    this.inputChangeHandler(event, "Programme");
+                    this.inputChangeHandler(event, "programme");
                     console.log("drop down is being read");
                   }}
                 >

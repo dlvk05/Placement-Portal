@@ -141,8 +141,8 @@ class AddTechnicalSkillsModal extends React.Component {
         </a>
 
         <Modal show={this.state.show} onHide={this.handleShow}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add Internship or Work Experience </Modal.Title>
+          <Modal.Header closeButton>   
+            <Modal.Title>Add Skill</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>

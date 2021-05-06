@@ -19,7 +19,6 @@ const styles = {
 };
 
 class Education extends React.Component {
-
   onFileDownload = (subHeader, fileName) => {
     axios({
       url: "/api/downloadFile",
@@ -36,25 +35,6 @@ class Education extends React.Component {
       fileDownload(response.data, fileName);
     });
   };
-
-  // <Col style={{ fontSize: "25px" }}>
-  //           File:{" "}
-  //           {this.props.data.Class12th != null &&
-  //           this.props.data.Class12th.MarksheetProvided !== false ? (
-  //             <span
-  //               onClick={() =>
-  //                 this.onFileDownload(
-  //                   "Class12th",
-  //                   this.props.data.Class12th.FileName
-  //                 )
-  //               }
-  //             >
-  //               {this.props.data.Class12th.FileName}
-  //             </span>
-  //           ) : (
-  //             "no file"
-  //           )}
-  //         </Col>
 
   render() {
     console.log(this.props.data);
@@ -354,6 +334,153 @@ class Education extends React.Component {
                 : ""}
             </td>
           </tr>
+          <tr>
+            <td>Files</td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0 &&
+              this.props.data.Current.Performance[0].MarksheetProvided !==
+                false ? (
+                <i
+                  class="fas fa-download"
+                  onClick={() =>
+                    this.onFileDownload(
+                      "Current",
+                      this.props.data.Current.Performance[0].FileName
+                    )
+                  }
+                ></i>
+              ) : (
+                "No File"
+              )}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0 &&
+              this.props.data.Current.Performance[1].MarksheetProvided !==
+                false ? (
+                <i
+                  class="fas fa-download"
+                  onClick={() =>
+                    this.onFileDownload(
+                      "Current",
+                      this.props.data.Current.Performance[1].FileName
+                    )
+                  }
+                ></i>
+              ) : (
+                "No File"
+              )}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0 &&
+              this.props.data.Current.Performance[2].MarksheetProvided !==
+                false ? (
+                <i
+                  class="fas fa-download"
+                  onClick={() =>
+                    this.onFileDownload(
+                      "Current",
+                      this.props.data.Current.Performance[2].FileName
+                    )
+                  }
+                ></i>
+              ) : (
+                "No File"
+              )}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0 &&
+              this.props.data.Current.Performance[3].MarksheetProvided !==
+                false ? (
+                <i
+                  class="fas fa-download"
+                  onClick={() =>
+                    this.onFileDownload(
+                      "Current",
+                      this.props.data.Current.Performance[3].FileName
+                    )
+                  }
+                ></i>
+              ) : (
+                "No File"
+              )}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0 &&
+              this.props.data.Current.Performance[4].MarksheetProvided !==
+                false ? (
+                <i
+                  class="fas fa-download"
+                  onClick={() =>
+                    this.onFileDownload(
+                      "Current",
+                      this.props.data.Current.Performance[4].FileName
+                    )
+                  }
+                ></i>
+              ) : (
+                "No File"
+              )}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0 &&
+              this.props.data.Current.Performance[5].MarksheetProvided !==
+                false ? (
+                <i
+                  class="fas fa-download"
+                  onClick={() =>
+                    this.onFileDownload(
+                      "Current",
+                      this.props.data.Current.Performance[5].FileName
+                    )
+                  }
+                ></i>
+              ) : (
+                "No File"
+              )}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0 &&
+              this.props.data.Current.Performance[6].MarksheetProvided !==
+                false ? (
+                <i
+                  class="fas fa-download"
+                  onClick={() =>
+                    this.onFileDownload(
+                      "Current",
+                      this.props.data.Current.Performance[6].FileName
+                    )
+                  }
+                ></i>
+              ) : (
+                "No File"
+              )}
+            </td>
+            <td>
+              {this.props.data.Current != null &&
+              this.props.data.Current.Performance.length > 0 &&
+              this.props.data.Current.Performance[7].MarksheetProvided !==
+                false ? (
+                <i
+                  class="fas fa-download"
+                  onClick={() =>
+                    this.onFileDownload(
+                      "Current",
+                      this.props.data.Current.Performance[7].FileName
+                    )
+                  }
+                ></i>
+              ) : (
+                "No File"
+              )}
+            </td>
+          </tr>
         </Table>
         <br />
         <br />
@@ -398,6 +525,22 @@ class Education extends React.Component {
               ? this.props.data.Class12th.EndDate.slice(0, 10)
               : "no data"}
             <br />
+            File:{" "}
+            {this.props.data.Class12th != null &&
+            this.props.data.Class12th.MarksheetProvided !== false ? (
+              <span
+                onClick={() =>
+                  this.onFileDownload(
+                    "Class12th",
+                    this.props.data.Class12th.FileName
+                  )
+                }
+              >
+                {this.props.data.Class12th.FileName}
+              </span>
+            ) : (
+              "no file"
+            )}
           </Col>
           <Col style={{ fontSize: "25px" }}>
             Score:{" "}
@@ -406,7 +549,6 @@ class Education extends React.Component {
               ? this.props.data.Class12th.Score
               : "no data"}
           </Col>
-          
         </Row>
         <br />
         <br />
@@ -445,6 +587,22 @@ class Education extends React.Component {
               ? this.props.data.Class10th.EndDate.slice(0, 10)
               : "no data"}
             <br />
+            File:{" "}
+            {this.props.data.Class10th != null &&
+            this.props.data.Class10th.MarksheetProvided !== false ? (
+              <span
+                onClick={() =>
+                  this.onFileDownload(
+                    "Class10th",
+                    this.props.data.Class10th.FileName
+                  )
+                }
+              >
+                {this.props.data.Class12th.FileName}
+              </span>
+            ) : (
+              "no file"
+            )}
           </Col>
           <Col style={{ fontSize: "25px" }}>
             Score:

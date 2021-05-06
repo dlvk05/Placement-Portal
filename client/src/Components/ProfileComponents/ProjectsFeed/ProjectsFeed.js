@@ -31,6 +31,9 @@ if(props.projects!=null){
       <span>{currentProject.Description}</span>
       <br />
       <br />
+      <br />
+      <br />
+      <span onClick={() => alert("File has been submitted")}>File: {currentProject.DocumentProvided!==false?currentProject.FileName:"no File"}</span>
       <hr />
       <span>
       <i
