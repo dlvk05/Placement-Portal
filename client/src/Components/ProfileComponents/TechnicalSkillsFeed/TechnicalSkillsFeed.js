@@ -20,7 +20,7 @@ const technicalSkillsFeed = (props) => {
         <br />
         <br />
         <br />
-        <span onClick={() => alert("File has been submitted")}>File: {currentSkill.DocumentProvided!==false?currentSkill.FileName:"no File"}</span>
+        <span>File: {currentSkill.DocumentProvided!==false? <i class="fas fa-download" onClick={() => alert("Clicked")}> {currentSkill.FileName} </i> :"no File"}</span>
         <hr />
         <span>
           <i

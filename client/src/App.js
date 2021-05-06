@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch} from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "./Redux/actions/index";
 //Custom Components import

@@ -13,8 +13,8 @@ const resumesFeed = (props) => {
             </span>
           </Col>
           <Col>
-            <span style={{ fontSize: "20px" }} onClick={() => alert("Resume Clicked")}>
-            {currentResume.DocumentName}
+            <span style={{ fontSize: "20px" }}>
+            <i class="fas fa-download" onClick={() => alert("Resume Clicked")}>{currentResume.DocumentName}</i>
             </span>
             <br />
             <span>{currentResume.dateOfCreation}</span>
