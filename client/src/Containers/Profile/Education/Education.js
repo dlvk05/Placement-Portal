@@ -536,7 +536,8 @@ class Education extends React.Component {
                   )
                 }
               >
-                {this.props.data.Class12th.FileName}
+                <i class="fas fa-download">
+                {this.props.data.Class12th.FileName}</i>
               </span>
             ) : (
               "no file"
@@ -598,7 +599,8 @@ class Education extends React.Component {
                   )
                 }
               >
-                {this.props.data.Class12th.FileName}
+                <i class="fas fa-download">
+                {this.props.data.Class12th.FileName}</i>
               </span>
             ) : (
               "no file"
