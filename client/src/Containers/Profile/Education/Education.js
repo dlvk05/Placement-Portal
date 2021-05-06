@@ -15,6 +15,9 @@ const styles = {
   borderRadius: "10px",
 };
 
+
+
+
 class Education extends React.Component {
   render() {
     console.log(this.props.data);
@@ -365,6 +368,13 @@ class Education extends React.Component {
             this.props.data.Class12th.Score !== undefined
               ? this.props.data.Class12th.Score
               : "no data"}
+          </Col>
+          <Col style={{ fontSize: "25px" }}>
+            File:{" "}
+            {this.props.data.Class12th != null &&
+            this.props.data.Class12th.MarksheetProvided !== false
+              ? <a href="#" onClick={()=>alert('yo')}>{this.props.data.Class12th.FileName}</a>
+              : "no file"}
           </Col>
         </Row>
         <br />
