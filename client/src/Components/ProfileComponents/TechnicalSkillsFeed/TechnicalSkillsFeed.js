@@ -18,6 +18,9 @@ const technicalSkillsFeed = (props) => {
         <br />
         <span>{currentSkill.Proficiency}</span> <br />
         <br />
+        <br />
+        <br />
+        <span onClick={() => alert("File has been submitted")}>File: {currentSkill.DocumentProvided!==false?currentSkill.FileName:"no File"}</span>
         <hr />
         <span>
           <i
