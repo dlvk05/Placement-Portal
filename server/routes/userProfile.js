@@ -50,15 +50,31 @@ router.post("/uploadFile", uploadStorage.single("file"), async (req, res) => {
 
 //route to download a file from server
 router.get("/downloadFile", (req, res) => {
-  let path = [
-    "../uploads",
-    req.body.folderName,
-    req.body.profileId,
-    req.body.header,
-    req.body.subHeader,
-    req.body.fileName,
-  ].join("/");
+  console.log("/api/downloadFile called");
+  console.log(req.query);
+  let path = null;
+  let folderName = req.query.folderName;
+  let profileId = req.query.profileId;
+  let header = req.query.header;
+  let subHeader = req.query.subHeader;
+  let fileName = req.query.fileName;
+  if (subHeader != "null") {
+    path = [
+      "../uploads",
+      folderName,
+      profileId,
+      header,
+      subHeader,
+      fileName,
+    ].join("/");
+  } else {
+    path = ["../uploads", folderName, profileId, header, fileName].join("/");
+  }
+  console.log("path is");
+  console.log(path);
   res.download(path, (err) => {
+    
+    console.log("error occurred in res.download");
     console.log(err);
   });
 });
@@ -68,18 +84,18 @@ const UserProfile = require("../models/profileModel");
 
 //get user profile
 router.get("/userProfile/:id", (req, res) => {
-  console.log('get profile route contacted');
+  console.log("get profile route contacted");
   console.log(req.params.id);
   UserProfile.findById(req.params.id)
     .populate("userAccount")
     .then((profile) => {
       if (!profile) {
-        console.log('profile not found');
+        console.log("profile not found");
         return res
           .status(404)
           .json({ Error: "profile not found in the database" });
       }
-      console.log('profile  found');
+      console.log("profile  found");
       res.json({
         success: true,
         profile: profile,
