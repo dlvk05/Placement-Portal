@@ -1,0 +1,30 @@
+.wrapper {
+  display: flex;
+  background: aliceblue;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.innerDiv {
+  border: solid 2px slategray;
+  border-radius: 10px;
+  width: 80%;
+  height: 80%;
+  padding: 30px;
+}
+
+.titleDiv {
+  width: 50%;
+}
+
+.quillDiv {
+  margin: 1rem 4rem;
+  min-height: 300px;
+}
+
+.quillItself {
+    height: 500px;
+    background-color: azure;
+}
+

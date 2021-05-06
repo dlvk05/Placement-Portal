@@ -11,8 +11,8 @@ const adminNavbar = (props) => {
           <u>Placement Portal</u>
         </Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="#home" style={{ color: "#F2E7C4" }}>
-            Home
+          <Nav.Link href="/Updates" style={{ color: "#F2E7C4" }}>
+            Updates
           </Nav.Link>
           <Nav.Link href="#JobProfiles" style={{ color: "#F2E7C4" }}>
             Job Profile Form

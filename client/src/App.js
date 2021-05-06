@@ -12,6 +12,7 @@ import Logout from "./Containers/Authentication/Logout/Logout";
 import Profile from "./Containers/Profile/Profile";
 import AdminLogin from "./Containers/Authentication/AdminLogin/AdminLogin";
 import AdminLayout from "./HOC/AdminLayout/AdminLayout";
+import Updates from "./Containers/Adminfunctionalities/Updates/Updates";
 
 class App extends React.Component {
   componentDidMount() {
@@ -36,6 +37,7 @@ class App extends React.Component {
           <Switch>
 
             <Route path="/something" exact render={()=><h1>This is render</h1> }/>
+            <Route path="/Updates" exact component={Updates}/>
             <Route path="/Logout" exact component={Logout} />
           </Switch>
         </AdminLayout>
