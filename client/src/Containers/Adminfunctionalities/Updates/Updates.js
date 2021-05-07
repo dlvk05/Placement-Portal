@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Col, Button } from "react-bootstrap";
+import { Form, Col, Button, Row } from "react-bootstrap";
 import styles from "./Updates.module.css";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -64,13 +64,15 @@ class Updates extends React.Component {
           <br />
           <br />
           <hr />
-          <div >
-          <Form.Group as={Col}>
+          <div>
+            <Row>
+              <Form.Group as={Col}>
+                  <Form.Label><u><b>Upload Relevant Document</b></u></Form.Label>
                 <Form.Row>
-                  <Form.Label column="sm">Upload Relevant Document</Form.Label>
                   <Form.File Placeholder="Upload Doc" size="sm" />
                 </Form.Row>
               </Form.Group>
+            </Row>
           </div>
           <br />
           <Button

@@ -193,7 +193,23 @@ class JobProfileForm extends React.Component {
                   />
                 </Form.Row>
               </Form.Group>
-            </div>
+                </div>
+              <div className={styles.formDiv}>
+                <Form.Group as={Col} controlId="formGridCompanyRepresentativeMailId">
+                  <Form.Row>
+                  <Form.Label column="sm">Company Representative Email Id</Form.Label>
+                  <Form.Control
+                    type="CompanyRepresentativeMailId"
+                    placeholder="Email Id"
+                    required
+                    size="sm"
+                    onChange={(event, string) => {
+                    this.inputChangeHandler(event, "CompanyRepresentativeMailId");
+                    }}
+                  />
+                  </Form.Row>
+                </Form.Group>
+              </div>
           </Row>
           <Row>
             <Col xs="auto" className="my-1">
