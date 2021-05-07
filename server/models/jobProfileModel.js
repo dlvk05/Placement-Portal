@@ -9,6 +9,7 @@ const jobProfileSchema = new Schema({
   },
   adminAccount: { type: Schema.Types.ObjectId, ref: "adminAccounts" },
   ApplicationDeadLine: Date,
+  CompanyRepresentativeMailId: String,
   JobProfileTitle: String,
   CompanyName: String,
   Location: String,
