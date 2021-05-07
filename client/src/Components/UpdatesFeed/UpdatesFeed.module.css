@@ -1,9 +1,10 @@
 .wrapper{
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     background-color: aliceblue;
-    background-size: cover;
+    /* background-size: cover; */
+    height: 100vh;
 }
 
 .subdiv{

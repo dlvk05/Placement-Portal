@@ -15,3 +15,8 @@
     margin: 10px;
     padding: 10px;
 }
+
+.toolbardiv{
+    border-right:2px solid silver;
+    height: fit-content;
+}
