@@ -3,16 +3,6 @@ import { Form, Col, Row, Button } from "react-bootstrap";
 import styles from "./JobProfileForm.module.css";
 
 class JobProfileForm extends React.Component {
-  /* workflowStages = [{StageNo: 0,StageTitle: "initial stage"}, {StageNo: 1,StageTitle: "first stage"}, {StageNo: 2,StageTitle: "second stage"}];
-
-     showWorkflowStages = () => {
-         let stagesCollection = this.workflowStages.map((currentStage, i) =>(
-             <div key={i}>
-                 <div>{currentStage.StageNo}</div>
-                 <div>{currentStage.StageTitle}</div>
-             </div>
-         ))
-     } */
   state = {
     StageList: [],
     stage: {
@@ -26,7 +16,6 @@ class JobProfileForm extends React.Component {
   };
 
   addStage = () => {
-    // let currentList = this.state.list;
     var updatedStageList = [...this.state.StageList];
     console.log(updatedStageList);
     var updatedItem = this.state.stage;
@@ -44,17 +33,13 @@ class JobProfileForm extends React.Component {
         StageDescription: { value: "" },
       },
     });
-    // this.state.Stagelist.push(this.state.stage)
-
     console.log(this.state.StageList);
   };
 
   stageInputHandler(event, inputIdentifier) {
-    // var  updatedElement = [];
 
     var updatedStageItem = { ...this.state.stage };
     updatedStageItem[inputIdentifier].value = event.target.value;
-    // updatedElement[0].inputIdentifier = updatedStageItem
     console.log(updatedStageItem);
     this.setState({
       stage: updatedStageItem,
@@ -191,6 +176,21 @@ class JobProfileForm extends React.Component {
                       Internship (Unpaid)
                     </option>
                   </Form.Control>
+                </Form.Row>
+              </Form.Group>
+            </div>
+          </Row>
+          <Row>
+          <div className={styles.formDiv}>
+              <Form.Group as={Col}>
+                <Form.Row>
+                  <Form.Label column="sm">Application Dead Line</Form.Label>
+                  <Form.Control
+                    type="date"
+                    placeholder="Application Dead Line"
+                    required
+                    size="sm"
+                  />
                 </Form.Row>
               </Form.Group>
             </div>

@@ -63,6 +63,15 @@ class Updates extends React.Component {
           <br />
           <br />
           <br />
+          <hr />
+          <div >
+          <Form.Group as={Col}>
+                <Form.Row>
+                  <Form.Label column="sm">Upload Relevant Document</Form.Label>
+                  <Form.File Placeholder="Upload Doc" size="sm" />
+                </Form.Row>
+              </Form.Group>
+          </div>
           <br />
           <Button
             variant="primary"
@@ -74,6 +83,7 @@ class Updates extends React.Component {
             Submit{" "}
           </Button>
           {/* <div dangerouslySetInnerHTML={this.createMarkup()}></div> */}
+          {/* {this.state.text.info} */}
         </div>
       </div>
     );
