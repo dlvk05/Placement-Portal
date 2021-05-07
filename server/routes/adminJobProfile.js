@@ -8,6 +8,7 @@ const fs = require("fs-extra");
 const JobProfile = require("../models/jobProfileModel");
 const UserProfile = require("../models/profileModel");
 
+
 // get all job profiles
 router.get("/getAllJobProfiles", (req, res) => {
   JobProfile.find({}).then((foundJobProfiles) => {
