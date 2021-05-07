@@ -1,10 +1,31 @@
 import React from "react";
 // import AddTechnicalSkillsModal from "../../../Containers/Profile/TechnicalSkills/AddTechnicalSkillsModal/AddTechnicalSkillsModal";
+import axios from "axios";
+import { connect } from "react-redux";
+var fileDownload = require("js-file-download");
 
 const technicalSkillsFeed = (props) => {
-  let feed = "nothing to display"
-  if(props.technicalSkills!=null){
-     feed = props.technicalSkills.map((currentSkill, i) => (
+  const onFileDownload = (subHeader, fileName) => {
+    console.log("onFileDownload called");
+    axios({
+      url: "/api/downloadFile",
+      method: "GET",
+      params: {
+        folderName: "Profile",
+        profileId: props.profileId,
+        header: "TechnicalSkills",
+        subHeader: subHeader,
+        fileName: fileName,
+      },
+      responseType: "blob", // Important
+    }).then((response) => {
+      fileDownload(response.data, fileName);
+    });
+  };
+
+  let feed = "nothing to display";
+  if (props.technicalSkills != null) {
+    feed = props.technicalSkills.map((currentSkill, i) => (
       <div
         style={{
           border: "groove 2px",
@@ -20,16 +41,24 @@ const technicalSkillsFeed = (props) => {
         <br />
         <br />
         <br />
-        <span>File: {currentSkill.DocumentProvided!==false? <i class="fas fa-download" onClick={() => alert("Clicked")}> {currentSkill.FileName} </i> :"no File"}</span>
+        <span>
+          File:{" "}
+          {currentSkill.DocumentProvided !== false ? (
+            <i
+              class="fas fa-download"
+              onClick={() => onFileDownload(null, currentSkill.FileName)}
+            >
+              {" "}
+              {currentSkill.FileName}{" "}
+            </i>
+          ) : (
+            "no File"
+          )}
+        </span>
         <hr />
         <span>
-          <i
-            class="fas fa-pen-square fa-lg"
-          >
-            {" "}
-            Edit
-          </i>{" "}
-          | <i class="fas fa-trash-alt fa-lg"> Delete</i>
+          <i class="fas fa-pen-square fa-lg"> Edit</i> |{" "}
+          <i class="fas fa-trash-alt fa-lg"> Delete</i>
         </span>
       </div>
     ));
@@ -37,4 +66,10 @@ const technicalSkillsFeed = (props) => {
   return feed;
 };
 
-export default technicalSkillsFeed;
+const mapStateToProps = (state) => {
+  return {
+    profileId: state.userAuth.profileId,
+  };
+};
+
+export default connect(mapStateToProps)(technicalSkillsFeed);

@@ -13,6 +13,7 @@ const checkAdmin=require('./utills/checkAdmin');
 const userAuth = require("./routes/userAuth");
 const userProfile = require('./routes/userProfile');
 const adminAuth = require('./routes/adminAuth');
+const adminJobProfile=require('./routes/adminJobProfile');
 
 const app = express();
 
@@ -47,6 +48,7 @@ require("./config/passport")(passport);
 app.use("/api", userAuth);
 app.use("/api", userProfile);
 app.use("/api", adminAuth);
+app.use("/api", adminJobProfile);
 
 
 app.get(
