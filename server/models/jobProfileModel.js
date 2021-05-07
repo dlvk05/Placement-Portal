@@ -33,7 +33,7 @@ const jpbProfileSchema = new Schema({
       StageNo: Number,
       StageTitle: String,
       StageVenue: String,
-      StartData: Date,
+      StartDate: Date,
       EndDate: Date,
       StageDescription: String,
       Selects: [

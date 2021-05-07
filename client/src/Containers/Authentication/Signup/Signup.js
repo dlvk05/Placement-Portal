@@ -77,6 +77,7 @@ class Signup extends React.Component {
     //des updating the value in the selected input element
     updatedFormElement.value = event.target.value;
     updatedformData[inputIdentifier] = updatedFormElement;
+    console.log(updatedformData);
 
     this.setState({
       formData: updatedformData,

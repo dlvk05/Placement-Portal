@@ -13,11 +13,53 @@ class JobProfileForm extends React.Component {
              </div>
          ))
      } */
-  state = { list: [] };
+  state = {
+    StageList: [],
+    stage: {
+      StageNo: { value: "" },
+      StageTitle: { value: "" },
+      StageVenue: { value: "" },
+      StartDate: { value: "" },
+      EndDate: { value: "" },
+      StageDescription: { value: "" },
+    },
+  };
 
   addStage = () => {
     // let currentList = this.state.list;
+    var updatedStageList = [...this.state.StageList];
+    console.log(updatedStageList);
+    var updatedItem = this.state.stage;
+    updatedStageList.push(updatedItem);
+    console.log(updatedStageList);
+
+    this.setState({
+      StageList: updatedStageList,
+      stage: {
+        StageNo: { value: "" },
+        StageTitle: { value: "" },
+        StageVenue: { value: "" },
+        StartDate: { value: "" },
+        EndDate: { value: "" },
+        StageDescription: { value: "" },
+      },
+    });
+    // this.state.Stagelist.push(this.state.stage)
+
+    console.log(this.state.StageList);
   };
+
+  stageInputHandler(event, inputIdentifier) {
+    // var  updatedElement = [];
+
+    var updatedStageItem = { ...this.state.stage };
+    updatedStageItem[inputIdentifier].value = event.target.value;
+    // updatedElement[0].inputIdentifier = updatedStageItem
+    console.log(updatedStageItem);
+    this.setState({
+      stage: updatedStageItem,
+    });
+  }
 
   render() {
     return (
@@ -29,7 +71,7 @@ class JobProfileForm extends React.Component {
           <hr />
           <br />
           <br />
-          <h5>Basic Information</h5>
+          <h5>Basic Information</h5> {/* ^^^ Basic Info starts here */}
           <hr />
           <Row>
             <div className={styles.formDiv}>
@@ -155,19 +197,19 @@ class JobProfileForm extends React.Component {
           </Row>
           <Row>
             <Col xs="auto" className="my-1">
-              <Form.Check
-                type="checkbox"
-                id="customControlAutosizing"
-                label="Dream Job (Check for YES)"
-                custom
-              />
+              <Form.Group controlId="formBasicCheckbox">
+                <Form.Check
+                  type="checkbox"
+                  label="Dream Job? (Check for YES)"
+                />
+              </Form.Group>
             </Col>
           </Row>
           <hr />
           <br />
           <br />
           <br />
-          <h5>Job Opening Overview</h5>
+          <h5>Job Opening Overview</h5> {/* ^^^ Job opening starts here */}
           <hr />
           <Row>
             <div className={styles.formDiv}>
@@ -273,7 +315,7 @@ class JobProfileForm extends React.Component {
           <br />
           <br />
           <br />
-          <h5>About The Company</h5>
+          <h5>About The Company</h5> {/* ^^^ About the company starts here */}
           <hr />
           <Row>
             <div className={styles.formDiv}>
@@ -323,33 +365,159 @@ class JobProfileForm extends React.Component {
           <br />
           <br />
           <br />
-          {/* ^^^ This needs to be implemented properly */}
-          <h5>Hiring Workflow</h5>
+          {/* !!! This needs to be implemented properly */}
+          <h5>Hiring Workflow</h5> {/* ^^^ Hiring workflow starts here */}
           <hr />
           <Row>
-            <div>
-              <Form.Group as={Col} controlId="formGridHiringStage">
+            <div className={styles.formDiv}>
+              <Form.Group as={Col} controlId="formGridStageNo">
                 <Form.Row>
-                  <Form.Label column="sm">Hiring Stage Info</Form.Label>
+                  <Form.Label column="sm">Stage Number</Form.Label>
                   <Form.Control
-                    type="HiringStage"
-                    placeholder="Info"
+                    type="StageNo"
+                    placeholder="e.g. 1, 2, 3, ..."
                     required
                     size="sm"
+                    value={this.state.stage.StageNo.value}
                     onChange={(event, string) => {
-                      this.inputChangeHandler(event, "HiringStage");
+                      this.stageInputHandler(event, "StageNo");
                     }}
                   />
                 </Form.Row>
               </Form.Group>
             </div>
             {/* <i class="fas fa-plus-square fa-lg"></i> Add Workflow Stage{" "} */}
+            <div className={styles.formDiv}>
+              <Form.Group as={Col} controlId="formGridStageTitle">
+                <Form.Row>
+                  <Form.Label column="sm">Enter Stage Title</Form.Label>
+                  <Form.Control
+                    type="StageTitle"
+                    placeholder="e.g. Interview, Test, etc..."
+                    required
+                    value={this.state.stage.StageTitle.value}
+                    size="sm"
+                    onChange={(event, string) => {
+                      this.stageInputHandler(event, "StageTitle");
+                    }}
+                  />
+                </Form.Row>
+              </Form.Group>
+            </div>
+            <div className={styles.formDiv}>
+              <Form.Group as={Col} controlId="formGridStageVenue">
+                <Form.Row>
+                  <Form.Label column="sm">Enter Stage Venue</Form.Label>
+                  <Form.Control
+                    type="StageVenue"
+                    placeholder="e.g. Jaipur, Mumbai, etc..."
+                    required
+                    value={this.state.stage.StageVenue.value}
+                    size="sm"
+                    onChange={(event, string) => {
+                      this.stageInputHandler(event, "StageVenue");
+                    }}
+                  />
+                </Form.Row>
+              </Form.Group>
+            </div>
           </Row>
+          <Row>
+            <div className={styles.formDiv}>
+              <Form.Group as={Col}>
+                <Form.Row>
+                  <Form.Label column="sm">Start Date</Form.Label>
+                  <Form.Control
+                    type="date"
+                    placeholder="Stage Start Date"
+                    value={this.state.stage.StartDate.value}
+                    required
+                    size="sm"
+                    onChange={(event, string) => {
+                      this.stageInputHandler(event, "StartDate");
+                    }}
+                  />
+                </Form.Row>
+              </Form.Group>
+            </div>
+            <div className={styles.formDiv}>
+              <Form.Group as={Col}>
+                <Form.Row>
+                  <Form.Label column="sm">End Date</Form.Label>
+                  <Form.Control
+                    type="date"
+                    placeholder="Stage End Date"
+                    value={this.state.stage.EndDate.value}
+                    required
+                    size="sm"
+                    onChange={(event, string) => {
+                      this.stageInputHandler(event, "EndDate");
+                    }}
+                  />
+                </Form.Row>
+              </Form.Group>
+            </div>
+          </Row>
+          <Row>
+            <div className={styles.formDiv}>
+              <Form.Group as={Col}>
+                <Form.Row>
+                  <Form.Label column="sm">About this Stage</Form.Label>
+                  <Form.Control
+                    type="TextArea"
+                    placeholder="What happens in this stage?"
+                    rows="5"
+                    cols="50"
+                    as="textarea"
+                    value={this.state.stage.StageDescription.value}
+                    onChange={(event, string) => {
+                      this.stageInputHandler(event, "StageDescription");
+                    }}
+                  />
+                </Form.Row>
+              </Form.Group>
+            </div>
+            <br />
+            <br />
+          </Row>
+          <Button variant="dark" onClick={() => this.addStage()}>
+            Add Stage
+          </Button>
           <hr />
+          <div>
+            {this.state.StageList.length === 0 ? (
+              <div>No Stages Added Yet</div>
+            ) : (
+              this.state.StageList.map((currentStage, i) => (
+                <div key={i} className={styles.stageItems}>
+                  <Row>
+                    <Col>
+                      <b>Stage Number</b> : {currentStage.StageNo.value}
+                    </Col>
+                    <Col><b>Stage Title</b> : {currentStage.StageTitle.value}</Col>
+                    <Col>
+                      <div><b>Stage Venue</b> : {currentStage.StageVenue.value}</div>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      Description: {currentStage.StageDescription.value}
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <div>Start Date: {currentStage.StartDate.value}</div>
+                      <div>End Date: {currentStage.EndDate.value}</div>
+                    </Col>
+                  </Row>
+                </div>
+              ))
+            )}
+          </div>
           <br />
           <br />
           <br />
-          <h5>Document Attachments</h5>
+          <h5>Document Attachments</h5> {/* ^^^ Doc attachements  */}
           <hr />
           <Row>
             <div className={styles.formDiv}>
@@ -365,7 +533,7 @@ class JobProfileForm extends React.Component {
           <br />
           <br />
           <br />
-          <h5>Eligibility Criteria</h5>
+          <h5>Eligibility Criteria</h5> {/* ^^^ Eligibility Criteria  */}
           <hr />
           <Row>
             <div className={styles.formDiv}>
@@ -373,60 +541,36 @@ class JobProfileForm extends React.Component {
               <Form.Group as={Col}>
                 <Form.Row>
                   <Col>
-                    <Form.Check
-                      as={Col}
-                      type="checkbox"
-                      id="customControlAutosizing"
-                      label="B.Tech"
-                      custom
-                    />
+                    <Form.Group controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="B.tech" />
+                    </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Check
-                      as={Col}
-                      type="checkbox"
-                      id="customControlAutosizing"
-                      label="M.Tech"
-                      custom
-                    />
+                    <Form.Group controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="M.tech" />
+                    </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Check
-                      as={Col}
-                      type="checkbox"
-                      id="customControlAutosizing"
-                      label="Ph.D"
-                      custom
-                    />
+                    <Form.Group controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="Ph.D" />
+                    </Form.Group>
                   </Col>
                 </Form.Row>
                 <Form.Row>
                   <Col>
-                    <Form.Check
-                      as={Col}
-                      type="checkbox"
-                      id="customControlAutosizing"
-                      label="B.Arch"
-                      custom
-                    />
+                    <Form.Group controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="B.Sc" />
+                    </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Check
-                      as={Col}
-                      type="checkbox"
-                      id="customControlAutosizing"
-                      label="BBA"
-                      custom
-                    />
+                    <Form.Group controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="BBA" />
+                    </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Check
-                      as={Col}
-                      type="checkbox"
-                      id="customControlAutosizing"
-                      label="LLB"
-                      custom
-                    />
+                    <Form.Group controlId="formBasicCheckbox">
+                      <Form.Check as="input" type="checkbox" label="LLB" />
+                    </Form.Group>
                   </Col>
                 </Form.Row>
               </Form.Group>
@@ -436,60 +580,36 @@ class JobProfileForm extends React.Component {
               <Form.Group as={Col}>
                 <Form.Row>
                   <Col>
-                    <Form.Check
-                      as={Col}
-                      type="checkbox"
-                      id="customControlAutosizing"
-                      label="IT"
-                      custom
-                    />
+                    <Form.Group controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="IT" />
+                    </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Check
-                      as={Col}
-                      type="checkbox"
-                      id="customControlAutosizing"
-                      label="CSE"
-                      custom
-                    />
+                    <Form.Group controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="CSE" />
+                    </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Check
-                      as={Col}
-                      type="checkbox"
-                      id="customControlAutosizing"
-                      label="CCE"
-                      custom
-                    />
+                    <Form.Group controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="CCE" />
+                    </Form.Group>
                   </Col>
                 </Form.Row>
                 <Form.Row>
                   <Col>
-                    <Form.Check
-                      as={Col}
-                      type="checkbox"
-                      id="customControlAutosizing"
-                      label="ME"
-                      custom
-                    />
+                    <Form.Group controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="Me" />
+                    </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Check
-                      as={Col}
-                      type="checkbox"
-                      id="customControlAutosizing"
-                      label="EEE"
-                      custom
-                    />
+                    <Form.Group controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="EEE" />
+                    </Form.Group>
                   </Col>
                   <Col>
-                    <Form.Check
-                      as={Col}
-                      type="checkbox"
-                      id="customControlAutosizing"
-                      label="ECE"
-                      custom
-                    />
+                    <Form.Group controlId="formBasicCheckbox">
+                      <Form.Check type="checkbox" label="ECE" />
+                    </Form.Group>
                   </Col>
                 </Form.Row>
               </Form.Group>
@@ -497,14 +617,11 @@ class JobProfileForm extends React.Component {
           </Row>
           <br />
           <Row>
-              <div className={styles.formDiv}>
-              <Form.Group
-                as={Col}
-                controlId="formGridUGScoreRequired"
-              >
+            <div className={styles.formDiv}>
+              <Form.Group as={Col} controlId="formGridUGScoreRequired">
                 <Form.Row>
                   <Form.Label column="sm">
-                  Under Graduate Score Required
+                    Under Graduate Score Required
                   </Form.Label>
                   <Form.Control
                     type="UGScoreRequired"
@@ -512,15 +629,12 @@ class JobProfileForm extends React.Component {
                     required
                     size="sm"
                     onChange={(event, string) => {
-                      this.inputChangeHandler(
-                        event,
-                        "UGScoreRequired"
-                      );
+                      this.inputChangeHandler(event, "UGScoreRequired");
                     }}
                   />
                 </Form.Row>
               </Form.Group>
-              </div>
+            </div>
           </Row>
           <Row>
             <div className={styles.formDiv}>
@@ -573,7 +687,7 @@ class JobProfileForm extends React.Component {
             </div>
           </Row>
           <Row>
-              <div className={styles.formDiv}>
+            <div className={styles.formDiv}>
               <Form.Group
                 as={Col}
                 controlId="formGridClass10thScoreRequiredPercentage"
@@ -596,8 +710,8 @@ class JobProfileForm extends React.Component {
                   />
                 </Form.Row>
               </Form.Group>
-              </div>
-              <div className={styles.formDiv}>
+            </div>
+            <div className={styles.formDiv}>
               <Form.Group
                 as={Col}
                 controlId="formGridClass10thScoreRequiredCGPA"
@@ -620,7 +734,7 @@ class JobProfileForm extends React.Component {
                   />
                 </Form.Row>
               </Form.Group>
-              </div>
+            </div>
           </Row>
           <hr />
           <br />
@@ -629,7 +743,8 @@ class JobProfileForm extends React.Component {
           <br />
           <br />
           <br />
-          <Button variant="success">Submit Data</Button>
+          <Button variant="success">Submit Data</Button>{" "}
+          {/* ^^^ Submit Button  */}
         </div>
       </div>
     );

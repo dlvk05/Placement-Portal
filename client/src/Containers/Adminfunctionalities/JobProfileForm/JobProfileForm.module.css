@@ -19,3 +19,9 @@
 .formDiv{
     width: 30%;
 }
+
+.stageItems{
+    border: 1px solid slateblue;
+    border-radius: 5px;
+    padding: 10px;
+}
