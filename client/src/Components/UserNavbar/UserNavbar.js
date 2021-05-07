@@ -12,10 +12,10 @@ const userNavbar = () => {
           <u>Placement Portal</u>
         </Navbar.Brand>
         <Nav className="mr-auto">
-          <Nav.Link href="#home" style={{ color: "#F2E7C4",}}>
+          <Nav.Link href="/UpdatesFeed" style={{ color: "#F2E7C4",}}>
             Home
           </Nav.Link>
-          <Nav.Link href="#JobProfiles" style={{ color: "#F2E7C4" }}>
+          <Nav.Link href="/JobProfilesFeed" style={{ color: "#F2E7C4" }}>
             Job Profiles
           </Nav.Link>
           <Nav.Link href="/Profile" style={{ color: "#F2E7C4" }}>
