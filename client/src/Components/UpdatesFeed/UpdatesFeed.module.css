@@ -1,0 +1,22 @@
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
+    background-size: cover;
+}
+
+.subdiv{
+    /* display: block; */
+    border: solid 2px silver;
+    border-radius: 5px;
+    width: 60%;
+    height: fit-content;
+    margin: 30px;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+.colStyle{
+    display: flex;
+}

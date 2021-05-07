@@ -14,6 +14,9 @@ import AdminLogin from "./Containers/Authentication/AdminLogin/AdminLogin";
 import AdminLayout from "./HOC/AdminLayout/AdminLayout";
 import Updates from "./Containers/Adminfunctionalities/Updates/Updates";
 import JobProfileForm from "./Containers/Adminfunctionalities/JobProfileForm/JobProfileForm";
+import updatesFeed from "./Components/UpdatesFeed/UpdatesFeed";
+import JobProfilesFeed from "./Containers/JobProfilesFeed/JobProfilesFeed";
+import PracticeContainer from "./Containers/PracticeContainer/PracticeContainer";
 
 class App extends React.Component {
   componentDidMount() {
@@ -28,6 +31,7 @@ class App extends React.Component {
         <Route path="/Signup" exact component={Signup} />
         <Route path="/AdminSignup" exact component={AdminSignup} />
         <Route path="/Profile" exact component={Profile} />
+        <Route path="/PracticeContainer" exact component={PracticeContainer} />
       </Switch>
     );
 
@@ -51,6 +55,8 @@ class App extends React.Component {
         <UserLayout>
           <Switch>
             <Route path="/Profile" exact component={Profile} />
+            <Route path="/UpdatesFeed" exact component={updatesFeed} />
+            <Route path="/JobProfilesFeed" exact component={JobProfilesFeed} />
             <Route path="/Logout" exact component={Logout} />
           </Switch>
         </UserLayout>
