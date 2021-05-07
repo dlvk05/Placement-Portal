@@ -36,10 +36,10 @@ class AddResumesModal extends React.Component {
       this.state.formData.DocumentName.value
     );
     // Details of the uploaded file
-    console.log(this.state.selectedFile);
-    console.log("--------------------");
-    console.log(formData);
-    console.log(this.state.formData);
+    // console.log(this.state.selectedFile);
+    // console.log("--------------------");
+    // console.log(formData);
+    // console.log(this.state.formData);
     const config = {
       headers: { "content-type": "multipart/form-data" },
     };

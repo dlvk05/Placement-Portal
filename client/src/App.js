@@ -36,7 +36,6 @@ class App extends React.Component {
       routes = (
         <AdminLayout>
           <Switch>
-
             <Route path="/something" exact render={()=><h1>This is render</h1> }/>
             <Route path="/Updates" exact component={Updates}/>
             <Route path="/JobProfileForm" exact component={JobProfileForm}/>

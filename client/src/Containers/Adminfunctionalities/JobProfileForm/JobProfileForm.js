@@ -1,9 +1,136 @@
 import React from "react";
 import { Form, Col, Row, Button } from "react-bootstrap";
 import styles from "./JobProfileForm.module.css";
-
+import axios from "axios";
+import { connect } from "react-redux";
 class JobProfileForm extends React.Component {
   state = {
+    formData: {
+      adminAccount: {
+        type: "adminAccount",
+        value: "",
+      },
+      jobProfileID: {
+        type: "jobProfileID",
+        value: "",
+      },
+      ApplicationDeadLine: {
+        type: "ApplicationDeadLine",
+        value: "",
+      },
+      CompanyRepresentativeMailId: {
+        type: "CompanyRepresentativeMailId",
+        value: "",
+      },
+      JobProfileTitle: {
+        type: "JobProfileTitle",
+        value: "",
+      },
+      CompanyName: {
+        type: "CompanyName",
+        value: "",
+      },
+      Location: {
+        type: "Location",
+        value: "",
+      },
+      JobSector: {
+        type: "JobSector",
+        value: "",
+      },
+      PositionType: {
+        type: "PositionType",
+        value: "",
+      },
+      Dream: {
+        type: "Dream",
+        value: false,
+      },
+      OpeningOverview: {
+        type: "OpeningOverview",
+        value: {
+          Domain: {
+            type: "Domain",
+            value: "",
+          },
+          Category: {
+            type: "Category",
+            value: "",
+          },
+          JobFunctions: {
+            type: "JobFunctions",
+            value: "",
+          },
+          CTCRange: {
+            type: "CTCRange",
+            value: "",
+          },
+          AbsoluteCTC: {
+            type: "AbsoluteCTC",
+            value: "",
+          },
+        },
+      },
+      AboutCompany: {
+        type: "AboutCompany",
+        value: "",
+      },
+      JobDescription: {
+        type: "JobDescription",
+        value: "",
+      },
+      RequiredSkills: {
+        type: "RequiredSkills",
+        value: "",
+      },
+      HiringWorkflow: {
+        type: "HiringWorkflow",
+        value: "",
+      },
+      AttachedDocuments: {
+        type: "AttachedDocuments",
+        value: "",
+      },
+      HiringWorkflow: {
+        type: "HiringWorkflow",
+        value: "",
+      },
+      EligibilityCriteria: {
+        type: "EligibilityCriteria",
+        value: {
+          Backlogs: {
+            type: "Backlogs",
+            value: "",
+          },
+          ProgrammesAllowed: {
+            type: "ProgrammesAllowed",
+            value: "",
+          },
+          BranchesAllowed: {
+            type: "BranchesAllowed",
+            value: "",
+          },
+          UGScoreRequired: {
+            type: "UGScoreRequired",
+            value: "",
+          },
+          Class12thScoreRequiredPercentage: {
+            type: "Class12thScoreRequiredPercentage",
+            value: "",
+          },
+          Class12thScoreRequiredCGPA: {
+            type: "Class12thScoreRequiredCGPA",
+            value: "",
+          },
+          Class10thScoreRequiredCGPA: {
+            type: "Class10thScoreRequiredCGPA",
+            value: "",
+          },
+        },
+      },
+    },
+    selectedFile: null,
+    loading: false,
     StageList: [],
     stage: {
       StageNo: { value: "" },
@@ -13,6 +140,177 @@ class JobProfileForm extends React.Component {
       EndDate: { value: "" },
       StageDescription: { value: "" },
     },
+  };
+
+  // On file select (from the pop up)
+  onFileChange = (event) => {
+    // Update the state
+    this.setState({ selectedFile: event.target.files[0] });
+  };
+
+  openingOverviewInputHandler = (event, inputIdentifier) => {
+    const updatedformDataOpeningOverview = {
+      ...this.state.formData.OpeningOverview.value,
+    };
+    // console.log(updatedformDataOpeningOverview);
+
+    const updatedFormElement = {
+      ...updatedformDataOpeningOverview[inputIdentifier],
+    };
+    // console.log(updatedFormElement);
+
+    //des updating the value in the selected input element
+    updatedFormElement.value = event.target.value;
+    updatedformDataOpeningOverview[inputIdentifier] = updatedFormElement;
+
+    // console.log("after adding value");
+    console.log(updatedformDataOpeningOverview);
+
+    this.setState({
+      ...this.state,
+      formData: {
+        ...this.state.formData,
+        OpeningOverview: {
+          type: "OpeningOverview",
+          value: updatedformDataOpeningOverview,
+        },
+      },
+    });
+    // this.setState({
+    //   ...this.state,
+
+    // })
+  };
+
+  inputChangeHandler = (event, inputIdentifier) => {
+    const updatedformData = {
+      ...this.state.formData,
+    };
+
+    const updatedFormElement = { ...updatedformData[inputIdentifier] };
+
+    //des updating the value in the selected input element
+    updatedFormElement.value = event.target.value;
+    updatedformData[inputIdentifier] = updatedFormElement;
+
+    this.setState({
+      formData: updatedformData,
+    });
+  };
+
+  onSubmitHandler = (event) => {
+    event.preventDefault(); //prevent page reload
+
+    axios
+      .get("/api/jobProfile/getRandomId")
+      .then((res) => {
+        let newId2 = res.data.id;
+
+        //creating formData to send to Resume put route
+        const formData = {};
+        for (let formElementIdentifier in this.state.formData) {
+          formData[formElementIdentifier] = this.state.formData[
+            formElementIdentifier
+          ].value;
+        }
+
+        if (this.state.selectedFile !== null) {
+          formData.FileAttached = true;
+          let AttachedDocuments = [];
+          let temp = {
+            DocumentName: null,
+          };
+          temp.DocumentName = this.state.selectedFile.name;
+          AttachedDocuments.push(temp);
+          formData.AttachedDocuments = AttachedDocuments;
+        }
+        //setting correct stage list in formData
+        let tempStageList = [];
+
+        if (this.state.StageList.length > 0) {
+          this.state.StageList.forEach((stage) => {
+            let temp = {
+              StageNo: null,
+              StageTitle: null,
+              StageVenue: null,
+              StartDate: null,
+              EndDate: null,
+              StageDescription: null,
+            };
+            temp.StageNo = stage.StageNo.value;
+            temp.StageTitle = stage.StageTitle.value;
+            temp.StageVenue = stage.StageVenue.value;
+            temp.StartDate = stage.StartDate.value;
+            temp.EndDate = stage.EndDate.value;
+            temp.StageDescription = stage.StageDescription.value;
+            tempStageList.push(temp);
+          });
+        }
+        formData.HiringWorkflow = tempStageList;
+
+        //setting correct openingOverview in FormData
+        const tempOverview = {};
+        for (let formElementIdentifier in this.state.formData.OpeningOverview.value) {
+          tempOverview[
+            formElementIdentifier
+          ] = this.state.formData.OpeningOverview.value[formElementIdentifier].value;
+        }
+        formData.OpeningOverview = tempOverview;
+
+        formData.AdminAccount = this.props.adminID;
+        formData.jobProfileID = newId2;
+
+        console.log(formData);
+
+        //creating fileFormData to send to uploadFile route
+        const fileFormData = new FormData();
+        // Update the formData object
+        fileFormData.append("jobProfileID", formData.jobProfileID);
+        fileFormData.append("file", this.state.selectedFile);
+
+        //creating config for axios
+        const config = {
+          headers: { "content-type": "multipart/form-data" },
+        };
+
+        this.setState({
+          ...this.state,
+          loading: true,
+        });
+
+        let postData = {
+          ...formData,
+        };
+
+        let url = "/api/jobProfile/addNewJobProfile";
+        axios
+          .all([
+            axios.post(url, postData),
+            axios.post("api/jobProfile/uploadFile", fileFormData, config),
+          ])
+          .then(
+            axios.spread((res1, res2) => {
+              this.setState({
+                loading: false,
+              });
+              console.log(res1);
+              console.log(res2);
+            })
+          )
+          .catch(
+            axios.spread((err1, err2) => {
+              console.log(err1);
+              console.log(err2);
+              this.setState({
+                loading: false,
+              });
+            })
+          );
+      })
+      .catch((err) => {
+        console.log("err in /api/updates/getRandomId");
+        console.log(err);
+      });
   };
 
   addStage = () => {
@@ -37,7 +335,6 @@ class JobProfileForm extends React.Component {
   };
 
   stageInputHandler(event, inputIdentifier) {
-
     var updatedStageItem = { ...this.state.stage };
     updatedStageItem[inputIdentifier].value = event.target.value;
     console.log(updatedStageItem);
@@ -181,7 +478,7 @@ class JobProfileForm extends React.Component {
             </div>
           </Row>
           <Row>
-          <div className={styles.formDiv}>
+            <div className={styles.formDiv}>
               <Form.Group as={Col}>
                 <Form.Row>
                   <Form.Label column="sm">Application Dead Line</Form.Label>
@@ -190,26 +487,37 @@ class JobProfileForm extends React.Component {
                     placeholder="Application Dead Line"
                     required
                     size="sm"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "ApplicationDeadLine");
+                    }}
                   />
                 </Form.Row>
               </Form.Group>
-                </div>
-              <div className={styles.formDiv}>
-                <Form.Group as={Col} controlId="formGridCompanyRepresentativeMailId">
-                  <Form.Row>
-                  <Form.Label column="sm">Company Representative Email Id</Form.Label>
+            </div>
+            <div className={styles.formDiv}>
+              <Form.Group
+                as={Col}
+                controlId="formGridCompanyRepresentativeMailId"
+              >
+                <Form.Row>
+                  <Form.Label column="sm">
+                    Company Representative Email Id
+                  </Form.Label>
                   <Form.Control
                     type="CompanyRepresentativeMailId"
                     placeholder="Email Id"
                     required
                     size="sm"
                     onChange={(event, string) => {
-                    this.inputChangeHandler(event, "CompanyRepresentativeMailId");
+                      this.inputChangeHandler(
+                        event,
+                        "CompanyRepresentativeMailId"
+                      );
                     }}
                   />
-                  </Form.Row>
-                </Form.Group>
-              </div>
+                </Form.Row>
+              </Form.Group>
+            </div>
           </Row>
           <Row>
             <Col xs="auto" className="my-1">
@@ -217,6 +525,9 @@ class JobProfileForm extends React.Component {
                 <Form.Check
                   type="checkbox"
                   label="Dream Job? (Check for YES)"
+                  onChange={(event, string) => {
+                    this.inputChangeHandler(event, "Dream");
+                  }}
                 />
               </Form.Group>
             </Col>
@@ -238,7 +549,7 @@ class JobProfileForm extends React.Component {
                     required
                     size="sm"
                     onChange={(event, string) => {
-                      this.inputChangeHandler(event, "Domain");
+                      this.openingOverviewInputHandler(event, "Domain");
                     }}
                   />
                 </Form.Row>
@@ -254,7 +565,7 @@ class JobProfileForm extends React.Component {
                     required
                     size="sm"
                     onChange={(event, string) => {
-                      this.inputChangeHandler(event, "JobFunctions");
+                      this.openingOverviewInputHandler(event, "JobFunctions");
                     }}
                   />
                 </Form.Row>
@@ -269,7 +580,7 @@ class JobProfileForm extends React.Component {
                     custom
                     size="sm"
                     onChange={(event, string) => {
-                      this.inputChangeHandler(event, "Category");
+                      this.openingOverviewInputHandler(event, "Category");
                       console.log("drop down is being read");
                     }}
                   >
@@ -304,7 +615,7 @@ class JobProfileForm extends React.Component {
                     required
                     size="sm"
                     onChange={(event, string) => {
-                      this.inputChangeHandler(event, "CTCRange");
+                      this.openingOverviewInputHandler(event, "CTCRange");
                     }}
                   />
                 </Form.Row>
@@ -320,7 +631,7 @@ class JobProfileForm extends React.Component {
                     required
                     size="sm"
                     onChange={(event, string) => {
-                      this.inputChangeHandler(event, "AbsoluteCTC");
+                      this.openingOverviewInputHandler(event, "AbsoluteCTC");
                     }}
                   />
                 </Form.Row>
@@ -344,6 +655,9 @@ class JobProfileForm extends React.Component {
                     rows="10"
                     cols="40"
                     as="textarea"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "AboutCompany");
+                    }}
                   />
                 </Form.Row>
               </Form.Group>
@@ -358,6 +672,9 @@ class JobProfileForm extends React.Component {
                     rows="10"
                     cols="60"
                     as="textarea"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "JobDescription");
+                    }}
                   />
                 </Form.Row>
               </Form.Group>
@@ -372,6 +689,9 @@ class JobProfileForm extends React.Component {
                     rows="10"
                     cols="60"
                     as="textarea"
+                    onChange={(event, string) => {
+                      this.inputChangeHandler(event, "RequiredSkills");
+                    }}
                   />
                 </Form.Row>
               </Form.Group>
@@ -510,9 +830,13 @@ class JobProfileForm extends React.Component {
                     <Col>
                       <b>Stage Number</b> : {currentStage.StageNo.value}
                     </Col>
-                    <Col><b>Stage Title</b> : {currentStage.StageTitle.value}</Col>
                     <Col>
-                      <div><b>Stage Venue</b> : {currentStage.StageVenue.value}</div>
+                      <b>Stage Title</b> : {currentStage.StageTitle.value}
+                    </Col>
+                    <Col>
+                      <div>
+                        <b>Stage Venue</b> : {currentStage.StageVenue.value}
+                      </div>
                     </Col>
                   </Row>
                   <Row>
@@ -540,7 +864,11 @@ class JobProfileForm extends React.Component {
               <Form.Group as={Col}>
                 <Form.Row>
                   <Form.Label column="sm">Upload Relevant Document</Form.Label>
-                  <Form.File Placeholder="Upload Doc" size="sm" />
+                  <Form.File
+                    Placeholder="Upload Doc"
+                    size="sm"
+                    onChange={this.onFileChange}
+                  />
                 </Form.Row>
               </Form.Group>
             </div>
@@ -759,7 +1087,9 @@ class JobProfileForm extends React.Component {
           <br />
           <br />
           <br />
-          <Button variant="success">Submit Data</Button>{" "}
+          <Button variant="success" onClick={this.onSubmitHandler}>
+            Submit Data
+          </Button>{" "}
           {/* ^^^ Submit Button  */}
         </div>
       </div>
@@ -767,4 +1097,10 @@ class JobProfileForm extends React.Component {
   }
 }
 
-export default JobProfileForm;
+const mapStateToProps = (state) => {
+  return {
+    adminID: state.userAuth.userId,
+  };
+};
+
+export default connect(mapStateToProps)(JobProfileForm);

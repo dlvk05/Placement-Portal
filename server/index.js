@@ -6,6 +6,7 @@ const cors = require("cors");
 const dotenv = require('dotenv');
 dotenv.config();//reads the .env file and imports the values
 
+
 //importing utilities
 const checkAdmin=require('./utills/checkAdmin');
 
@@ -14,6 +15,7 @@ const userAuth = require("./routes/userAuth");
 const userProfile = require('./routes/userProfile');
 const adminAuth = require('./routes/adminAuth');
 const adminJobProfile=require('./routes/adminJobProfile');
+const adminUpdates=require('./routes/adminUpdates');
 
 const app = express();
 
@@ -49,7 +51,12 @@ app.use("/api", userAuth);
 app.use("/api", userProfile);
 app.use("/api", adminAuth);
 app.use("/api", adminJobProfile);
+app.use("/api", adminUpdates);
 
+
+// let newId2 = new mongoose.mongo.ObjectId();
+// console.log("random object iD for updates is");
+// ;console.log(newId2);
 
 app.get(
   "/api/data",
