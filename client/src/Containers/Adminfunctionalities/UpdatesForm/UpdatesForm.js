@@ -7,7 +7,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 
 
-class Updates extends React.Component {
+class UpdatesForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -234,4 +234,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Updates);
+export default connect(mapStateToProps)(UpdatesForm);
