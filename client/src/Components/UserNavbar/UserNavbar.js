@@ -25,7 +25,7 @@ const userNavbar = () => {
         <div style={{ color: "white", marginRight: "70px" }}>
           {/* ^^^ you have to edit this dropdown properly later */}
         <NavDropdown title={x} style={{color: "white"}}>
-        <NavDropdown.Item href="#action/3.1">Acount Info</NavDropdown.Item>
+        <NavDropdown.Item href="/UserAccountInfoPage">Acount Info</NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item href="/Logout">Logout</NavDropdown.Item>
       </NavDropdown>

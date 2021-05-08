@@ -129,6 +129,7 @@ class OverviewModal extends React.Component {
                   <Form.Label>Name</Form.Label>
                   <Form.Control
                     type="Name"
+                    as='input'
                     placeholder="Enter Name"
                     value={this.state.formData.Name.value}
                     required
