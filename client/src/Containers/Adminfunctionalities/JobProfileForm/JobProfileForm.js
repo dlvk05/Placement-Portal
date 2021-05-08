@@ -104,11 +104,11 @@ class JobProfileForm extends React.Component {
           },
           ProgrammesAllowed: {
             type: "ProgrammesAllowed",
-            value: "",
+            value: [],
           },
           BranchesAllowed: {
             type: "BranchesAllowed",
-            value: "",
+            value: [],
           },
           UGScoreRequired: {
             type: "UGScoreRequired",
@@ -120,6 +120,10 @@ class JobProfileForm extends React.Component {
           },
           Class12thScoreRequiredCGPA: {
             type: "Class12thScoreRequiredCGPA",
+            value: "",
+          },
+          Class10thScoreRequiredPercentage: {
+            type: "Class10thScoreRequiredPercentage",
             value: "",
           },
           Class10thScoreRequiredCGPA: {
@@ -148,6 +152,43 @@ class JobProfileForm extends React.Component {
     this.setState({ selectedFile: event.target.files[0] });
   };
 
+  eligibilityCriteriaInputHandler = (event, inputIdentifier, sub) => {
+    const updatedformDataEligibilityCriteria = {
+      ...this.state.formData.EligibilityCriteria.value,
+    };
+    // console.log(updatedformDataOpeningOverview);
+
+    const updatedFormElement = {
+      ...updatedformDataEligibilityCriteria[inputIdentifier],
+    };
+
+    if (inputIdentifier === "ProgrammesAllowed") {
+      updatedFormElement.value.push(sub);
+    } else if (inputIdentifier === "BranchesAllowed") {
+      updatedFormElement.value.push(sub);
+    } else {
+      updatedFormElement.value = event.target.value;
+    }
+    // console.log(updatedFormElement);
+
+    //des updating the value in the selected input element
+    updatedformDataEligibilityCriteria[inputIdentifier] = updatedFormElement;
+
+    // console.log("after adding value");
+    console.log(updatedformDataEligibilityCriteria);
+
+    this.setState({
+      ...this.state,
+      formData: {
+        ...this.state.formData,
+        EligibilityCriteria: {
+          type: "EligibilityCriteria",
+          value: updatedformDataEligibilityCriteria,
+        },
+      },
+    });
+  };
+
   openingOverviewInputHandler = (event, inputIdentifier) => {
     const updatedformDataOpeningOverview = {
       ...this.state.formData.OpeningOverview.value,
@@ -164,7 +205,7 @@ class JobProfileForm extends React.Component {
     updatedformDataOpeningOverview[inputIdentifier] = updatedFormElement;
 
     // console.log("after adding value");
-    console.log(updatedformDataOpeningOverview);
+    // console.log(updatedformDataOpeningOverview);
 
     this.setState({
       ...this.state,
@@ -176,10 +217,6 @@ class JobProfileForm extends React.Component {
         },
       },
     });
-    // this.setState({
-    //   ...this.state,
-
-    // })
   };
 
   inputChangeHandler = (event, inputIdentifier) => {
@@ -250,16 +287,35 @@ class JobProfileForm extends React.Component {
 
         //setting correct openingOverview in FormData
         const tempOverview = {};
-        for (let formElementIdentifier in this.state.formData.OpeningOverview.value) {
+        for (let formElementIdentifier in this.state.formData.OpeningOverview
+          .value) {
           tempOverview[
             formElementIdentifier
-          ] = this.state.formData.OpeningOverview.value[formElementIdentifier].value;
+          ] = this.state.formData.OpeningOverview.value[
+            formElementIdentifier
+          ].value;
         }
         formData.OpeningOverview = tempOverview;
 
-        formData.AdminAccount = this.props.adminID;
-        formData.jobProfileID = newId2;
+        //setting correct eligibility Criteria in formData
+        const tempEligibility = {};
+        for (let formElementIdentifier in this.state.formData
+          .EligibilityCriteria.value) {
+          tempEligibility[
+            formElementIdentifier
+          ] = this.state.formData.EligibilityCriteria.value[
+            formElementIdentifier
+          ].value;
+        }
+        formData.EligibilityCriteria = tempEligibility;
 
+        formData.adminAccount = this.props.adminID;
+        formData.jobProfileID = newId2;
+        if (formData.Dream === "on") {
+          formData.Dream = true;
+        } else {
+          formData.Dream = false;
+        }
         console.log(formData);
 
         //creating fileFormData to send to uploadFile route
@@ -315,10 +371,10 @@ class JobProfileForm extends React.Component {
 
   addStage = () => {
     var updatedStageList = [...this.state.StageList];
-    console.log(updatedStageList);
+    // console.log(updatedStageList);
     var updatedItem = this.state.stage;
     updatedStageList.push(updatedItem);
-    console.log(updatedStageList);
+    // console.log(updatedStageList);
 
     this.setState({
       StageList: updatedStageList,
@@ -337,7 +393,7 @@ class JobProfileForm extends React.Component {
   stageInputHandler(event, inputIdentifier) {
     var updatedStageItem = { ...this.state.stage };
     updatedStageItem[inputIdentifier].value = event.target.value;
-    console.log(updatedStageItem);
+    // console.log(updatedStageItem);
     this.setState({
       stage: updatedStageItem,
     });
@@ -525,6 +581,7 @@ class JobProfileForm extends React.Component {
                 <Form.Check
                   type="checkbox"
                   label="Dream Job? (Check for YES)"
+                  as="input"
                   onChange={(event, string) => {
                     this.inputChangeHandler(event, "Dream");
                   }}
@@ -886,34 +943,95 @@ class JobProfileForm extends React.Component {
                 <Form.Row>
                   <Col>
                     <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="B.tech" />
+                      <Form.Check
+                        type="checkbox"
+                        label="B.tech"
+                        onChange={(event, string, sub) =>
+                          this.eligibilityCriteriaInputHandler(
+                            event,
+                            "ProgrammesAllowed",
+                            "Bachelor of Technology"
+                          )
+                        }
+                      />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="M.tech" />
+                      <Form.Check
+                        type="checkbox"
+                        label="M.tech"
+                        onChange={(event, string, sub) =>
+                          this.eligibilityCriteriaInputHandler(
+                            event,
+                            "ProgrammesAllowed",
+                            "Master of Technology"
+                          )
+                        }
+                      />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="Ph.D" />
+                      <Form.Check
+                        type="checkbox"
+                        label="Ph.D"
+                        onChange={(event, string, sub) =>
+                          this.eligibilityCriteriaInputHandler(
+                            event,
+                            "ProgrammesAllowed",
+                            "PHD"
+                          )
+                        }
+                      />
                     </Form.Group>
                   </Col>
                 </Form.Row>
                 <Form.Row>
                   <Col>
                     <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="B.Sc" />
+                      <Form.Check
+                        type="checkbox"
+                        label="B.Sc"
+                        onChange={(event, string, sub) =>
+                          this.eligibilityCriteriaInputHandler(
+                            event,
+                            "ProgrammesAllowed",
+                            "Bachelor of Science"
+                          )
+                        }
+                      />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="BBA" />
+                      <Form.Check
+                        type="checkbox"
+                        label="BBA"
+                        onChange={(event, string, sub) =>
+                          this.eligibilityCriteriaInputHandler(
+                            event,
+                            "ProgrammesAllowed",
+                            "Bachelor of Business Administration"
+                          )
+                        }
+                      />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check as="input" type="checkbox" label="LLB" />
+                      <Form.Check
+                        as="input"
+                        type="checkbox"
+                        label="LLB"
+                        onChange={(event, string, sub) =>
+                          this.eligibilityCriteriaInputHandler(
+                            event,
+                            "ProgrammesAllowed",
+                            "LLB"
+                          )
+                        }
+                      />
                     </Form.Group>
                   </Col>
                 </Form.Row>
@@ -925,34 +1043,94 @@ class JobProfileForm extends React.Component {
                 <Form.Row>
                   <Col>
                     <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="IT" />
+                      <Form.Check
+                        type="checkbox"
+                        label="IT"
+                        onChange={(event, string, sub) =>
+                          this.eligibilityCriteriaInputHandler(
+                            event,
+                            "BranchesAllowed",
+                            "Information Technology"
+                          )
+                        }
+                      />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="CSE" />
+                      <Form.Check
+                        type="checkbox"
+                        label="CSE"
+                        onChange={(event, string, sub) =>
+                          this.eligibilityCriteriaInputHandler(
+                            event,
+                            "BranchesAllowed",
+                            "Computer Science Engineering"
+                          )
+                        }
+                      />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="CCE" />
+                      <Form.Check
+                        type="checkbox"
+                        label="CCE"
+                        onChange={(event, string, sub) =>
+                          this.eligibilityCriteriaInputHandler(
+                            event,
+                            "BranchesAllowed",
+                            "Computer Communication Engineering"
+                          )
+                        }
+                      />
                     </Form.Group>
                   </Col>
                 </Form.Row>
                 <Form.Row>
                   <Col>
                     <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="Me" />
+                      <Form.Check
+                        type="checkbox"
+                        label="Mech"
+                        onChange={(event, string, sub) =>
+                          this.eligibilityCriteriaInputHandler(
+                            event,
+                            "BranchesAllowed",
+                            "Me"
+                          )
+                        }
+                      />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="EEE" />
+                      <Form.Check
+                        type="checkbox"
+                        label="EEE"
+                        onChange={(event, string, sub) =>
+                          this.eligibilityCriteriaInputHandler(
+                            event,
+                            "BranchesAllowed",
+                            "EEE"
+                          )
+                        }
+                      />
                     </Form.Group>
                   </Col>
                   <Col>
                     <Form.Group controlId="formBasicCheckbox">
-                      <Form.Check type="checkbox" label="ECE" />
+                      <Form.Check
+                        type="checkbox"
+                        label="ECE"
+                        onChange={(event, string, sub) =>
+                          this.eligibilityCriteriaInputHandler(
+                            event,
+                            "BranchesAllowed",
+                            "ECE"
+                          )
+                        }
+                      />
                     </Form.Group>
                   </Col>
                 </Form.Row>
@@ -972,8 +1150,12 @@ class JobProfileForm extends React.Component {
                     placeholder="CGPA"
                     required
                     size="sm"
-                    onChange={(event, string) => {
-                      this.inputChangeHandler(event, "UGScoreRequired");
+                    onChange={(event, string, sub) => {
+                      this.eligibilityCriteriaInputHandler(
+                        event,
+                        "UGScoreRequired",
+                        null
+                      );
                     }}
                   />
                 </Form.Row>
@@ -995,10 +1177,11 @@ class JobProfileForm extends React.Component {
                     placeholder="Percentage %"
                     required
                     size="sm"
-                    onChange={(event, string) => {
-                      this.inputChangeHandler(
+                    onChange={(event, string, sub) => {
+                      this.eligibilityCriteriaInputHandler(
                         event,
-                        "Class12thScoreRequiredPercentage"
+                        "Class12thScoreRequiredPercentage",
+                        null
                       );
                     }}
                   />
@@ -1019,10 +1202,11 @@ class JobProfileForm extends React.Component {
                     placeholder="CGPA"
                     required
                     size="sm"
-                    onChange={(event, string) => {
-                      this.inputChangeHandler(
+                    onChange={(event, string, sub) => {
+                      this.eligibilityCriteriaInputHandler(
                         event,
-                        "Class12thScoreRequiredCGPA"
+                        "Class12thScoreRequiredCGPA",
+                        null
                       );
                     }}
                   />
@@ -1045,10 +1229,11 @@ class JobProfileForm extends React.Component {
                     placeholder="Percentage %"
                     required
                     size="sm"
-                    onChange={(event, string) => {
-                      this.inputChangeHandler(
+                    onChange={(event, string, sub) => {
+                      this.eligibilityCriteriaInputHandler(
                         event,
-                        "Class10thScoreRequiredPercentage"
+                        "Class10thScoreRequiredPercentage",
+                        null
                       );
                     }}
                   />
@@ -1069,10 +1254,11 @@ class JobProfileForm extends React.Component {
                     placeholder="CGPA"
                     required
                     size="sm"
-                    onChange={(event, string) => {
-                      this.inputChangeHandler(
+                    onChange={(event, string, sub) => {
+                      this.eligibilityCriteriaInputHandler(
                         event,
-                        "Class10thScoreRequiredCGPA"
+                        "Class10thScoreRequiredCGPA",
+                        null
                       );
                     }}
                   />

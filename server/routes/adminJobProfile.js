@@ -138,8 +138,6 @@ router.post("/jobProfile/addNewJobProfile", (req, res) => {
         AttachedDocuments: req.body.AttachedDocuments,
         EligibilityCriteria: req.body.EligibilityCriteria,
       });
-
-      //   console.log(newJobProfile);
       //save the new jobProfile
       newJobProfile
         .save()
