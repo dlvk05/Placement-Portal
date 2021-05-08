@@ -9,6 +9,7 @@ const User = require("../models/userModel");
 
 //Load Profile model
 const UserProfile = require("../models/profileModel");
+const StudentStats = require("../models/studentStatsModel");
 
 // @route POST api/signupUser
 // @desc Register user
@@ -47,8 +48,22 @@ router.post("/signupUser", (req, res) => {
               //saving the new profile
               newProfile
                 .save()
-                .then((profile) => console.log("new profile created"))
+                .then((profile) => {
+                  console.log("new profile created");
+                  //create new student stats object
+                  const newStudentStats = new StudentStats({
+                    UserProfile: profile._id,
+                    UserAccount: user._id,
+                  });
+                  newStudentStats
+                    .save()
+                    .then((studentStats) =>
+                      console.log("new student stats created")
+                    )
+                    .catch((err) => console.log(err));
+                })
                 .catch((err) => console.log(err));
+
               // sending the newUser document
               res.json({
                 success: true,

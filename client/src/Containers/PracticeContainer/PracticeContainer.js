@@ -23,7 +23,6 @@ class PracticeContainer extends React.Component{
   }
 
   onFileChange = (event) => {
-    let SelectedCandidates=[];
     // Update the state
     this.setState({ selectedFile: event.target.files[0] });
   };
