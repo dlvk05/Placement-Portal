@@ -1,9 +1,9 @@
 .wrapper{
     display: flex;
     justify-content: center;
-    align-items: center;
+    /* align-items: center; */
     background-color: aliceblue;
-    /* height: 100vh; */
+    height: auto;
 }
 
 .subdiv{

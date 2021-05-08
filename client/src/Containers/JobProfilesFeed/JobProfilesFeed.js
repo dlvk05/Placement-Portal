@@ -1,6 +1,6 @@
 import React from "react";
 import a from "./JobProfilesFeed.module.css";
-import { Row, Col, Table, Form, Dropdown } from "react-bootstrap";
+import { Row, Col, Table, Form} from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 class JobProfilesFeed extends React.Component {
@@ -181,7 +181,7 @@ class JobProfilesFeed extends React.Component {
               </thead>
               {this.state.jobs.map((currentJob, i) => (
                 <tr key={i}>
-                  <td>logo</td>
+                  <td><i class="fas fa-suitcase fa-2x"></i></td>
                   <td>
                     <Link to="">{currentJob.JobProfileTitle}</Link>
                   </td>
