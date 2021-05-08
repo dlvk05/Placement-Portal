@@ -91,10 +91,6 @@ class JobProfileForm extends React.Component {
         type: "AttachedDocuments",
         value: "",
       },
-      HiringWorkflow: {
-        type: "HiringWorkflow",
-        value: "",
-      },
       EligibilityCriteria: {
         type: "EligibilityCriteria",
         value: {
