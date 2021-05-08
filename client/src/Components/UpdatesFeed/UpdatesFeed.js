@@ -37,7 +37,7 @@ const updatesFeed = (props) => {
     feed = <div>No Updates Yet!!!</div>;
   } 
   else {
-    feed = props.data.map((currentUpdate, i) => (
+    feed = props.data.reverse().map((currentUpdate, i) => (
       <div className={styles.subdiv} key={i}>
         <Row>
           <Col className={styles.colStyle}>

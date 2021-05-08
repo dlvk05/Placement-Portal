@@ -1157,6 +1157,22 @@ class JobProfileForm extends React.Component {
                 </Form.Row>
               </Form.Group>
             </div>
+              <div className={styles.formDiv}>
+                <Form.Group as={Col} controlId="formGridBacklogsAllowed">
+                  <Form.Row>
+                  <Form.Label column="sm">Number of Backlogs Allowed</Form.Label>
+                  <Form.Control
+                    type="Backlogs"
+                    placeholder="Enter Number"
+                    required
+                    size="sm"
+                    onChange={(event, string) => {
+                    this.inputChangeHandler(event, "Backlogs");
+                    }}
+                  />
+                  </Form.Row>
+                </Form.Group>
+              </div>
           </Row>
           <Row>
             <div className={styles.formDiv}>
