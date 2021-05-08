@@ -109,7 +109,7 @@ router.post("/updates/addNewUpdate", (req, res) => {
 
 //get all updates
 router.get("/updates/getAllUpdates", (req, res) => {
-  Updates.find({}).then((foundUpdates) => {
+  Updates.find({}).populate("AdminAccount").then((foundUpdates) => {
     if (!foundUpdates) {
       res.status(400).json({
         success: false,

@@ -2,6 +2,7 @@ import React from "react";
 import a from "./JobProfilesFeed.module.css";
 import { Row, Col, Table, Form} from "react-bootstrap";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 class JobProfilesFeed extends React.Component {
   state = {
@@ -19,7 +20,25 @@ class JobProfilesFeed extends React.Component {
         ApplicationDeadLine: new Date("2021-05-01"),
       },
     ],
+    jobProfiles:[],
   };
+
+  componentDidMount(){
+    console.log("component did mount")
+    axios 
+    .get("/api/student/jobProfile/getAllJobProfiles")
+    .then((res) => {
+      console.log("jobProfiles loaded");
+      console.log(res.data.jobProfiles);
+      this.setState({
+        jobProfiles: res.data.jobProfiles,
+      });
+    })
+    .catch((err) => {
+      console.log("error ocurred at /student/jobProfile/getAllJobProfiles");
+      console.log(err);
+    });
+  }
 
   render() {
     var current = new Date("2021-05-06");

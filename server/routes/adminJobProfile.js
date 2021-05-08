@@ -90,7 +90,7 @@ router.get("/jobProfile/getAllJobProfiles", (req, res) => {
 
 //get specific job
 router.get("/jobProfile/getJobProfile/:id", (req, res) => {
-  JobProfile.findById(re(q.params.id)).then((foundJobProfile) => {
+  JobProfile.findById(req.params.id).then((foundJobProfile) => {
     if (!foundJobProfile) {
       res.status(404).json({
         success: false,

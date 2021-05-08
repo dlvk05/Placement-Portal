@@ -16,6 +16,9 @@ const userProfile = require('./routes/userProfile');
 const adminAuth = require('./routes/adminAuth');
 const adminJobProfile=require('./routes/adminJobProfile');
 const adminUpdates=require('./routes/adminUpdates');
+const studentUpdates=require('./routes/studentUpdates');
+const studentJobProfiles=require('./routes/studentJobProfiles');
+
 
 const app = express();
 
@@ -52,11 +55,9 @@ app.use("/api", userProfile);
 app.use("/api", adminAuth);
 app.use("/api", adminJobProfile);
 app.use("/api", adminUpdates);
+app.use("/api", studentJobProfiles);
+app.use("/api", studentUpdates);
 
-
-// let newId2 = new mongoose.mongo.ObjectId();
-// console.log("random object iD for updates is");
-// ;console.log(newId2);
 
 app.get(
   "/api/data",

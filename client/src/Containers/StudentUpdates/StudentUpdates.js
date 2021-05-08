@@ -1,12 +1,30 @@
-import React, { Component, Fragment } from "react";
-import UserNavbar from "../../Components/UserNavbar/UserNavbar";
-import UpdatesFeed from '../../Components/UpdatesFeed/UpdatesFeed';
+import React, { Component } from "react";
+import UpdatesFeed from "../../Components/UpdatesFeed/UpdatesFeed";
+import axios from "axios";
 
 class StudentUpdates extends Component {
+  state = {
+    updates: [],
+  };
+
+  componentDidMount() {
+    axios
+      .get("/api/student/updates/getAllUpdates")
+      .then((res) => {
+        console.log("updates loaded");
+        console.log(res.data.updates);
+        this.setState({
+          updates: res.data.updates,
+        });
+      })
+      .catch((err) => {
+        console.log("error ocurred at /api/updates/getAllUpdates");
+        console.log(err);
+      });
+  }
+
   render() {
-    return (
-     <UpdatesFeed/>
-    );
+    return <UpdatesFeed data={this.state.updates} />;
   }
 }
 

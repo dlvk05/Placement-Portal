@@ -39,7 +39,6 @@ class App extends React.Component {
       routes = (
         <AdminLayout>
           <Switch>
-
             <Route path="/Updates" exact component={Updates}/>
             <Route path="/JobProfileForm" exact component={JobProfileForm}/>
             <Route path="/Logout" exact component={Logout} />
