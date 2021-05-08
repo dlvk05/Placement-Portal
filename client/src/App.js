@@ -14,7 +14,7 @@ import AdminLogin from "./Containers/Authentication/AdminLogin/AdminLogin";
 import AdminLayout from "./HOC/AdminLayout/AdminLayout";
 import Updates from "./Containers/Adminfunctionalities/Updates/Updates";
 import JobProfileForm from "./Containers/Adminfunctionalities/JobProfileForm/JobProfileForm";
-import updatesFeed from "./Components/UpdatesFeed/UpdatesFeed";
+import StudentUpdates from "./Containers/StudentUpdates/StudentUpdates";
 import JobProfilesFeed from "./Containers/JobProfilesFeed/JobProfilesFeed";
 import PracticeContainer from "./Containers/PracticeContainer/PracticeContainer";
 
@@ -30,7 +30,6 @@ class App extends React.Component {
         <Route path="/AdminLogin" exact component={AdminLogin} />
         <Route path="/Signup" exact component={Signup} />
         <Route path="/AdminSignup" exact component={AdminSignup} />
-        <Route path="/Profile" exact component={Profile} />
         <Route path="/PracticeContainer" exact component={PracticeContainer} />
       </Switch>
     );
@@ -40,7 +39,7 @@ class App extends React.Component {
       routes = (
         <AdminLayout>
           <Switch>
-            <Route path="/something" exact render={()=><h1>This is render</h1> }/>
+
             <Route path="/Updates" exact component={Updates}/>
             <Route path="/JobProfileForm" exact component={JobProfileForm}/>
             <Route path="/Logout" exact component={Logout} />
@@ -55,7 +54,7 @@ class App extends React.Component {
         <UserLayout>
           <Switch>
             <Route path="/Profile" exact component={Profile} />
-            <Route path="/UpdatesFeed" exact component={updatesFeed} />
+            <Route path="/UpdatesFeed" exact component={StudentUpdates} />
             <Route path="/JobProfilesFeed" exact component={JobProfilesFeed} />
             <Route path="/Logout" exact component={Logout} />
           </Switch>
