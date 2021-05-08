@@ -5,10 +5,10 @@ const multer = require("multer");
 const fs = require("fs-extra");
 const mongoose = require("mongoose");
 
-
 //Load JobProfile model
 const JobProfile = require("../models/jobProfileModel");
 const UserProfile = require("../models/profileModel");
+const StudentStats = require("../models/studentStatsModel");
 
 //multer config
 const storage = multer.diskStorage({
@@ -27,7 +27,6 @@ const storage = multer.diskStorage({
 });
 
 const uploadStorage = multer({ storage: storage });
-
 
 //route to get a random Mongoose id
 router.get("/student/jobProfile/getRandomId", (req, res) => {
@@ -68,10 +67,9 @@ router.get("/student/jobProfile/downloadFile", (req, res) => {
   });
 });
 
-
 // get all job profiles
 router.get("/student/jobProfile/getAllJobProfiles", (req, res) => {
-  console.log('/student/jobProfile/getAllJobProfiles called')
+  console.log("/student/jobProfile/getAllJobProfiles called");
   JobProfile.find({}).then((foundJobProfiles) => {
     if (!foundJobProfiles) {
       res.json({
@@ -95,14 +93,146 @@ router.get("/student/jobProfile/getJobProfile/:id", (req, res) => {
         error: "jobProfile not found",
       });
     }
-
     res.json({
       success: true,
-      jobProfile: foundJobProfiles,
+      jobProfile: foundJobProfile,
     });
-
   });
 });
 
+//apply to a job profile
+router.post("/student/applyToJobProfile", (req, res) => {
+  //add the userAccountId and userProfileId to initialApplications array of job
+  JobProfile.findById(req.body.jobProfileId)
+    .then((foundJobProfile) => {
+      let temp = {
+        userAccount: req.body.userAccountId,
+        userProfile: req.body.userProfileId,
+      };
+      foundJobProfile.InitialApplications.push(temp);
+      foundJobProfile
+        .save()
+        .then((updatedJobProfile) => {
+          console.log("applied to the job for student");
+          res.json({
+            success: true,
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+
+  //add the jobProfileId to JobProfilesAppliedFor array of studentStats
+  StudentStats.findOne({ UserAccount: req.body.userAccountId })
+    .then((foundStudentStats) => {
+      if (!foundStudentStats) {
+        console.log("error occurred in finding studentStats");
+      } else {
+        let temp = {
+          JobProfileId: req.body.jobProfileId,
+        };
+
+        foundStudentStats.JobProfilesAppliedFor.push(temp);
+        foundStudentStats
+          .save()
+          .then((updatedStudentStats) => {
+            if (!updatedStudentStats) {
+              console.log("error occurred in updating studentStats");
+            } else {
+              console.log("jobProfile added to studentStats");
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err));
+});
+
+//withdraw application from a specific job Profile
+router.post("/student/withdrawFromJobProfile", (req, res) => {
+  //remove the userAccountId and userProfileId from initialApplications array of job
+  JobProfile.findById(req.body.jobProfileId)
+    .then((foundJobProfile) => {
+      let temp = {
+        userAccount: req.body.userAccountId,
+        userProfile: req.body.userProfileId,
+      };
+      let newInitialApplications = [];
+      foundJobProfile.InitialApplications.forEach((Application) => {
+        if (
+          Application.userAccount != temp.userAccount &&
+          Application.userProfile != temp.userProfile
+        ) {
+          newInitialApplications.push(Application);
+        }
+      });
+      foundJobProfile.InitialApplications = newInitialApplications;
+      foundJobProfile
+        .save()
+        .then((updatedJobProfile) => {
+          console.log("withdrawn  from the job for student");
+          res.json({
+            success: true,
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+
+  //remove the jobProfileId from JobProfilesAppliedFor array of studentStats
+  StudentStats.findOne({ UserAccount: req.body.userAccountId })
+    .then((foundStudentStats) => {
+      if (!foundStudentStats) {
+        console.log("error occurred in finding studentStats");
+      } else {
+        let temp = {
+          JobProfileId: req.body.jobProfileId,
+        };
+        let newJobProfilesAppliedFor = [];
+        foundStudentStats.JobProfilesAppliedFor.forEach((JobProfile) => {
+          if (JobProfile.JobProfileId != temp.JobProfileId) {
+            newJobProfilesAppliedFor.push(JobProfile);
+          }
+        });
+        foundStudentStats.JobProfilesAppliedFor = newJobProfilesAppliedFor;
+        foundStudentStats
+          .save()
+          .then((updatedStudentStats) => {
+            if (!updatedStudentStats) {
+              console.log("error occurred in updating studentStats");
+            } else {
+              console.log("jobProfile removed from studentStats");
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    })
+    .catch((err) => console.log(err));
+});
+
+//add feedback regarding a Job Profile Process
+router.post("/student/addFeedbackToJobProfile", (req, res) => {
+  //remove the userAccountId and userProfileId from initialApplications array of job
+  JobProfile.findById(req.body.jobProfileId)
+    .then((foundJobProfile) => {
+      let temp = {
+        userAccount: req.body.userAccountId,
+        FeedBackText: req.body.FeedBackText,
+        Rating: req.body.Rating,
+      };
+
+      foundJobProfile.StudentFeedback.push(temp);
+      foundJobProfile
+        .save()
+        .then((updatedJobProfile) => {
+          console.log("added feedback  to the job for student");
+          res.json({
+            success: true,
+          });
+        })
+        .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+});
 
 module.exports = router;

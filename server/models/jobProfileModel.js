@@ -74,6 +74,11 @@ const jobProfileSchema = new Schema({
     {
       userAccount: { type: Schema.Types.ObjectId, ref: "userAccounts" },
       FeedBackText: String,
+      Rating: Number,
+      CreatedOn: {
+        type: Date,
+        default: Date.now,
+      },
     },
   ],
   InitialApplications: [
