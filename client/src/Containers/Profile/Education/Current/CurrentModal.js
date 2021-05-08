@@ -348,7 +348,7 @@ class CurrentModal extends React.Component {
                     }}
                   >
                     <option eventkey="none" selected disabled hidden>Please select an Option</option>
-                    <option eventkey="2">Infromation Technology</option>
+                    <option eventkey="2">Information Technology</option>
                     <option eventkey="3">Computer Science Engineering</option>
                     <option eventkey="4">Computer Communication Engineering</option>
                     
@@ -368,7 +368,7 @@ class CurrentModal extends React.Component {
                     }}
                   >
                     <option eventkey="none" selected disabled hidden>Please Select an Option</option>
-                    <option eventkey="2">Bachlor of Technology</option>
+                    <option eventkey="2">Bachelor of Technology</option>
                     <option eventkey="3">Master Technology</option>
                     <option eventkey="3">Master of Business Administration</option>
                   </Form.Control>

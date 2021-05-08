@@ -238,7 +238,7 @@ class Signup extends React.Component {
                   <option selected disabled hidden>
                     Please Select an Option
                   </option>
-                  <option eventkey="6">Infromation Technology</option>
+                  <option eventkey="6">Information Technology</option>
                   <option eventkey="7">Computer Science Engineering</option>
                   <option eventkey="8">Computer Communication Engineering</option>
                 </Form.Control>
@@ -256,7 +256,7 @@ class Signup extends React.Component {
                   <option eventkey="none" selected disabled hidden>
                     Please Select an Option
                   </option>
-                  <option eventkey="2">Bachlor of Technology</option>
+                  <option eventkey="2">Bachelor of Technology</option>
                   <option eventkey="3">Master Technology</option>
                   <option eventkey="3">Master of Business Administration</option>
                 </Form.Control>

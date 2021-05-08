@@ -202,7 +202,7 @@ class AdminSignup extends React.Component {
                   <option selected disabled hidden>
                     Please Select an Option
                   </option>
-                  <option eventkey="6">Infromation Technology</option>
+                  <option eventkey="6">Information Technology</option>
                   <option eventkey="7">Computer Science Engineering</option>
                   <option eventkey="8">Computer Communication Engineering</option>
                 </Form.Control>
