@@ -44,6 +44,7 @@ class App extends React.Component {
             <Route path="/Updates" exact component={UpdatesForm}/>
             <Route path="/AdminUpdatesFeed" exact component={AdminUpdates}/>
             <Route path="/JobProfileForm" exact component={JobProfileForm}/>
+            <Route path="/JobProfilesFeed" exact component={JobProfilesFeed} />
             <Route path="/Logout" exact component={Logout} />
           </Switch>
         </AdminLayout>
