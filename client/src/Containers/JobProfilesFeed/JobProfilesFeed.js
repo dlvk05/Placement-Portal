@@ -200,20 +200,6 @@ class JobProfilesFeed extends React.Component {
                   </td>
                 </tr>
               ))}
-              {/*   <tr>
-                          <td><i class="fab fa-google fa-2x"></i></td>
-                          <td><Link to="/Job1">Chief Operating Officer</Link></td>
-                          <td>Google</td>
-                          <td>Pan India</td>
-                          <td>Applications Open</td>
-                      </tr>
-                      <tr>
-                          <td><i class="fab fa-apple fa-2x"></i></td>
-                          <td><Link to="/Job2">Chief Executive Officer</Link></td>
-                          <td>Apple</td>
-                          <td>Pan India</td>
-                          <td>Applications Open</td>
-                      </tr> */}
             </Table>
           </div>
         </div>
