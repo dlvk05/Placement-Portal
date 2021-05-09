@@ -19,6 +19,7 @@ import JobProfilesFeed from "./Containers/JobProfilesFeed/JobProfilesFeed";
 import PracticeContainer from "./Containers/PracticeContainer/PracticeContainer";
 import UserAccountInfoPage from "./Containers/UserAccountInfoPage/UserAccountInfoPage";
 import UpdatesForm from "./Containers/Adminfunctionalities/UpdatesForm/UpdatesForm";
+import StudentJobViewContainer from "./Containers/StudentJobViewContainer/StudentJobViewContainer";
 
 class App extends React.Component {
   componentDidMount() {
@@ -61,6 +62,7 @@ class App extends React.Component {
             <Route path="/JobProfilesFeed" exact component={JobProfilesFeed} />
             <Route path="/Logout" exact component={Logout} />
             <Route path="/UserAccountInfoPage" exact component={UserAccountInfoPage} />
+            <Route path="/StudentJobView" exact component={StudentJobViewContainer} />
 
           </Switch>
         </UserLayout>

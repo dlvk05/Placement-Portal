@@ -1,0 +1,17 @@
+.imgDiv{
+    display: flex;
+}
+
+.logoDiv{
+    border: solid silver 2px;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+.jobDesDiv{
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    width: 800px;
+    padding: 20px;
+}
+

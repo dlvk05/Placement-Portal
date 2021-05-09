@@ -8,29 +8,29 @@ const jobProfileSchema = new Schema({
     default: Date.now,
   },
   adminAccount: { type: Schema.Types.ObjectId, ref: "adminAccounts" },
-  ApplicationDeadLine: Date,
-  CompanyRepresentativeMailId: String,
-  JobProfileTitle: String,
-  CompanyName: String,
-  Location: String,
-  JobSector: String, //dropdown
-  PositionType: String, //dropdown
-  Dream: {
+  ApplicationDeadLine: Date, //-->  USED IN ADDITIONAL INFO
+  CompanyRepresentativeMailId: String, //won't be shown
+  JobProfileTitle: String, //-->USED IN ADDITIONAL INFO
+  CompanyName: String, //!!!USED IN OPENING OVERVIEW
+  Location: String, //!!! USED IN OPENING OVERVIEW
+  JobSector: String, //--> USEDJobSector IN ADDITIONAL INFO dropdown
+  PositionType: String, //--> USED IN ADDITIONAL INFOdropdown
+  Dream: { //-->USED IN ADDITIONAL INFO
     //checkbox
     type: Boolean,
     default: false,
   },
-  OpeningOverview: {
+  OpeningOverview: { //!!! USED IN OPENING OVERVIEW
     Domain: String,
     Category: String, //dropdown ITES,Core/Preferred Domain/R&D ,Non-core
     JobFunctions: String,
     CTCRange: String,
-    AbsoluteCTC: Number,
+    AbsoluteCTC: Number, //won't be shown
   },
-  AboutCompany: String,
-  JobDescription: String,
-  RequiredSkills: String,
-  HiringWorkflow: [
+  AboutCompany: String, /* ### USED IN JOB DESCRIPTIONS COMPONENT */
+  JobDescription: String, //### USED IN JOB DESCRIPTIONS COMPONENT
+  RequiredSkills: String, //### USED IN JOB DESCRIPTIONS COMPONENT
+  HiringWorkflow: [ //OKK USED IN HIRINGWORKFLOW COMPONENT 
     {
       StageNo: Number,
       StageTitle: String,
@@ -38,7 +38,7 @@ const jobProfileSchema = new Schema({
       StartDate: Date,
       EndDate: Date,
       StageDescription: String,
-      Selects: [
+      Selects: [  //haven't really used this anywhere
         {
           userAccount: { type: Schema.Types.ObjectId, ref: "userAccounts" },
           userProfile: { type: Schema.Types.ObjectId, ref: "userProfiles" },
@@ -46,7 +46,7 @@ const jobProfileSchema = new Schema({
       ],
     },
   ],
-  AttachedDocuments: [
+  AttachedDocuments: [ //-->USED IN ADDITIONAL INFO
     {
       DocumentName: String,
     },

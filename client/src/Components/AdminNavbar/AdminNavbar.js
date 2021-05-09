@@ -21,7 +21,7 @@ const adminNavbar = (props) => {
             Reports
           </Nav.Link>
         </Nav>
-        <div style={{ color: "white", marginRight: "70px" }}>
+        <div style={{ color: "white", marginRight: "120px" }}>
           {/* ^^^ you have to edit this dropdown properly later */}
           <NavDropdown title={x} style={{ color: "white" }}>
             <NavDropdown.Item href="#action/3.1">Account Info</NavDropdown.Item>

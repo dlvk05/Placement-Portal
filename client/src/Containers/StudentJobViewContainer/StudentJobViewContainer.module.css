@@ -1,0 +1,36 @@
+.wrapper {
+  background-color: aliceblue;
+  padding: 10px;
+}
+
+.container {
+  display: block;
+  border: solid silver 2px;
+  border-radius: 10px;
+  padding: 20px;
+  margin-right: 20%;
+  margin-left: 10%;
+  background-color: #f5f5f5;
+}
+
+.applicationButton {
+  position: fixed;
+  right: 30px;
+  border: solid silver 2px;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+/* After this point its all for separate components */
+.eligibilityDiv {
+  padding: 20px;
+  border: solid silver 1px;
+  border-radius: 10px;
+}
+
+.feedbackDiv {
+  padding: 20px;
+  border: solid silver 1px;
+  border-radius: 10px;
+}

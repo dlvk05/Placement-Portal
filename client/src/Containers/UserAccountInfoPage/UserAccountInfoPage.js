@@ -106,6 +106,20 @@ class UserAccountInfoPage extends React.Component {
                 </Modal.Header>
                 <Modal.Body>
                   <Form>
+                    <Form.Group as={Col} controlId="formGridCurrentPassword">
+                      <Form.Row>
+                      <Form.Label column="sm">Current Password</Form.Label>
+                      <Form.Control
+                        type="CurrentPassword"
+                        placeholder="Type Here"
+                        required
+                        size="sm"
+                        /* onChange={(event, string) => {
+                        this.inputChangeHandler(event, "CurrentPassword");
+                        }} */
+                      />
+                      </Form.Row>
+                    </Form.Group>
                     <Form.Group as={Col} controlId="formGridPassword">
                       <Form.Row>
                         <Form.Label column="sm">Enter New Password</Form.Label>
