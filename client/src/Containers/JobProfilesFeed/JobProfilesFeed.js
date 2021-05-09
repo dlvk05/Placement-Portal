@@ -157,10 +157,7 @@ class JobProfilesFeed extends React.Component {
                     <option value="Location" eventkey="4">
                       Location
                     </option>
-                    <option value="Status" eventkey="5">
-                      Status
-                    </option>
-                    <option value="ApplicationDeadline" eventkey="6">
+                    <option value="ApplicationDeadline" eventkey="5">
                       Application Deadline
                     </option>
                   </Form.Control>

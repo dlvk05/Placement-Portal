@@ -26,10 +26,11 @@ class PersonalSummary extends React.Component {
         </i>
         <br />
         <i>
+        semester: 
           {this.props.userAccountInfo != null
             ? this.props.userAccountInfo.semester
             : "this is where the semester goes"}
-          semester{" "}
+          {" "}
         </i>
         <br />
         <i>
