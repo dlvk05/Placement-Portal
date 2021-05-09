@@ -11,7 +11,7 @@ const quizSchema = new Schema({
     default: Date.now,
   },
   AdminAccount: { type: Schema.Types.ObjectId, ref: "adminAccounts" },
-  UpdateBody: [
+  QuizBody: [
     {
       question: String,
       option1: String,
