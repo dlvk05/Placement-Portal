@@ -184,7 +184,8 @@ class JobProfilesFeed extends React.Component {
                   <th>status</th>
                 </tr>
               </thead>
-              {this.state.jobProfiles.reverse().map((currentJob, i) => (
+              {this.state.jobProfiles.length===0?<div>Nothing to show</div>:
+              this.state.jobProfiles.reverse().map((currentJob, i) => (
                 <tr key={i}>
                   {/* ^^^ so later on we might have to licence this company logo */}
                   <td style={{width: "20px"}}>{/* <i class="fas fa-suitcase fa-2x"></i> */}  <img alt="company logo" src="https://img.icons8.com/color/40/000000/google-logo.png"/></td>
