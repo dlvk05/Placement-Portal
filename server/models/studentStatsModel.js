@@ -10,7 +10,10 @@ const studentStatsSchema = new Schema({
     {
       QuizId: { type: Schema.Types.ObjectId, ref: "quizzes" },
       MarksScored: Number,
-      AttemptedOn: Date,
+      AttemptedOn: {
+        type: Date,
+        default: Date.now,
+      },
     },
   ],
   JobProfilesAppliedFor: [

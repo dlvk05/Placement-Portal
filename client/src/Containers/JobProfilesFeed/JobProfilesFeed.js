@@ -1,33 +1,61 @@
 import React from "react";
 import a from "./JobProfilesFeed.module.css";
-import { Row, Col, Table, Form} from "react-bootstrap";
+import { Row, Col, Table, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 class JobProfilesFeed extends React.Component {
   state = {
-    jobProfiles:[],
+    jobProfiles: [],
   };
 
-  componentDidMount(){
-    console.log("component did mount")
-    axios 
-    .get("/api/student/jobProfile/getAllJobProfiles")
-    .then((res) => {
-      console.log("jobProfiles loaded");
-      console.log(res.data.jobProfiles);
-      this.setState({
-        jobProfiles: res.data.jobProfiles,
+  componentDidMount() {
+    console.log("component did mount");
+    axios
+      .get("/api/student/jobProfile/getAllJobProfiles")
+      .then((res) => {
+        console.log("jobProfiles loaded");
+        console.log(res.data.jobProfiles);
+        this.setState({
+          jobProfiles: res.data.jobProfiles,
+        });
+      })
+      .catch((err) => {
+        console.log("error ocurred at /student/jobProfile/getAllJobProfiles");
+        console.log(err);
       });
-    })
-    .catch((err) => {
-      console.log("error ocurred at /student/jobProfile/getAllJobProfiles");
-      console.log(err);
-    });
   }
 
   render() {
     var current = new Date("2021-05-06");
+    let feed =
+      this.state.jobProfiles.length === 0 ? (
+        <div>Nothing to show</div>
+      ) : (
+        this.state.jobProfiles.reverse().map((currentJob, i) => (
+          <tr key={i}>
+            {/* ^^^ so later on we might have to licence this company logo */}
+            <td style={{ width: "20px" }}>
+              {/* <i class="fas fa-suitcase fa-2x"></i> */}{" "}
+              <img
+                alt="company logo"
+                src="https://img.icons8.com/color/40/000000/google-logo.png"
+              />
+            </td>
+            <td>
+              <Link to="">{currentJob.JobProfileTitle}</Link>
+            </td>
+            <td>{currentJob.CompanyName}</td>
+            <td>{currentJob.Location}</td>
+            <td>
+              {current > currentJob.ApplicationDeadLine
+                ? "Application Closed"
+                : "Application Open"}
+            </td>
+          </tr>
+        ))
+      );
+
     // console.log(current);
 
     return (
@@ -82,41 +110,43 @@ class JobProfilesFeed extends React.Component {
                   </Form.Group>
                 </div>
                 <div className={a.toolbardiv}>
-                <Form.Group controlId="exampleForm.SelectCustom" as={Col}>
-                <Form.Row>
-                  <Form.Label column="sm">Position Type</Form.Label>
-                  <Form.Control
-                    as="select"
-                    custom
-                    size="sm"
-                    onChange={(event, string) => {
-                      this.inputChangeHandler(event, "PositionType");
-                      console.log("drop down is being read");
-                    }}
-                  >
-                    <option eventkey="none" selected disabled hidden>
-                      Please Select an Option
-                    </option>
-                    <option value="Part Time" eventkey="1">
-                      Part Time
-                    </option>
-                    <option value="Full Time" eventkey="2">
-                      Full Time
-                    </option>
-                    <option value="Internship Paid" eventkey="3">
-                      Internship (Paid)
-                    </option>
-                    <option value="Internship Unpaid" eventkey="4">
-                      Internship (Unpaid)
-                    </option>
-                  </Form.Control>
-                </Form.Row>
-              </Form.Group>
+                  <Form.Group controlId="exampleForm.SelectCustom" as={Col}>
+                    <Form.Row>
+                      <Form.Label column="sm">Position Type</Form.Label>
+                      <Form.Control
+                        as="select"
+                        custom
+                        size="sm"
+                        onChange={(event, string) => {
+                          this.inputChangeHandler(event, "PositionType");
+                          console.log("drop down is being read");
+                        }}
+                      >
+                        <option eventkey="none" selected disabled hidden>
+                          Please Select an Option
+                        </option>
+                        <option value="Part Time" eventkey="1">
+                          Part Time
+                        </option>
+                        <option value="Full Time" eventkey="2">
+                          Full Time
+                        </option>
+                        <option value="Internship Paid" eventkey="3">
+                          Internship (Paid)
+                        </option>
+                        <option value="Internship Unpaid" eventkey="4">
+                          Internship (Unpaid)
+                        </option>
+                      </Form.Control>
+                    </Form.Row>
+                  </Form.Group>
                 </div>
                 <div className={a.toolbardiv}>
                   <Form.Group as={Col} controlId="formGridSearch">
                     <Form.Row>
-                      <Form.Label column="sm"><i class="fas fa-search"></i> Search</Form.Label>
+                      <Form.Label column="sm">
+                        <i class="fas fa-search"></i> Search
+                      </Form.Label>
                       <Form.Control
                         type="Search"
                         placeholder="Type Here..."
@@ -130,39 +160,39 @@ class JobProfilesFeed extends React.Component {
                   </Form.Group>
                 </div>
                 <div>
-                <Form.Group controlId="exampleForm.SelectCustom" as={Col}>
-                <Form.Row>
-                  <Form.Label column="sm">Sort By</Form.Label>
-                  <Form.Control
-                    as="select"
-                    custom
-                    size="sm"
-                    /* onChange={(event, string) => {
+                  <Form.Group controlId="exampleForm.SelectCustom" as={Col}>
+                    <Form.Row>
+                      <Form.Label column="sm">Sort By</Form.Label>
+                      <Form.Control
+                        as="select"
+                        custom
+                        size="sm"
+                        /* onChange={(event, string) => {
                       this.inputChangeHandler(event, "JobSector");
                       console.log("drop down is being read");
                     }} */
-                  >
-                    <option eventkey="none" selected disabled hidden>
-                      Please Select an Option
-                    </option>
-                    <option value="CreatedDate" eventkey="1">
-                      Created Date
-                    </option>
-                    <option value="JobTitle" eventkey="2">
-                      Job Title
-                    </option>
-                    <option value="CompanyName" eventkey="3">
-                      Company Name
-                    </option>
-                    <option value="Location" eventkey="4">
-                      Location
-                    </option>
-                    <option value="ApplicationDeadline" eventkey="5">
-                      Application Deadline
-                    </option>
-                  </Form.Control>
-                </Form.Row>
-              </Form.Group>
+                      >
+                        <option eventkey="none" selected disabled hidden>
+                          Please Select an Option
+                        </option>
+                        <option value="CreatedDate" eventkey="1">
+                          Created Date
+                        </option>
+                        <option value="JobTitle" eventkey="2">
+                          Job Title
+                        </option>
+                        <option value="CompanyName" eventkey="3">
+                          Company Name
+                        </option>
+                        <option value="Location" eventkey="4">
+                          Location
+                        </option>
+                        <option value="ApplicationDeadline" eventkey="5">
+                          Application Deadline
+                        </option>
+                      </Form.Control>
+                    </Form.Row>
+                  </Form.Group>
                 </div>
               </Form>
             </Row>
@@ -181,23 +211,7 @@ class JobProfilesFeed extends React.Component {
                   <th>status</th>
                 </tr>
               </thead>
-              {this.state.jobProfiles.length===0?<div>Nothing to show</div>:
-              this.state.jobProfiles.reverse().map((currentJob, i) => (
-                <tr key={i}>
-                  {/* ^^^ so later on we might have to licence this company logo */}
-                  <td style={{width: "20px"}}>{/* <i class="fas fa-suitcase fa-2x"></i> */}  <img alt="company logo" src="https://img.icons8.com/color/40/000000/google-logo.png"/></td>
-                  <td>
-                    <Link to="">{currentJob.JobProfileTitle}</Link>
-                  </td>
-                  <td>{currentJob.CompanyName}</td>
-                  <td>{currentJob.Location}</td>
-                  <td>
-                    {current > currentJob.ApplicationDeadLine
-                      ? "Application Closed"
-                      : "Application Open"}
-                  </td>
-                </tr>
-              ))}
+              {feed}
             </Table>
           </div>
         </div>
