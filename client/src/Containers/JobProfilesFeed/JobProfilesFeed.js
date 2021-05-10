@@ -3,6 +3,7 @@ import a from "./JobProfilesFeed.module.css";
 import { Row, Col, Table, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { connect } from "react-redux";
 
 class JobProfilesFeed extends React.Component {
   state = {
@@ -14,7 +15,7 @@ class JobProfilesFeed extends React.Component {
   };
 
   componentDidMount() {
-    console.log("component did mount");
+    // console.log("component did mount");
     axios
       .get("/api/student/jobProfile/getAllJobProfiles")
       .then((res) => {
@@ -30,6 +31,14 @@ class JobProfilesFeed extends React.Component {
       });
   }
 
+  handlePageChange = (id) => {
+    if (this.props.isAdmin) {
+      this.props.history.push("/AdminJobView/" + id);
+    } else {
+      this.props.history.push("/StudentJobView/" + id);
+    }
+  };
+
   inputChangeHandler = (event, inputIdentifier) => {
     console.log(inputIdentifier);
     console.log(event.target.value);
@@ -43,7 +52,7 @@ class JobProfilesFeed extends React.Component {
   filterArray = (jobProfiles) => {
     let relevantProfiles = [];
     if (jobProfiles.length > 0) {
-      console.log("job profiles not empty");
+      // console.log("job profiles not empty");
       // console.log("filterArray called");
       jobProfiles.forEach((jobProfile) => {
         let relevant = true;
@@ -85,7 +94,7 @@ class JobProfilesFeed extends React.Component {
         return relevantProfiles;
       }
     }
-    console.log("job profiles  empty");
+    // console.log("job profiles  empty");
     return jobProfiles;
   };
 
@@ -134,7 +143,7 @@ class JobProfilesFeed extends React.Component {
   render() {
     let filteredJobProfiles = [];
     filteredJobProfiles = this.filterArray(this.state.jobProfiles);
-    let sortedFilteredArray=[...filteredJobProfiles];
+    let sortedFilteredArray = [...filteredJobProfiles];
     // console.log("filtered job profiles are");
     // console.log(filteredJobProfiles);
     // console.log("sorted array is");
@@ -156,7 +165,9 @@ class JobProfilesFeed extends React.Component {
               />
             </td>
             <td>
-              <Link to="">{currentJob.JobProfileTitle}</Link>
+              <Link onClick={() => this.handlePageChange(currentJob._id)}>
+                {currentJob.JobProfileTitle}
+              </Link>
             </td>
             <td>{currentJob.CompanyName}</td>
             <td>{currentJob.Location}</td>
@@ -341,4 +352,10 @@ class JobProfilesFeed extends React.Component {
   }
 }
 
-export default JobProfilesFeed;
+const mapStateToProps = (state) => {
+  return {
+    isAdmin: state.userAuth.isAdmin,
+  };
+};
+
+export default connect(mapStateToProps)(JobProfilesFeed);

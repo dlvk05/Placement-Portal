@@ -1,6 +1,6 @@
 import React from "react";
-import { Button} from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import JobAdditionalInfoComponent from "../../Components/StudentJobViewComponents/JobAdditionalInfoComponent/JobAdditionalInfoComponent";
 import JobDescriptionsComponent from "../../Components/StudentJobViewComponents/JobDescriptionsComponent/JobDescriptionsComponent";
 import OpeningOverviewComponent from "../../Components/StudentJobViewComponents/OpeningOverviewComponent/OpeningOverviewComponent";
@@ -8,13 +8,30 @@ import styles from "./StudentJobViewContainer.module.css";
 import HiringWorkflowComponent from "../../Components/StudentJobViewComponents/HiringWorkflowComponent/HiringWorkflowComponent";
 import EligibilityCriteriaComponent from "../../Components/StudentJobViewComponents/EligibilityCriteriaComponent/EligibilityCriteriaComponent";
 import StudentJobFeedBackContainer from "./StudentJobFeedBackContainer/StudentJobFeedBackContainer";
+import axios from "axios";
 
 class StudentJobViewContainer extends React.Component {
   state = {
-    
+    jobProfile: null,
   };
+  componentDidMount() {
+    let url =
+      "/api/student/jobProfile/getJobProfile/" + this.props.match.params.id;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        this.setState({
+          jobProfile: res.data.jobProfile,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   render() {
+    console.log(this.state);
     return (
       <div className={styles.wrapper}>
         <div className={styles.applicationButton}>
@@ -22,12 +39,18 @@ class StudentJobViewContainer extends React.Component {
             <h6>Interested? Apply Here</h6>
           </div>
           <hr />
-          <div><Button>Apply Now</Button></div>
+          <div>
+            <Button>Apply Now</Button>
+          </div>
           <hr />
           <div>
             <h6>Changed Your Mind? </h6>
           </div>
-          <div><Button variant="danger" disabled="false" >Withdraw Application</Button></div>
+          <div>
+            <Button variant="danger" disabled="false">
+              Withdraw Application
+            </Button>
+          </div>
           <hr />
           <h6>The Application is closed.</h6>
         </div>
@@ -40,13 +63,15 @@ class StudentJobViewContainer extends React.Component {
           <br />
           <HiringWorkflowComponent />
           <br />
-          <EligibilityCriteriaComponent/>
+          <EligibilityCriteriaComponent />
           <br />
-          <StudentJobFeedBackContainer/>
+          <StudentJobFeedBackContainer />
         </div>
       </div>
     );
   }
 }
+
+
 
 export default StudentJobViewContainer;
