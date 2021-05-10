@@ -8,11 +8,30 @@ import OpeningOverviewComponent from "../../Components/StudentJobViewComponents/
 import HiringWorkflowComponent from "../../Components/StudentJobViewComponents/HiringWorkflowComponent/HiringWorkflowComponent";
 import EligibilityCriteriaComponent from "../../Components/StudentJobViewComponents/EligibilityCriteriaComponent/EligibilityCriteriaComponent";
 // import StudentJobFeedBackContainer from "./StudentJobFeedBackContainer/StudentJobFeedBackContainer";
+import axios from "axios";
 
 class AdminJobViewContainer extends React.Component {
-  state = {};
+  state = {
+    jobProfile: null,
+  };
+
+  componentDidMount() {
+    let url = "/api/jobProfile/getJobProfile/" + this.props.match.params.id;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log(res.data);
+        this.setState({
+          jobProfile: res.data.jobProfile,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   render() {
+    console.log(this.state);
     return (
       <div className={styles.wrapper}>
         <div className={styles.sidebar}>
@@ -28,36 +47,28 @@ class AdminJobViewContainer extends React.Component {
             <h6>Download Initial Applicants List</h6>
           </div>
           <div>
-            <Button variant="info">
-              Download
-            </Button>
+            <Button variant="info">Download</Button>
           </div>
           <hr />
           <div>
             <h6>Upload Selected Applicants List</h6>
           </div>
           <div>
-            <Button variant="info">
-              Download
-            </Button>
+            <Button variant="info">Download</Button>
           </div>
           <hr />
           <div>
             <h6>Download Student Feedback</h6>
           </div>
           <div>
-            <Button variant="warning">
-              Download
-            </Button>
+            <Button variant="warning">Download</Button>
           </div>
           <hr />
           <div>
             <h6>Email Company Representative</h6>
           </div>
           <div>
-            <Button variant="success">
-              Send an Email
-            </Button>
+            <Button variant="success">Send an Email</Button>
           </div>
         </div>
         <div className={styles.container}>

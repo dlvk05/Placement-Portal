@@ -49,8 +49,8 @@ class App extends React.Component {
             <Route path="/JobProfileForm" exact component={JobProfileForm}/>
             <Route path="/JobProfilesFeed" exact component={JobProfilesFeed} />
             <Route path="/Logout" exact component={Logout} />
-            <Route path="/AdminJobView" exact component={AdminJobViewContainer} />
             <Route path="/QuizUpload" exact component={QuizUploadForm} />
+            <Route path="/AdminJobView/:id" exact component={AdminJobViewContainer} />
           </Switch>
         </AdminLayout>
       );
@@ -66,7 +66,7 @@ class App extends React.Component {
             <Route path="/JobProfilesFeed" exact component={JobProfilesFeed} />
             <Route path="/Logout" exact component={Logout} />
             <Route path="/UserAccountInfoPage" exact component={UserAccountInfoPage} />
-            <Route path="/StudentJobView" exact component={StudentJobViewContainer} />
+            <Route path="/StudentJobView/:id" exact component={StudentJobViewContainer} />
 
           </Switch>
         </UserLayout>

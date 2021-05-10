@@ -100,7 +100,7 @@ router.get("/jobProfile/getJobProfile/:id", (req, res) => {
 
     res.json({
       success: true,
-      jobProfile: foundJobProfiles,
+      jobProfile: foundJobProfile,
     });
 
   });
