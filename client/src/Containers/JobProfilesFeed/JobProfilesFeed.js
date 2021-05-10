@@ -7,6 +7,10 @@ import axios from "axios";
 class JobProfilesFeed extends React.Component {
   state = {
     jobProfiles: [],
+    JobSector: null,
+    PositionType: null,
+    Search: "",
+    SortBy: null,
   };
 
   componentDidMount() {
@@ -26,13 +30,122 @@ class JobProfilesFeed extends React.Component {
       });
   }
 
+  inputChangeHandler = (event, inputIdentifier) => {
+    console.log(inputIdentifier);
+    console.log(event.target.value);
+    this.setState({
+      ...this.state,
+      [inputIdentifier]:
+        event.target.value === "All" ? null : event.target.value,
+    });
+  };
+
+  filterArray = (jobProfiles) => {
+    let relevantProfiles = [];
+    if (jobProfiles.length > 0) {
+      console.log("job profiles not empty");
+      // console.log("filterArray called");
+      jobProfiles.forEach((jobProfile) => {
+        let relevant = true;
+        if (
+          this.state.JobSector != null &&
+          jobProfile.JobSector != this.state.JobSector
+        ) {
+          relevant = false;
+        }
+
+        if (
+          this.state.PositionType != null &&
+          jobProfile.PositionType != this.state.PositionType
+        ) {
+          relevant = false;
+        }
+        if (relevant) {
+          relevantProfiles.push(jobProfile);
+        }
+      });
+      if (this.state.Search != "") {
+        return relevantProfiles.filter((profile) => {
+          if (
+            profile.JobProfileTitle.toLowerCase().includes(
+              this.state.Search.toLowerCase()
+            ) ||
+            profile.CompanyName.toLowerCase().includes(
+              this.state.Search.toLowerCase()
+            ) ||
+            profile.Location.toLowerCase().includes(
+              this.state.Search.toLowerCase()
+            )
+          ) {
+            return true;
+          }
+          return false;
+        });
+      } else {
+        return relevantProfiles;
+      }
+    }
+    console.log("job profiles  empty");
+    return jobProfiles;
+  };
+
+  sortArray = (filteredProfiles) => {
+    if (filteredProfiles.length <= 0 || this.state.SortBy == null) {
+      return filteredProfiles.reverse();
+    } else {
+      if (
+        this.state.SortBy === "JobTitle" ||
+        this.state.SortBy === "CompanyName" ||
+        this.state.SortBy === "Location"
+      ) {
+        filteredProfiles.sort((a, b) => {
+          let fa = a[this.state.SortBy].toLowerCase(),
+            fb = b[this.state.SortBy].toLowerCase();
+
+          if (fa < fb) {
+            return -1;
+          }
+          if (fa > fb) {
+            return 1;
+          }
+          return 0;
+        });
+      } else if (this.state.SortBy === "createdOn") {
+        filteredProfiles.sort((a, b) => {
+          let fa = new Date(a[this.state.SortBy]),
+            fb = new Date(b[this.state.SortBy]);
+
+          return fa - fb;
+        });
+      } else {
+        //sorted by application deadline
+        //the closer deadline objects come first
+        filteredProfiles.sort((a, b) => {
+          let fa = new Date(a[this.state.SortBy]),
+            fb = new Date(b[this.state.SortBy]);
+
+          return fa - fb;
+        });
+      }
+      return filteredProfiles;
+    }
+  };
+
   render() {
+    let filteredJobProfiles = [];
+    filteredJobProfiles = this.filterArray(this.state.jobProfiles);
+    let sortedFilteredArray=[...filteredJobProfiles];
+    // console.log("filtered job profiles are");
+    // console.log(filteredJobProfiles);
+    // console.log("sorted array is");
+    // console.log(this.sortArray(tempArray));
+    this.sortArray(filteredJobProfiles);
     var current = new Date("2021-05-06");
     let feed =
-      this.state.jobProfiles.length === 0 ? (
+      filteredJobProfiles.length === 0 ? (
         <div>Nothing to show</div>
       ) : (
-        this.state.jobProfiles.reverse().map((currentJob, i) => (
+        filteredJobProfiles.map((currentJob, i) => (
           <tr key={i}>
             {/* ^^^ so later on we might have to licence this company logo */}
             <td style={{ width: "20px" }}>
@@ -84,6 +197,7 @@ class JobProfilesFeed extends React.Component {
                         <option eventkey="none" selected disabled hidden>
                           Please Select an Option
                         </option>
+
                         <option value="Accounting" eventkey="1">
                           Accounting
                         </option>
@@ -105,6 +219,9 @@ class JobProfilesFeed extends React.Component {
                         <option value="Consulting" eventkey="6">
                           Consulting
                         </option>
+                        <option value={null} eventkey="7">
+                          All
+                        </option>
                       </Form.Control>
                     </Form.Row>
                   </Form.Group>
@@ -125,6 +242,7 @@ class JobProfilesFeed extends React.Component {
                         <option eventkey="none" selected disabled hidden>
                           Please Select an Option
                         </option>
+
                         <option value="Part Time" eventkey="1">
                           Part Time
                         </option>
@@ -136,6 +254,9 @@ class JobProfilesFeed extends React.Component {
                         </option>
                         <option value="Internship Unpaid" eventkey="4">
                           Internship (Unpaid)
+                        </option>
+                        <option value={null} eventkey="5">
+                          All
                         </option>
                       </Form.Control>
                     </Form.Row>
@@ -167,18 +288,18 @@ class JobProfilesFeed extends React.Component {
                         as="select"
                         custom
                         size="sm"
-                        /* onChange={(event, string) => {
-                      this.inputChangeHandler(event, "JobSector");
-                      console.log("drop down is being read");
-                    }} */
+                        onChange={(event, string) => {
+                          this.inputChangeHandler(event, "SortBy");
+                          console.log("drop down is being read");
+                        }}
                       >
                         <option eventkey="none" selected disabled hidden>
                           Please Select an Option
                         </option>
-                        <option value="CreatedDate" eventkey="1">
+                        <option value="createdOn" eventkey="1">
                           Created Date
                         </option>
-                        <option value="JobTitle" eventkey="2">
+                        <option value="JobProfileTitle" eventkey="2">
                           Job Title
                         </option>
                         <option value="CompanyName" eventkey="3">
@@ -187,7 +308,7 @@ class JobProfilesFeed extends React.Component {
                         <option value="Location" eventkey="4">
                           Location
                         </option>
-                        <option value="ApplicationDeadline" eventkey="5">
+                        <option value="ApplicationDeadLine" eventkey="5">
                           Application Deadline
                         </option>
                       </Form.Control>
