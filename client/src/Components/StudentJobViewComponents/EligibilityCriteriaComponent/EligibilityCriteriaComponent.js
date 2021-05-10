@@ -2,26 +2,8 @@ import React from 'react';
 import { Table } from 'react-bootstrap';
 import styles from './EligibilityCriteriaComponent.module.css';
 
-const eligibilityCriteriaComponent = () => {
-    const data = {
-        Backlogs: 0,
-    ProgrammesAllowed: [
-      {
-        type: String,
-      },
-    ],
-    BranchesAllowed: [
-      {
-        type: String,
-      },
-    ],
-    UGScoreRequired: Number, //in CGPA
-    Class12thScoreRequiredPercentage: Number,
-    Class12thScoreRequiredCGPA: Number,
-    Class10thScoreRequiredPercentage: Number,
-    Class10thScoreRequiredCGPA: Number,
-    isStudent: false,
-    }
+const eligibilityCriteriaComponent = (props) => {
+    const EligibilityCriteria = props.EligibilityCriteria
 
     let studentEligibilityTable = (
       <Table striped bordered hover>
@@ -33,7 +15,7 @@ const eligibilityCriteriaComponent = () => {
                 </tr>
               </thead>
               <tr>
-                <td>Number of Backlogs allowed: {data.Backlogs}</td>
+                <td>Number of Backlogs allowed: {EligibilityCriteria.Backlogs}</td>
                 <td>Student Backlogs: 0</td>
                 <td><i class="fas fa-check fa-2x" style={{color: "greenyellow"}}></i></td>
               </tr>
@@ -95,7 +77,7 @@ const eligibilityCriteriaComponent = () => {
                 </tr>
               </thead>
               <tr>
-                <td>Number of Backlogs allowed: {data.Backlogs}</td>
+                <td>Number of Backlogs allowed: {EligibilityCriteria.Backlogs}</td>
                 {/* <td>Student Backlogs: 0</td>
                 <td><i class="fas fa-check fa-2x" style={{color: "greenyellow"}}></i></td> */}
               </tr>
@@ -156,7 +138,7 @@ const eligibilityCriteriaComponent = () => {
             <br />
             <b>Placement Eligibility :</b> 
             <br />
-            {data.isStudent?studentEligibilityTable:AdminEligibilityTable}
+            {studentEligibilityTable}
         </div>
 
       </div>

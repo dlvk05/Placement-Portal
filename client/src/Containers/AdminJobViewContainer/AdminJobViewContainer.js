@@ -12,7 +12,31 @@ import axios from "axios";
 
 class AdminJobViewContainer extends React.Component {
   state = {
-    jobProfile: null,
+    jobProfile: {
+      //OPENINGOVERVIEWCOMPONENT
+      OpeningOverview: {},
+      CompanyName: String,
+      Location: String,
+
+      //JOBADDITIONALINFOCOMPONENT
+      JobProfileTitle: "",
+      JobSector: "",
+      Dream: "",
+      PositionType: "",
+      ApplicationDeadLine: "",
+      AttachedDocuments: [{ DocumentName: "" }],
+
+      //JOBDESCRIPTIONCOMPONENT
+      AboutCompany: "",
+      JobDescription: "",
+      RequiredSkills: "",
+
+      //HIRINGWORKFLOWCOMPONENT
+      HiringWorkflow: [],
+
+      //ELIGIBILITYCRITERIACOMPONENT
+      EligibilityCriteria:{}
+    },
   };
 
   componentDidMount() {
@@ -72,15 +96,36 @@ class AdminJobViewContainer extends React.Component {
           </div>
         </div>
         <div className={styles.container}>
-          <OpeningOverviewComponent />
+        <OpeningOverviewComponent
+            openingOverview={this.state.jobProfile.OpeningOverview}
+            companyName={this.state.jobProfile.CompanyName}
+            location={this.state.jobProfile.Location}
+          />
           <br />
-          <JobAdditionalInfoComponent />
+          <JobAdditionalInfoComponent
+            jobProfileTitle={this.state.jobProfile.JobProfileTitle}
+            jobSector={this.state.jobProfile.JobSector}
+            dream={this.state.jobProfile.Dream}
+            positionType={this.state.jobProfile.PositionType}
+            applicationDeadLine={this.state.jobProfile.ApplicationDeadLine}
+            attachedDocuments={
+              this.state.jobProfile.AttachedDocuments[0].DocumentName
+            }
+          />
           <br />
-          <JobDescriptionsComponent />
+          <JobDescriptionsComponent
+            AboutCompany={this.state.jobProfile.AboutCompany}
+            JobDescription={this.state.jobProfile.JobDescription}
+            RequiredSkills={this.state.jobProfile.RequiredSkills}
+          />
           <br />
-          <HiringWorkflowComponent />
+          <HiringWorkflowComponent
+            HiringWorkflow={this.state.jobProfile.HiringWorkflow}
+          />
           <br />
-          <EligibilityCriteriaComponent />
+          <EligibilityCriteriaComponent 
+            EligibilityCriteria={this.state.jobProfile.EligibilityCriteria}
+          />
           <br />
           {/* <StudentJobFeedBackContainer/> */}
         </div>
