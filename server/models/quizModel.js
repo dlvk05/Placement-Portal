@@ -3,15 +3,15 @@ const Schema = mongoose.Schema;
 
 //Schema
 const quizSchema = new Schema({
-  QuizTitle: String,
-  QuizTopic: String,
-  MaxMarks: Number,
+  QuizTitle: String, //this input
+  QuizTopic: String, //input
+  MaxMarks: Number, //input
   DateOfCreation: {
     type: Date,
     default: Date.now,
   },
   AdminAccount: { type: Schema.Types.ObjectId, ref: "adminAccounts" },
-  QuizBody: [
+  QuizBody: [//from file no need for input
     {
       question: String,
       option1: String,
