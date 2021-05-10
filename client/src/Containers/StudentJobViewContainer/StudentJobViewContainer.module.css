@@ -23,14 +23,6 @@
 }
 
 /* After this point its all for separate components */
-.eligibilityDiv {
-  padding: 20px;
-  border: solid silver 1px;
-  border-radius: 10px;
-}
 
-.feedbackDiv {
-  padding: 20px;
-  border: solid silver 1px;
-  border-radius: 10px;
-}
+
+
