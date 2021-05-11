@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Route, Switch} from "react-router-dom";
+import { Redirect, Route, Switch} from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "./Redux/actions/index";
 //Custom Components import
@@ -36,6 +36,7 @@ class App extends React.Component {
         <Route path="/Signup" exact component={Signup} />
         <Route path="/AdminSignup" exact component={AdminSignup} />
         <Route path="/PracticeContainer" exact component={PracticeContainer} />
+        {/* <Redirect to="/Login"/> */}
       </Switch>
     );
 

@@ -32,6 +32,58 @@ class JobProfilesFeed extends React.Component {
       });
   }
 
+  returnStatus = (currentJob) => {
+    let currentDate = new Date();
+    let deadline = new Date(currentJob.ApplicationDeadLine);
+    if (this.props.isAdmin) {
+      if (currentDate > deadline) {
+        return "Application Closed";
+      } else {
+        return "Application Open";
+      }
+    } else {
+      let message = null;
+      let applied = false;
+      let selected = false;
+      if (currentJob.InitialApplications.length > 0) {
+        currentJob.InitialApplications.forEach((application) => {
+          if (application.userAccount === this.props.userId) {
+            applied = true;
+            // break;
+          }
+        });
+      }
+      if (applied) {
+        message = "Applied";
+      }
+
+      if (applied && currentJob.SelectedApplications.length > 0) {
+        currentJob.SelectedApplications.forEach((application) => {
+          if (application.userAccount === this.props.userId) {
+            selected = true;
+            // break;
+          }
+        });
+        if (selected) {
+          message = "Selected";
+        } else {
+          message = "Not Selected";
+        }
+      }
+
+      if (!applied) {
+        if (currentDate > deadline) {
+          message = "Application Closed";
+        }
+        if (currentDate <= deadline) {
+          message = "Application Open";
+        }
+      }
+
+      return message;
+    }
+  };
+
   handlePageChange = (id) => {
     if (this.props.isAdmin) {
       this.props.history.push("/AdminJobView/" + id);
@@ -74,7 +126,6 @@ class JobProfilesFeed extends React.Component {
         if (relevant) {
           relevantProfiles.push(jobProfile);
         }
-        
       });
 
       if (this.state.Search != "") {
@@ -144,10 +195,6 @@ class JobProfilesFeed extends React.Component {
     }
   };
 
-  
-
-
-
   render() {
     let filteredJobProfiles = [];
     filteredJobProfiles = this.filterArray(this.state.jobProfiles);
@@ -159,7 +206,6 @@ class JobProfilesFeed extends React.Component {
         <div>Nothing to show</div>
       ) : (
         filteredJobProfiles.map((currentJob, i) => (
-          
           <tr key={i}>
             {/* ^^^ so later on we might have to licence this company logo */}
             <td style={{ width: "20px" }}>
@@ -176,9 +222,7 @@ class JobProfilesFeed extends React.Component {
             </td>
             <td>{currentJob.CompanyName}</td>
             <td>{currentJob.Location}</td>
-            <td>
-              "In Works"
-            </td>
+            <td>{this.returnStatus(currentJob)}</td>
           </tr>
         ))
       );
@@ -357,6 +401,7 @@ class JobProfilesFeed extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
+    userId: state.userAuth.userId,
     isAdmin: state.userAuth.isAdmin,
   };
 };

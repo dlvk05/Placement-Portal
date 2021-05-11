@@ -164,8 +164,11 @@ router.put("/updates/updateData", (req, res) => {
 });
 
 //delete a specific update
-router.delete("/updates/deleteSpecificUpdate", (req, res) => {
+router.post("/updates/deleteSpecificUpdate", (req, res) => {
+  console.log('called');
   Update.findByIdAndDelete(req.body.updateID).then((deletedUpdate) => {
+    console.log("deletedUpdate");
+    console.log(req.body.updateID);
     if (!deletedUpdate) {
       res.status(404).json({
         success: false,

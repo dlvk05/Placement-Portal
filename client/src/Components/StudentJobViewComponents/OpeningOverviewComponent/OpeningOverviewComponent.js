@@ -8,7 +8,7 @@ const openingOverviewComponent = (props) => {
     const openingOverview = props.openingOverview;
     const companyName = props.companyName
     const location = props.location
-    console.log(props);
+    // console.log(props);
     // const data={
     // OpeningOverview: {
     //     Domain: "Job Domain",
