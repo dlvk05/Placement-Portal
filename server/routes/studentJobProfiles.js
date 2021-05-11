@@ -97,6 +97,7 @@ router.get("/student/jobProfile/getJobProfile/:id", (req, res) => {
       success: true,
       jobProfile: foundJobProfile,
     });
+    
   });
 });
 
@@ -234,6 +235,5 @@ router.post("/student/addFeedbackToJobProfile", (req, res) => {
     })
     .catch((err) => console.log(err));
 });
-
 
 module.exports = router;

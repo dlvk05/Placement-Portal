@@ -9,29 +9,135 @@ import HiringWorkflowComponent from "../../Components/StudentJobViewComponents/H
 import EligibilityCriteriaComponent from "../../Components/StudentJobViewComponents/EligibilityCriteriaComponent/EligibilityCriteriaComponent";
 import StudentJobFeedBackContainer from "./StudentJobFeedBackContainer/StudentJobFeedBackContainer";
 import axios from "axios";
-
+import { connect } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
 class StudentJobViewContainer extends React.Component {
   state = {
     jobProfile: null,
+    studentProfile: null,
+    finalEligibility: true,
+    eligibilityChecked: false,
+    applied: false,
+    eligibilityResults: {
+      DreamOffer: true,
+      ItesOffers: true,
+      CoreOffers: true,
+      RnDOffers: true,
+      NonCoreOffers: true,
+      Backlogs: true,
+      ProgrammesAllowed: true,
+      BranchesAllowed: true,
+      UGScoreRequired: true,
+      Class12thScoreRequired: true,
+      Class10thScoreRequired: true,
+    },
   };
-  componentDidMount() {
+
+  loadInitialData = () => {
+    //loading jobProfile
     let url =
       "/api/student/jobProfile/getJobProfile/" + this.props.match.params.id;
     axios
       .get(url)
       .then((res) => {
-        console.log(res.data);
+        console.log("job profile loaded");
+        console.log(res.data.jobProfile);
         this.setState({
+          ...this.state,
           jobProfile: res.data.jobProfile,
         });
       })
       .catch((err) => {
         console.log(err);
       });
+    //loading student profile
+    let url2 = "/student/getSpecificStudentStat/" + this.props.userId;
+    axios
+      .get(url2)
+      .then((res) => {
+        console.log("student profile loaded");
+        this.setState({
+          ...this.state,
+          studentProfile: res.data.UserProfile,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  componentDidMount() {
+    this.loadInitialData();
   }
 
+  checkEligibility = () => {
+    if (
+      this.state.eligibilityChecked !== true &&
+      this.state.studentProfile !== null
+    ) {
+      let currentSem = parseInt(
+        this.state.studentProfile.Education.Current.CurrentSemester
+      );
+      let currentBacklogs = this.state.studentProfile.Education.Current
+        .Performance[currentSem - 1].BacklogOngoing;
+      console.log(currentBacklogs);
+      if (
+        currentBacklogs > this.state.jobProfile.EligibilityCriteria.Backlogs
+      ) {
+        this.setState({
+          ...this.state,
+          eligibilityChecked: true,
+          eligibilityResults: {
+            ...this.state.eligibilityResults,
+            Backlogs: false,
+          },
+          finalEligibility: false,
+        });
+      }
+    }
+  };
+
+  jobProfileApplyHandler = () => {
+    let postData = {
+      jobProfileId: this.state.jobProfile._id,
+      userAccountId: this.props.userId,
+      userProfileId: this.props.profileId,
+    };
+
+    // console.log(postData)
+    axios
+      .post("/api/student/applyToJobProfile", postData)
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Applied");
+        this.loadInitialData();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  jobProfileWithdrawHandler = () => {
+    let postData = {
+      jobProfileId: this.state.jobProfile._id,
+      userAccountId: this.props.userId,
+      userProfileId: this.props.profileId,
+    };
+    // console.log(postData)
+
+    axios
+      .post("/api/student/withdrawFromJobProfile", postData)
+      .then((res) => {
+        console.log(res.data);
+        toast.success("Withdrawn");
+        this.loadInitialData();
+      })
+      .catch((err) => console.log(err));
+  };
+
   render() {
-    console.log(this.state);
+    // console.log(this.state);`
+    if (this.state.eligibilityChecked === false) {
+      this.checkEligibility();
+    }
     return (
       <div className={styles.wrapper}>
         <div className={styles.applicationButton}>
@@ -40,14 +146,14 @@ class StudentJobViewContainer extends React.Component {
           </div>
           <hr />
           <div>
-            <Button>Apply Now</Button>
+            <Button onClick={this.jobProfileApplyHandler}>Apply Now</Button>
           </div>
           <hr />
           <div>
             <h6>Changed Your Mind? </h6>
           </div>
           <div>
-            <Button variant="danger" disabled="false">
+            <Button variant="danger" onClick={this.jobProfileWithdrawHandler}>
               Withdraw Application
             </Button>
           </div>
@@ -72,6 +178,11 @@ class StudentJobViewContainer extends React.Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    userId: state.userAuth.userId,
+    profileId: state.userAuth.profileId,
+  };
+};
 
-
-export default StudentJobViewContainer;
+export default connect(mapStateToProps)(StudentJobViewContainer);

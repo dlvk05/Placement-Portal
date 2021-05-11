@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React from "react";
 import a from "./JobProfilesFeed.module.css";
 import { Row, Col, Table, Form } from "react-bootstrap";
@@ -56,6 +57,7 @@ class JobProfilesFeed extends React.Component {
       // console.log("filterArray called");
       jobProfiles.forEach((jobProfile) => {
         let relevant = true;
+
         if (
           this.state.JobSector != null &&
           jobProfile.JobSector != this.state.JobSector
@@ -72,7 +74,9 @@ class JobProfilesFeed extends React.Component {
         if (relevant) {
           relevantProfiles.push(jobProfile);
         }
+        
       });
+
       if (this.state.Search != "") {
         return relevantProfiles.filter((profile) => {
           if (
@@ -140,14 +144,14 @@ class JobProfilesFeed extends React.Component {
     }
   };
 
+  
+
+
+
   render() {
     let filteredJobProfiles = [];
     filteredJobProfiles = this.filterArray(this.state.jobProfiles);
-    let sortedFilteredArray = [...filteredJobProfiles];
-    // console.log("filtered job profiles are");
-    // console.log(filteredJobProfiles);
-    // console.log("sorted array is");
-    // console.log(this.sortArray(tempArray));
+    // let sortedFilteredArray = [...filteredJobProfiles];
     this.sortArray(filteredJobProfiles);
     var current = new Date("2021-05-06");
     let feed =
@@ -155,6 +159,7 @@ class JobProfilesFeed extends React.Component {
         <div>Nothing to show</div>
       ) : (
         filteredJobProfiles.map((currentJob, i) => (
+          
           <tr key={i}>
             {/* ^^^ so later on we might have to licence this company logo */}
             <td style={{ width: "20px" }}>
@@ -172,9 +177,7 @@ class JobProfilesFeed extends React.Component {
             <td>{currentJob.CompanyName}</td>
             <td>{currentJob.Location}</td>
             <td>
-              {current > currentJob.ApplicationDeadLine
-                ? "Application Closed"
-                : "Application Open"}
+              "In Works"
             </td>
           </tr>
         ))

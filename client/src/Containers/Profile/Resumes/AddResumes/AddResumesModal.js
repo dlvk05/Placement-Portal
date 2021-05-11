@@ -157,10 +157,13 @@ class AddResumesModal extends React.Component {
             <Form>
               <Form.Group as={Col} controlId="formGridResumeTitle">
                 <Form.Row>
-                  <Form.Label column="sm">Enter Resume Title With its File Extension</Form.Label>
+                  <Form.Label column="sm">
+                    Please Enter The Resume Title With its File Extension (as
+                    Name_RegNo_Title.pdf)
+                  </Form.Label>
                   <Form.Control
                     type="resumeTitle"
-                    placeholder="e.g. Resume1.pdf"
+                    placeholder="Name_RegistrationNumber_Title.pdf" 
                     required
                     size="sm"
                     onChange={(event, string) => {

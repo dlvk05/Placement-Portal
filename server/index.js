@@ -18,6 +18,7 @@ const adminJobProfile=require('./routes/adminJobProfile');
 const adminUpdates=require('./routes/adminUpdates');
 const studentUpdates=require('./routes/studentUpdates');
 const studentJobProfiles=require('./routes/studentJobProfiles');
+const studentStats=require('./routes/studentStats');
 
 
 const app = express();
@@ -57,6 +58,7 @@ app.use("/api", adminJobProfile);
 app.use("/api", adminUpdates);
 app.use("/api", studentJobProfiles);
 app.use("/api", studentUpdates);
+app.use("/api", studentStats);
 
 
 app.get(
