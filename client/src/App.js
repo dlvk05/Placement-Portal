@@ -22,6 +22,7 @@ import UpdatesForm from "./Containers/Adminfunctionalities/UpdatesForm/UpdatesFo
 import StudentJobViewContainer from "./Containers/StudentJobViewContainer/StudentJobViewContainer";
 import AdminJobViewContainer from "./Containers/AdminJobViewContainer/AdminJobViewContainer";
 import QuizUploadForm from "./Containers/Adminfunctionalities/QuizUploadForm/QuizUploadForm";
+import QuizListFeed from "./Containers/QuizContainers/QuizListFeed/QuizListFeed";
 
 class App extends React.Component {
   componentDidMount() {
@@ -67,6 +68,7 @@ class App extends React.Component {
             <Route path="/Logout" exact component={Logout} />
             <Route path="/UserAccountInfoPage" exact component={UserAccountInfoPage} />
             <Route path="/StudentJobView/:id" exact component={StudentJobViewContainer} />
+            <Route path="/QuizListFeed" exact component={QuizListFeed} />
 
           </Switch>
         </UserLayout>

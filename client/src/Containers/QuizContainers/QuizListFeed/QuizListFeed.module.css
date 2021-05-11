@@ -1,0 +1,15 @@
+.wrapper {
+    background-color: aliceblue;
+    padding: 10px;
+  }
+  
+  .container {
+    display: block;
+    border: solid silver 2px;
+    border-radius: 10px;
+    padding: 20px;
+    margin-right: 10%;
+    margin-left: 10%;
+    background-color: #f5f5f5;
+  }
+  
