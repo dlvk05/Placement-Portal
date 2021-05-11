@@ -13,9 +13,10 @@ import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 toast.configure();
+
 class StudentJobViewContainer extends React.Component {
   state = {
-    jobProfile: null,
+    jobProfileLoaded: false,
     studentProfile: null,
     finalEligibility: true,
     eligibilityChecked: false,
@@ -33,6 +34,31 @@ class StudentJobViewContainer extends React.Component {
       Class12thScoreRequired: true,
       Class10thScoreRequired: true,
     },
+    jobProfile: {
+      //OPENINGOVERVIEWCOMPONENT
+      OpeningOverview: {},
+      CompanyName: String,
+      Location: String,
+
+      //JOBADDITIONALINFOCOMPONENT
+      JobProfileTitle: "",
+      JobSector: "",
+      Dream: "",
+      PositionType: "",
+      ApplicationDeadLine: "",
+      AttachedDocuments: [{ DocumentName: "" }],
+
+      //JOBDESCRIPTIONCOMPONENT
+      AboutCompany: "",
+      JobDescription: "",
+      RequiredSkills: "",
+
+      //HIRINGWORKFLOWCOMPONENT
+      HiringWorkflow: [],
+
+      //ELIGIBILITYCRITERIACOMPONENT
+      EligibilityCriteria: {},
+    },
   };
 
   loadInitialData = () => {
@@ -46,6 +72,7 @@ class StudentJobViewContainer extends React.Component {
         console.log(res.data.jobProfile);
         this.setState({
           ...this.state,
+          jobProfileLoaded: true,
           jobProfile: res.data.jobProfile,
         });
       })
@@ -78,8 +105,9 @@ class StudentJobViewContainer extends React.Component {
       let currentSem = parseInt(
         this.state.studentProfile.Education.Current.CurrentSemester
       );
-      let currentBacklogs = this.state.studentProfile.Education.Current
-        .Performance[currentSem - 1].BacklogOngoing;
+      let currentBacklogs =
+        this.state.studentProfile.Education.Current.Performance[currentSem - 1]
+          .BacklogOngoing;
       console.log(currentBacklogs);
       if (
         currentBacklogs > this.state.jobProfile.EligibilityCriteria.Backlogs
@@ -161,15 +189,36 @@ class StudentJobViewContainer extends React.Component {
           <h6>The Application is closed.</h6>
         </div>
         <div className={styles.container}>
-          <OpeningOverviewComponent />
+          <OpeningOverviewComponent
+            openingOverview={this.state.jobProfile.OpeningOverview}
+            companyName={this.state.jobProfile.CompanyName}
+            location={this.state.jobProfile.Location}
+          />
           <br />
-          <JobAdditionalInfoComponent />
+          <JobAdditionalInfoComponent
+            jobProfileTitle={this.state.jobProfile.JobProfileTitle}
+            jobSector={this.state.jobProfile.JobSector}
+            dream={this.state.jobProfile.Dream}
+            positionType={this.state.jobProfile.PositionType}
+            applicationDeadLine={this.state.jobProfile.ApplicationDeadLine}
+            attachedDocuments={
+              this.state.jobProfile.AttachedDocuments[0].DocumentName
+            }
+          />
           <br />
-          <JobDescriptionsComponent />
+          <JobDescriptionsComponent
+            AboutCompany={this.state.jobProfile.AboutCompany}
+            JobDescription={this.state.jobProfile.JobDescription}
+            RequiredSkills={this.state.jobProfile.RequiredSkills}
+          />
           <br />
-          <HiringWorkflowComponent />
+          <HiringWorkflowComponent
+            HiringWorkflow={this.state.jobProfile.HiringWorkflow}
+          />
           <br />
-          <EligibilityCriteriaComponent />
+          <EligibilityCriteriaComponent
+            EligibilityCriteria={this.state.jobProfile.EligibilityCriteria}
+          />
           <br />
           <StudentJobFeedBackContainer />
         </div>

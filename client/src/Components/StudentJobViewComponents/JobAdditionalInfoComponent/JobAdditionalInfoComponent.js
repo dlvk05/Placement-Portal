@@ -1,16 +1,15 @@
 import React from 'react';
 import styles from './JobAdditionalInfoComponent.module.css';
 
-const jobAdditionalInfoComponent = () => {
+const jobAdditionalInfoComponent = (props) => {
 
     const data = {
-        JobDescription: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde ducimus eveniet minus natus veritatis illum eius rerum mollitia aperiam est tempore magnam eum quos nisi repellendus, aliquid culpa nam sapiente iste vitae voluptate adipisci? At laboriosam in, illo porro aliquam quaerat voluptatum molestias illum amet, obcaecati nam reiciendis, suscipit explicabo. Aspernatur reiciendis vitae culpa molestias? Reiciendis aut labore vero tempore, ex repellendus, at ipsam natus temporibus incidunt modi adipisci vitae!",
-          JobProfileTitle: "Chief Executive Officer",
-          JobSector: "Accounting",
-          Dream: true,
-          PositionType: "Full Time",
-          ApplicationDeadLine: "12/12/2021",
-          AttachedDocuments: [{DocumentName: "impdoc.pdf"}]
+          JobProfileTitle: props.jobProfileTitle,
+          JobSector: props.jobSector,
+          Dream: props.dream,
+          PositionType: props.positionType,
+          ApplicationDeadLine: props.applicationDeadLine,
+          AttachedDocuments: [{DocumentName: props.attachedDocuments}]
     }
 
     return(

@@ -3,38 +3,9 @@ import styles from './HiringWorkflowComponent.module.css';
 import {Table} from 'react-bootstrap';
 
 
-const hiringWorkflowComponent = () => {
+const hiringWorkflowComponent = (props) => {
 const data ={
-    HiringWorkflow: [
-        {
-          StageNo: 1,
-          StageTitle: "Interview",
-          StageVenue: "Jaipur",
-          StartDate: "12/12/2021",
-          EndDate: "21/12/2021",
-          StageDescription: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestiae, debitis.",
-          Selects: [
-            {
-              userAccount: { type: "Schema.Types.ObjectId", ref: "userAccounts" }, //had to turn the type field into string
-              userProfile: { type: "Schema.Types.ObjectId", ref: "userProfiles" }, //had to turn the type field into string
-            },
-          ],
-        },
-        {
-            StageNo: 2,
-            StageTitle: "Technical Exam",
-            StageVenue: "MUJ in Jaipur",
-            StartDate: "17/12/2021",
-            EndDate: "28/12/2021",
-            StageDescription: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Molestiae, debitis.",
-            Selects: [
-              {
-                userAccount: { type: "Schema.Types.ObjectId", ref: "userAccounts" }, //had to turn the type field into string
-                userProfile: { type: "Schema.Types.ObjectId", ref: "userProfiles" }, //had to turn the type field into string
-              },
-            ],
-          }
-      ],
+    HiringWorkflow: props.HiringWorkflow
 }
     return(
         <div className={styles.hiringWorkflowDiv}>
