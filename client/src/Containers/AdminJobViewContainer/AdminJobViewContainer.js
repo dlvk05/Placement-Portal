@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./AdminJobViewContainer.module.css";
-import { Button } from "react-bootstrap";
+import { Button, Col, Form, Modal } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import JobAdditionalInfoComponent from "../../Components/StudentJobViewComponents/JobAdditionalInfoComponent/JobAdditionalInfoComponent";
 import JobDescriptionsComponent from "../../Components/StudentJobViewComponents/JobDescriptionsComponent/JobDescriptionsComponent";
@@ -35,7 +35,10 @@ class AdminJobViewContainer extends React.Component {
       HiringWorkflow: [],
 
       //ELIGIBILITYCRITERIACOMPONENT
-      EligibilityCriteria:{}
+      EligibilityCriteria:{},
+
+      //FOR ADMIN MODAL
+      show: false,
     },
   };
 
@@ -53,6 +56,12 @@ class AdminJobViewContainer extends React.Component {
         console.log(err);
       });
   }
+
+  handleShow = () => {
+    this.setState({
+      show: !this.state.show,
+    });
+  };
 
   render() {
     console.log(this.state);
@@ -78,7 +87,36 @@ class AdminJobViewContainer extends React.Component {
             <h6>Upload Selected Applicants List</h6>
           </div>
           <div>
-            <Button variant="info">Download</Button>
+            <Button variant="info" onClick={this.handleShow}>Upload</Button>
+            <div>
+            <Modal show={this.state.show} onHide={this.handleShow}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Upload List of Final Selects (selects.xlsx)</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Form>
+                  <Form.Group as={Col} sm={6}>
+                <Form.Row>
+                  <Form.Label column="sm">Upload File: </Form.Label>
+                  <Form.File
+                    Placeholder="Upload Doc"
+                    size="sm"
+                    // onChange={this.onFileChange}
+                  />
+                </Form.Row>
+              </Form.Group>
+                  </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={this.handleShow}>
+                    Close
+                  </Button>
+                  <Button variant="primary" onClick={this.handleShow}>
+                    Upload and Submit
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </div>
           </div>
           <hr />
           <div>
