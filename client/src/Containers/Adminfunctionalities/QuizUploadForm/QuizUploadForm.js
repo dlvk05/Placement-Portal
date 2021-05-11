@@ -41,7 +41,7 @@ class QuizUploadForm extends React.Component {
               </Form.Group>
               <Form.Group as={Col} controlId="MaxMarks" sm={5}>
                   <Form.Row>
-                  <Form.Label column="sm">Enter Maximum Marks obtainable for this quiz</Form.Label>
+                  <Form.Label column="sm">Enter Maximum Marks obtainable for this quiz (one mark for every question)</Form.Label>
                   <Form.Control
                       type="MaxMarks"
                       placeholder="Max Marks"
