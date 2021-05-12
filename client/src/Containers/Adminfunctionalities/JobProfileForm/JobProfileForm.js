@@ -1168,7 +1168,7 @@ class JobProfileForm extends React.Component {
                     required
                     size="sm"
                     onChange={(event, string) => {
-                    this.inputChangeHandler(event, "Backlogs");
+                    this.eligibilityCriteriaInputHandler(event, "Backlogs");
                     }}
                   />
                   </Form.Row>
