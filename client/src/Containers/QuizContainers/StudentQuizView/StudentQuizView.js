@@ -38,7 +38,7 @@ class StudentQuizView extends React.Component {
         option2: "No",
         option3: "He did not go to conquer Gaul",
         option4: "His defeat was greatly exaggerated",
-        correctOption: "3",
+        correctOption: 3,
       },
       {
         question: "Who was the leader of unified Gaul?",
@@ -52,6 +52,9 @@ class StudentQuizView extends React.Component {
     show: false,
     currentQuestionNumber: 0,
     lastQuestion: false,
+    selectedOption: 0,
+    score: 0,
+    submittedQuiz: false,
   };
 
   noQuestionsLeft = "No Questions left";
@@ -61,6 +64,29 @@ class StudentQuizView extends React.Component {
     this.setState({
       show: !this.state.show,
     });
+  };
+
+  handleSelect = (optionNumber) => {
+    this.setState({
+      selectedOption: optionNumber,
+    });
+    // var x = document.getElementById(optionNumber).setAttribute("class", "btn btn-success");
+    // this.state.QuizBody.forEach(document.querySelectorAll(". btn btn-primary"))
+    
+    // console.log(this.state.selectedOption);
+    // console.log(x);
+  };
+
+  calculateScore = (qNo) => {
+    if (
+      this.state.selectedOption === this.state.QuizBody[qNo].correctOption &&
+      this.state.score <= this.state.MaxMarks
+    ) {
+      this.setState({
+        score: this.state.score + 1,
+      });
+    }
+    // console.log(this.state.score);
   };
 
   render() {
@@ -90,12 +116,18 @@ class StudentQuizView extends React.Component {
               Once you move to the next question, your previous question will
               not be viewable again
             </li>
+            <li>Once submitted, the quiz cannot be attempted again</li>
           </ul>
           <br />
           <br />
           <div>
             <center>
-              <Button onClick={this.handleShow}>Start The Quiz</Button>
+              <Button
+                onClick={this.handleShow}
+                disabled={this.state.submittedQuiz ? true : false}
+              >
+                Start The Quiz
+              </Button>
             </center>
 
             <Modal show={this.state.show} onHide={this.handleShow}>
@@ -103,7 +135,8 @@ class StudentQuizView extends React.Component {
                 <Modal.Title>Your Quiz Has Started</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <div>Q{this.state.currentQuestionNumber+1}.
+                <div>
+                  Q{this.state.currentQuestionNumber + 1}.
                   {
                     this.state.QuizBody[this.state.currentQuestionNumber]
                       .question
@@ -112,7 +145,7 @@ class StudentQuizView extends React.Component {
                 <hr />
                 <ol type="A">
                   <li>
-                    <Button>
+                    <Button onClick={() => this.handleSelect(1)} id={1} >
                       {
                         this.state.QuizBody[this.state.currentQuestionNumber]
                           .option1
@@ -121,7 +154,7 @@ class StudentQuizView extends React.Component {
                   </li>
                   <br />
                   <li>
-                    <Button>
+                    <Button onClick={() => this.handleSelect(2)} id={2}>
                       {
                         this.state.QuizBody[this.state.currentQuestionNumber]
                           .option2
@@ -130,7 +163,7 @@ class StudentQuizView extends React.Component {
                   </li>
                   <br />
                   <li>
-                    <Button>
+                    <Button onClick={() => this.handleSelect(3)} id={3}>
                       {
                         this.state.QuizBody[this.state.currentQuestionNumber]
                           .option3
@@ -139,7 +172,7 @@ class StudentQuizView extends React.Component {
                   </li>
                   <br />
                   <li>
-                    <Button>
+                    <Button onClick={() => this.handleSelect(4)} id={4}>
                       {
                         this.state.QuizBody[this.state.currentQuestionNumber]
                           .option4
@@ -151,19 +184,25 @@ class StudentQuizView extends React.Component {
                   <Button
                     variant="success"
                     onClick={() => {
-                        if(this.state.currentQuestionNumber<this.state.QuizBody.length-1){
-                            this.setState({
-                              currentQuestionNumber:
-                                this.state.currentQuestionNumber + 1,
-                            });
-                        }else {
-                            this.setState({
-                                lastQuestion: true
-                            })
-                        }
+                      this.calculateScore(this.state.currentQuestionNumber);
+                      if (
+                        this.state.currentQuestionNumber <
+                        this.state.QuizBody.length - 1
+                      ) {
+                        this.setState({
+                          currentQuestionNumber:
+                            this.state.currentQuestionNumber + 1,
+                        });
+                      } else {
+                        this.setState({
+                          lastQuestion: true,
+                        });
+                      }
                     }}
                   >
-                    {this.state.lastQuestion===true? this.noQuestionsLeft : this.nextQuestion}
+                    {this.state.lastQuestion === true
+                      ? this.noQuestionsLeft
+                      : this.nextQuestion}
                   </Button>
                 </span>
               </Modal.Body>
@@ -171,11 +210,26 @@ class StudentQuizView extends React.Component {
                 <Button variant="secondary" onClick={this.handleShow}>
                   Close
                 </Button>
-                <Button variant="danger" onClick={this.handleShow}>
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    this.handleShow();
+                    this.calculateScore(this.state.currentQuestionNumber);
+                    this.setState({
+                      submittedQuiz: true,
+                    });
+                  }}
+                >
                   Submit Quiz
                 </Button>
               </Modal.Footer>
             </Modal>
+            <div
+              style={{ display: this.state.submittedQuiz ? "block" : "none" }}
+            >
+              <hr />
+              <h4>Score: {this.state.score}</h4>
+            </div>
           </div>
         </div>
       </div>

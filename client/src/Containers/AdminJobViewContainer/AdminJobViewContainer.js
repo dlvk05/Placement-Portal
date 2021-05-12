@@ -69,11 +69,11 @@ class AdminJobViewContainer extends React.Component {
       <div className={styles.wrapper}>
         <div className={styles.sidebar}>
           <div>
-            <h6>Edit This Job Profile</h6>
+            <h6>Delete This Job Profile</h6>
           </div>
           <hr />
           <div>
-            <Button>Edit</Button>
+            <Button variant="danger">Delete</Button>
           </div>
           <hr />
           <div>
@@ -127,10 +127,10 @@ class AdminJobViewContainer extends React.Component {
           </div>
           <hr />
           <div>
-            <h6>Email Company Representative</h6>
+            <h6><span style={{display: "flex"}}>Send Applicants List to <br/> Company Representative</span></h6>
           </div>
           <div>
-            <Button variant="success">Send an Email</Button>
+            <Button variant="success">Send</Button>
           </div>
         </div>
         <div className={styles.container}>

@@ -105,6 +105,7 @@ class QuizListFeed extends React.Component {
         <td><Link>{currentQuiz.QuizTitle}</Link></td>
         <td>{currentQuiz.QuizTopic}</td>
         <td>{currentQuiz.MaxMarks}</td>
+        <td>Not Attempted</td>
       </tr>
     ));
 
@@ -179,6 +180,7 @@ class QuizListFeed extends React.Component {
                 <td><b>Quiz Title</b></td>
                 <td><b>Quiz Topic</b></td>
                 <td><b>Maximum Marks</b></td>
+                <td><b>Status</b></td>
               </tr>
             </thead>
             {list}
