@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 import React from "react";
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,23 +13,25 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Feedback from "react-bootstrap/esm/Feedback";
 toast.configure();
 
 class StudentJobViewContainer extends React.Component {
   state = {
     currentResults: null,
-    currentOffers:null,
+    currentOffers: null,
     jobProfileLoaded: false,
     studentProfile: null,
     finalEligibility: true,
     deadlinePassed: false,
     eligibilityChecked: false,
-    finalSelectionsDone:false,
+    finalSelectionsDone: false,
     checkedApplicationStatus: false,
     applied: false,
     selected: false,
     studentStats: null,
     eligibilityResults: {
+      MaxOffers3:true,
       DreamOffer: true,
       ItesOffers: true,
       CoreOffers: true,
@@ -73,7 +76,7 @@ class StudentJobViewContainer extends React.Component {
       let currentJob = this.state.jobProfile;
       let currentDate = new Date();
       let deadline = new Date(this.state.jobProfile.ApplicationDeadLine);
-      let finalSelectionsDone=false;
+      let finalSelectionsDone = false;
       let deadlinePassed = false,
         applied = false,
         selected = false;
@@ -88,13 +91,12 @@ class StudentJobViewContainer extends React.Component {
             // break;
           }
         });
-      } 
+      }
 
-      if(currentJob.SelectedApplications.length>0){
-        finalSelectionsDone=true;
+      if (currentJob.SelectedApplications.length > 0) {
+        finalSelectionsDone = true;
       }
       if (applied && currentJob.SelectedApplications.length > 0) {
-
         currentJob.SelectedApplications.forEach((application) => {
           if (application.userAccount === this.props.userId) {
             selected = true;
@@ -107,7 +109,7 @@ class StudentJobViewContainer extends React.Component {
         deadlinePassed: deadlinePassed,
         applied: applied,
         selected: selected,
-        finalSelectionsDone:finalSelectionsDone,
+        finalSelectionsDone: finalSelectionsDone,
       });
 
       this.setState({
@@ -116,7 +118,7 @@ class StudentJobViewContainer extends React.Component {
         applied: applied,
         selected: selected,
         checkedApplicationStatus: true,
-        finalSelectionsDone:finalSelectionsDone,
+        finalSelectionsDone: finalSelectionsDone,
       });
     }
   };
@@ -326,7 +328,7 @@ class StudentJobViewContainer extends React.Component {
         eligibilityResults: eligibilityResults,
         finalEligibility: finalEligibility,
         currentResults: currentResults,
-        currentOffers:currentOffers,
+        currentOffers: currentOffers,
       });
     }
   };
@@ -371,59 +373,140 @@ class StudentJobViewContainer extends React.Component {
     this.loadInitialData();
   };
 
-  displaySidebar = () =>{
+  displaySidebar = () => {
     let action = null;
-    
-    let apply = (<div>
+
+    let apply = (
       <div>
-        <h6>Interested? Apply Here</h6>
+        <div>
+          <h6>Interested? Apply Here</h6>
+        </div>
+        <hr />
+        <div>
+          <Button onClick={this.jobProfileApplyHandler}>Apply Now</Button>
+        </div>
       </div>
-      <hr />
+    );
+
+    let withdraw = (
       <div>
-        <Button onClick={this.jobProfileApplyHandler}>Apply Now</Button>
+        <div>
+          <h6>Changed Your Mind? </h6>
+        </div>
+        <div>
+          <Button variant="danger" onClick={this.jobProfileWithdrawHandler}>
+            Withdraw Application
+          </Button>
+        </div>
       </div>
-    </div>)
+    );
 
-    let withdraw = (<div>
-          <div>
-            <h6>Changed Your Mind? </h6>
-          </div>
-          <div>
-            <Button variant="danger" onClick={this.jobProfileWithdrawHandler}>
-              Withdraw Application
-            </Button>
-          </div>
-    </div>)
+    let applicationStatus = null;
+    if (!this.state.finalEligibility) {
+      applicationStatus = <h6>Not Eligible</h6>;
+      action = null;
+    }
 
-    let appicationStatus = null;
+    if (this.state.deadlinePassed) {
+      applicationStatus = <h6>Application Closed</h6>;
 
-    if(this.state.deadlinePassed){
-            appicationStatus = (<h6>Application Closed</h6>);
-
-        if(this.state.applied){
-          appicationStatus = (<h6>Applied</h6>);
-        }
-        if(this.state.applied && this.state.finalSelectionsDone){
-          if(this.state.selected){
-            appicationStatus = (<h6>Selected</h6>);
-          }else {
-            appicationStatus = (<h6>Not Selected</h6>);
-          }
+      if (this.state.applied) {
+        applicationStatus = <h6>Applied,Result Pending</h6>;
+      }
+      if (this.state.applied && this.state.finalSelectionsDone) {
+        if (this.state.selected) {
+          applicationStatus = <h6>Selected</h6>;
+        } else {
+          applicationStatus = <h6>Not Selected</h6>;
         }
       }
-    if(!this.state.deadlinePassed && !this.state.applied){
+    }
+
+    if (!this.state.deadlinePassed && !this.state.applied) {
       action = apply;
     }
-    if(!this.state.deadlinePassed && this.state.applied){
+    if (!this.state.deadlinePassed && this.state.applied) {
       action = withdraw;
     }
+
+    if (!this.state.finalEligibility) {
+      applicationStatus = <h6>Not Eligible for this profile</h6>;
+      action = null;
+    }
+
     return (
-      <div>{action}
-      {appicationStatus}
+      <div>
+        {action}
+        {applicationStatus}
+        {apply}
+        {withdraw}
       </div>
-      
-    )
-  }
+    );
+  };
+
+  studentFeedbackHandler = () => {
+    let feedBack = null;
+    let feedbackDone = false;
+    let feedbackData = null;
+
+    if (
+      this.state.jobProfileLoaded === true &&
+      feedbackDone === false &&
+      this.state.jobProfile.StudentFeedback.length > 0
+    ) {
+      this.state.jobProfile.StudentFeedback.forEach((feedBack) => {
+        if (feedBack.userAccount == this.props.userId) {
+          feedbackDone = true;
+          feedbackData = feedBack;
+        }
+      });
+    }
+
+    if (this.state.finalSelectionsDone) {
+      feedBack = (
+        <StudentJobFeedBackContainer
+          forceReload={this.forceReload}
+          currentJobProfileId={this.state.jobProfile._id}
+          userAccountId={this.props.userId}
+          disabled="false"
+        />
+      );
+    }
+
+    if (!this.state.finalSelectionsDone) {
+      feedBack = (
+        <StudentJobFeedBackContainer
+          forceReload={this.forceReload}
+          currentJobProfileId={this.state.jobProfile._id}
+          userAccountId={this.props.userId}
+          disabled="true"
+        />
+      );
+    }
+
+    if (feedbackDone) {
+      feedBack = (
+        <div>
+          <h6>Rating:{feedbackData.Rating}</h6>
+          <h6>Feedback</h6>
+          <hr />
+          <br />
+          <p>{feedbackData.FeedBackText}</p>
+          <br />
+          <span>{feedbackData.CreatedOn}</span>
+        </div>
+      );
+    }
+
+    if(!this.state.applied){
+      feedBack=null;
+    }
+
+    console.log("feedback is")
+    console.log(feedBack);
+
+    return feedBack;
+  };
 
   render() {
     // console.log(this.state);`
@@ -441,9 +524,7 @@ class StudentJobViewContainer extends React.Component {
 
     return (
       <div className={styles.wrapper}>
-        <div className={styles.applicationButton}>
-          {this.displaySidebar()}
-        </div>
+        <div className={styles.applicationButton}>{this.displaySidebar()}</div>
         <div className={styles.container}>
           <OpeningOverviewComponent
             openingOverview={this.state.jobProfile.OpeningOverview}
@@ -476,11 +557,7 @@ class StudentJobViewContainer extends React.Component {
             EligibilityCriteria={this.state.jobProfile.EligibilityCriteria}
           />
           <br />
-          <StudentJobFeedBackContainer
-            forceReload={this.forceReload}
-            currentJobProfileId={this.state.jobProfile._id}
-            userAccountId={this.props.userId}
-          />
+          {this.studentFeedbackHandler()}
         </div>
       </div>
     );

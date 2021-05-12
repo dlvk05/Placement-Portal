@@ -78,15 +78,17 @@ class StudentJobFeedBackContainer extends React.Component {
       });
   };
 
+  
+
   render() {
     return (
       <div className={styles.feedbackDiv}>
         <h5>Student Feedback</h5>
         <hr />
-        <p>The FeedBack Form is currently closed</p>
+        {this.props.disabled==="true"?<p>The FeedBack Form is currently closed</p>:null}
         <div>
           <Form>
-            <fieldset>
+            <fieldset disabled={this.props.disabled}>
               <Form.Group as={Col} controlId="UserRating" sm={2}>
                 <Form.Row>
                   <Form.Label column="sm">User Rating :</Form.Label>
@@ -118,7 +120,7 @@ class StudentJobFeedBackContainer extends React.Component {
               </Form.Group>
             </fieldset>
           </Form>
-          <Button onClick={this.onSubmitHandler}>Submit FeedBack</Button>
+          <Button disabled={this.props.disabled} onClick={this.onSubmitHandler}>Submit FeedBack</Button>
         </div>
       </div>
     );
