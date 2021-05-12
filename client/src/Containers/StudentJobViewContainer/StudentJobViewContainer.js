@@ -474,6 +474,10 @@ class StudentJobViewContainer extends React.Component {
           <br />
           <EligibilityCriteriaComponent
             EligibilityCriteria={this.state.jobProfile.EligibilityCriteria}
+            eligibilityResults={this.state.eligibilityResults}
+            currentResults={this.state.currentResults}
+            currentOffers={this.state.currentOffers}
+            finalEligibility={this.state.finalEligibility}
           />
           <br />
           <StudentJobFeedBackContainer

@@ -163,6 +163,7 @@ class AdminJobViewContainer extends React.Component {
           <br />
           <EligibilityCriteriaComponent 
             EligibilityCriteria={this.state.jobProfile.EligibilityCriteria}
+            
           />
           <br />
           {/* <StudentJobFeedBackContainer/> */}
