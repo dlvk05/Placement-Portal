@@ -347,6 +347,7 @@ class JobProfileForm extends React.Component {
               });
               console.log(res1);
               console.log(res2);
+              this.props.history.push("/JobProfilesFeed");
             })
           )
           .catch(
@@ -646,7 +647,7 @@ class JobProfileForm extends React.Component {
                     <option value="CORE" eventkey="2">
                       CORE/Preferred Domain
                     </option>
-                    <option value="R&D" eventkey="3">
+                    <option value="RandD" eventkey="3">
                       Research & Development
                     </option>
                     <option value="NonCORE" eventkey="4">

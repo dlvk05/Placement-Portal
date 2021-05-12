@@ -98,7 +98,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              {this.props.data.ContactDetails!=null && this.props.data.ContactNo !== undefined
+              {this.props.data.ContactDetails!=null && this.props.data.ContactDetails.ContactNo !== undefined
               ?this.props.data.ContactDetails.ContactNo.value:"No data "}
             </span>
           </Col>
@@ -111,7 +111,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              {this.props.data.ContactDetails!=null && this.props.data.Email !== undefined
+              {this.props.data.ContactDetails!=null && this.props.data.ContactDetails.Email !== undefined
               ?this.props.data.ContactDetails.Email.value:"No data "}
             </span>
           </Col>
@@ -124,7 +124,7 @@ class About extends React.Component {
           </Col>
           <Col>
             <span >
-              {this.props.data.ContactDetails!=null && this.props.data.PersonalEmail !== undefined
+              {this.props.data.ContactDetails!=null && this.props.data.ContactDetails.PersonalEmail !== undefined
               ?this.props.data.ContactDetails.PersonalEmail.value:"No data "}
             </span>
           </Col>

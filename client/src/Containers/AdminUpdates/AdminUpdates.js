@@ -7,6 +7,22 @@ class StudentUpdates extends Component {
     updates: [],
   };
 
+  forceReload = () => {
+    axios
+      .get("/api/updates/getAllUpdates")
+      .then((res) => {
+        console.log("updates loaded");
+        console.log(res.data.updates);
+        this.setState({
+          updates: res.data.updates,
+        });
+      })
+      .catch((err) => {
+        console.log("error ocurred at /api/updates/getAllUpdates");
+        console.log(err);
+      });
+  };
+
   componentDidMount() {
     axios
       .get("/api/updates/getAllUpdates")
@@ -24,7 +40,7 @@ class StudentUpdates extends Component {
   }
 
   render() {
-    return <AdminUpdatesFeed data={this.state.updates} />;
+    return <AdminUpdatesFeed data={this.state.updates} forceReload={this.forceReload}/>;
   }
 }
 
