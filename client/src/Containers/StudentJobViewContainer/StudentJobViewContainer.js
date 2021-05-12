@@ -17,11 +17,13 @@ toast.configure();
 class StudentJobViewContainer extends React.Component {
   state = {
     currentResults: null,
+    currentOffers:null,
     jobProfileLoaded: false,
     studentProfile: null,
     finalEligibility: true,
     deadlinePassed: false,
     eligibilityChecked: false,
+    finalSelectionsDone:false,
     checkedApplicationStatus: false,
     applied: false,
     selected: false,
@@ -71,6 +73,7 @@ class StudentJobViewContainer extends React.Component {
       let currentJob = this.state.jobProfile;
       let currentDate = new Date();
       let deadline = new Date(this.state.jobProfile.ApplicationDeadLine);
+      let finalSelectionsDone=false;
       let deadlinePassed = false,
         applied = false,
         selected = false;
@@ -85,9 +88,13 @@ class StudentJobViewContainer extends React.Component {
             // break;
           }
         });
-      }
+      } 
 
+      if(currentJob.SelectedApplications.length>0){
+        finalSelectionsDone=true;
+      }
       if (applied && currentJob.SelectedApplications.length > 0) {
+
         currentJob.SelectedApplications.forEach((application) => {
           if (application.userAccount === this.props.userId) {
             selected = true;
@@ -108,6 +115,7 @@ class StudentJobViewContainer extends React.Component {
         applied: applied,
         selected: selected,
         checkedApplicationStatus: true,
+        finalSelectionsDone:finalSelectionsDone,
       });
     }
   };
@@ -309,6 +317,7 @@ class StudentJobViewContainer extends React.Component {
       console.log(eligibilityResults);
       console.log(finalEligibility);
       console.log(currentResults);
+      console.log(currentOffers);
 
       this.setState({
         ...this.state,
@@ -316,6 +325,7 @@ class StudentJobViewContainer extends React.Component {
         eligibilityResults: eligibilityResults,
         finalEligibility: finalEligibility,
         currentResults: currentResults,
+        currentOffers:currentOffers,
       });
     }
   };

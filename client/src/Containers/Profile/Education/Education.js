@@ -602,7 +602,7 @@ class Education extends React.Component {
                 }
               >
                 <i class="fas fa-download">
-                {this.props.data.Class12th.FileName}</i>
+                {this.props.data.Class10th.FileName}</i>
               </span>
             ) : (
               "no file"
