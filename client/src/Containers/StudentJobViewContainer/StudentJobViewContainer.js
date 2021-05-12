@@ -103,11 +103,12 @@ class StudentJobViewContainer extends React.Component {
         });
       }
 
-      // console.log({
-      //   deadlinePassed: deadlinePassed,
-      //   applied: applied,
-      //   selected: selected,
-      // });
+      console.log({
+        deadlinePassed: deadlinePassed,
+        applied: applied,
+        selected: selected,
+        finalSelectionsDone:finalSelectionsDone,
+      });
 
       this.setState({
         ...this.state,
@@ -370,6 +371,60 @@ class StudentJobViewContainer extends React.Component {
     this.loadInitialData();
   };
 
+  displaySidebar = () =>{
+    let action = null;
+    
+    let apply = (<div>
+      <div>
+        <h6>Interested? Apply Here</h6>
+      </div>
+      <hr />
+      <div>
+        <Button onClick={this.jobProfileApplyHandler}>Apply Now</Button>
+      </div>
+    </div>)
+
+    let withdraw = (<div>
+          <div>
+            <h6>Changed Your Mind? </h6>
+          </div>
+          <div>
+            <Button variant="danger" onClick={this.jobProfileWithdrawHandler}>
+              Withdraw Application
+            </Button>
+          </div>
+    </div>)
+
+    let appicationStatus = null;
+
+    if(this.state.deadlinePassed){
+            appicationStatus = (<h6>Application Closed</h6>);
+
+        if(this.state.applied){
+          appicationStatus = (<h6>Applied</h6>);
+        }
+        if(this.state.applied && this.state.finalSelectionsDone){
+          if(this.state.selected){
+            appicationStatus = (<h6>Selected</h6>);
+          }else {
+            appicationStatus = (<h6>Not Selected</h6>);
+          }
+        }
+      }
+    if(!this.state.deadlinePassed && !this.state.applied){
+      action = apply;
+    }
+    if(!this.state.deadlinePassed && this.state.applied){
+      action = withdraw;
+    }
+    return (
+      <div>{action}
+      {appicationStatus}
+      </div>
+      
+    )
+  }
+
   render() {
     // console.log(this.state);`
     if (this.state.jobProfileLoaded === true) {
@@ -387,24 +442,7 @@ class StudentJobViewContainer extends React.Component {
     return (
       <div className={styles.wrapper}>
         <div className={styles.applicationButton}>
-          <div>
-            <h6>Interested? Apply Here</h6>
-          </div>
-          <hr />
-          <div>
-            <Button onClick={this.jobProfileApplyHandler}>Apply Now</Button>
-          </div>
-          <hr />
-          <div>
-            <h6>Changed Your Mind? </h6>
-          </div>
-          <div>
-            <Button variant="danger" onClick={this.jobProfileWithdrawHandler}>
-              Withdraw Application
-            </Button>
-          </div>
-          <hr />
-          <h6>The Application is closed.</h6>
+          {this.displaySidebar()}
         </div>
         <div className={styles.container}>
           <OpeningOverviewComponent
