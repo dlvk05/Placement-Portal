@@ -16,7 +16,7 @@ toast.configure();
 
 class StudentJobViewContainer extends React.Component {
   state = {
-    currentResults: null,
+    currentResults: null, /* this is an object */
     jobProfileLoaded: false,
     studentProfile: null,
     finalEligibility: true,

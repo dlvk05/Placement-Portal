@@ -117,6 +117,7 @@ class StudentQuizView extends React.Component {
               not be viewable again
             </li>
             <li>Once submitted, the quiz cannot be attempted again</li>
+            <li>Once an option has been clicked you will be moved to the next question, and the option will be treated as your answer</li>
           </ul>
           <br />
           <br />
