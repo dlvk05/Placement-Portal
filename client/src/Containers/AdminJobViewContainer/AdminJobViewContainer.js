@@ -9,6 +9,7 @@ import HiringWorkflowComponent from "../../Components/StudentJobViewComponents/H
 import EligibilityCriteriaComponent from "../../Components/StudentJobViewComponents/EligibilityCriteriaComponent/EligibilityCriteriaComponent";
 // import StudentJobFeedBackContainer from "./StudentJobFeedBackContainer/StudentJobFeedBackContainer";
 import axios from "axios";
+import AdminEligibilityCriteriaComponent from "../../Components/AdminEligibilityCriteriaComponent/AdminEligibilityCriteriaComponent";
 
 class AdminJobViewContainer extends React.Component {
   state = {
@@ -161,9 +162,8 @@ class AdminJobViewContainer extends React.Component {
             HiringWorkflow={this.state.jobProfile.HiringWorkflow}
           />
           <br />
-          <EligibilityCriteriaComponent 
-            EligibilityCriteria={this.state.jobProfile.EligibilityCriteria}
-            
+          <AdminEligibilityCriteriaComponent
+          EligibilityCriteria={this.state.jobProfile.EligibilityCriteria}
           />
           <br />
           {/* <StudentJobFeedBackContainer/> */}
