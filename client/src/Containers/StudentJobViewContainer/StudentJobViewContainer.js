@@ -295,7 +295,7 @@ class StudentJobViewContainer extends React.Component {
       //check 12th Score required
       let current12thScore =
         this.state.studentProfile.Education.Class12th.Score;
-      currentResults["12thScore"] = current12thScore;
+      currentResults["Score12"] = current12thScore;
 
       if (
         current12thScore <
@@ -307,7 +307,7 @@ class StudentJobViewContainer extends React.Component {
       //check 10th Score required
       let current10thScore =
         this.state.studentProfile.Education.Class10th.Score;
-      currentResults["10thScore"] = current10thScore;
+      currentResults["Score10"] = current10thScore;
 
       if (
         current10thScore <
