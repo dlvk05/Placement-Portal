@@ -1,6 +1,6 @@
 import React from "react";
 import a from "./StudentQuizView.module.css";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Alert } from "react-bootstrap";
 
 class StudentQuizView extends React.Component {
   state = {
@@ -67,17 +67,24 @@ class StudentQuizView extends React.Component {
   };
 
  onOptionSelect = (currentQNo, optionNo) =>{
+   //check if selected option is currect option and that score isn't more than maxmarks then increase score
     if(this.state.QuizBody[currentQNo].correctOption === optionNo && this.state.score < this.state.MaxMarks){
       this.setState({
         score: this.state.score + 1
       })
     }
 
+    //checks if current question number is not final question
     if(currentQNo<this.state.QuizBody.length-1){
       this.setState({
         currentQuestionNumber: currentQNo + 1
       })
+    } else{
+      this.setState({
+        lastQuestion: true
+      })
     }
+
     console.log(this.state.score);
     console.log(this.state.currentQuestionNumber);
  }
@@ -111,7 +118,7 @@ class StudentQuizView extends React.Component {
               not be viewable again
             </li>
             <li>Once submitted, the quiz cannot be attempted again</li>
-            <li>Once an option has been clicked you will be moved to the next question, and the option will be treated as your answer</li>
+            <li>Once an option has been clicked you will be moved to the next question, and the clicked option will be treated as your answer</li>
           </ul>
           <br />
           <br />
@@ -176,6 +183,7 @@ class StudentQuizView extends React.Component {
                   </li>
                 </ol>
                 <span style={{ float: "right" }}>
+                  {this.state.lastQuestion? <Alert variant="primary">This is the last question</Alert> : ""}
                 </span>
               </Modal.Body>
               <Modal.Footer>
