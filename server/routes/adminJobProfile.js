@@ -265,12 +265,12 @@ router.get("/jobProfile/getApplicantList/:id", (req, res) => {
 
                       res.download(zipFileDes);
 
-                      //removing the temporary files
+                      // removing the temporary files
                       let desToRemove = "../temp/" + randomFolder;
                       fs.removeSync(desToRemove)
                       console.log("temporary files removed");
-                      desToRemove="../tempResults/" + randomFolder;
-                      fs.removeSync(desToRemove);
+                      // desToRemove="../tempResults/" + randomFolder;
+                      // fs.removeSync(desToRemove);
 
                     }
                   })
@@ -279,38 +279,6 @@ router.get("/jobProfile/getApplicantList/:id", (req, res) => {
             })
             .catch((err) => console.log(err));
 
-          //-------------------------------------------------------
-          // //moving the required resumes to temp folder
-          // let des = "../temp/" + randomFolder + "/" + "resumes/";
-          // pathToResumes.forEach((path) => {
-          //   fs.copy(path, des)
-          //     .then(() => console.log("successfully copied the resumes"))
-          //     .catch((err) => console.log(err));
-          // });
-
-          // // adding everything to zip
-          // const file = new AdmZip();
-
-          // let zipName =
-          //   foundJobProfile.CompanyName +
-          //   "_" +
-          //   foundJobProfile.JobProfileTitle +
-          //   "_" +
-          //   "Applicants.zip";
-          // let zipDes = "../tempResults/" + randomFolder;
-          // let zipFileDes = "../tempResults/" + randomFolder + "/" + zipName;
-          // let zipSrc = "../temp/" + randomFolder;
-          // // file.addLocalFolder(zipSrc);
-          // file.addLocalFolder(zipSrc);
-          // fs.ensureDirSync(zipDes);
-          // file.writeZip(zipFileDes);
-
-          // //removing the temporary files
-          // let desToRemove = "../temp/" + randomFolder;
-          // fs.remove(desToRemove)
-          //   .then(() => console.log("removed the temp files"))
-          //   .catch((err) => console.log(err));
-          //-------------------------------------------------------------------------
         });
       });
     }
