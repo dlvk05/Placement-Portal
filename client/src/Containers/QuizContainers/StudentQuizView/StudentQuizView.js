@@ -1,6 +1,6 @@
 import React from "react";
 import a from "./StudentQuizView.module.css";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Alert } from "react-bootstrap";
 
 class StudentQuizView extends React.Component {
   state = {
@@ -66,28 +66,29 @@ class StudentQuizView extends React.Component {
     });
   };
 
-  handleSelect = (optionNumber) => {
-    this.setState({
-      selectedOption: optionNumber,
-    });
-    // var x = document.getElementById(optionNumber).setAttribute("class", "btn btn-success");
-    // this.state.QuizBody.forEach(document.querySelectorAll(". btn btn-primary"))
-    
-    // console.log(this.state.selectedOption);
-    // console.log(x);
-  };
-
-  calculateScore = (qNo) => {
-    if (
-      this.state.selectedOption === this.state.QuizBody[qNo].correctOption &&
-      this.state.score <= this.state.MaxMarks
-    ) {
+ onOptionSelect = (currentQNo, optionNo) =>{
+   //check if selected option is currect option and that score isn't more than maxmarks then increase score
+    if(this.state.QuizBody[currentQNo].correctOption === optionNo && this.state.score < this.state.MaxMarks){
       this.setState({
-        score: this.state.score + 1,
-      });
+        score: this.state.score + 1
+      })
     }
-    // console.log(this.state.score);
-  };
+
+    //checks if current question number is not final question
+    if(currentQNo<this.state.QuizBody.length-1){
+      this.setState({
+        currentQuestionNumber: currentQNo + 1
+      })
+    } else{
+      this.setState({
+        lastQuestion: true
+      })
+    }
+
+    console.log(this.state.score);
+    console.log(this.state.currentQuestionNumber);
+ }
+
 
   render() {
     return (
@@ -117,7 +118,7 @@ class StudentQuizView extends React.Component {
               not be viewable again
             </li>
             <li>Once submitted, the quiz cannot be attempted again</li>
-            <li>Once an option has been clicked you will be moved to the next question, and the option will be treated as your answer</li>
+            <li>Once an option has been clicked you will be moved to the next question, and the clicked option will be treated as your answer</li>
           </ul>
           <br />
           <br />
@@ -146,7 +147,7 @@ class StudentQuizView extends React.Component {
                 <hr />
                 <ol type="A">
                   <li>
-                    <Button onClick={() => this.handleSelect(1)} id={1} >
+                    <Button onClick={() => {this.onOptionSelect(this.state.currentQuestionNumber, 1)}} id={1} >
                       {
                         this.state.QuizBody[this.state.currentQuestionNumber]
                           .option1
@@ -155,7 +156,7 @@ class StudentQuizView extends React.Component {
                   </li>
                   <br />
                   <li>
-                    <Button onClick={() => this.handleSelect(2)} id={2}>
+                    <Button onClick={() => {this.onOptionSelect(this.state.currentQuestionNumber, 2)}} id={2}>
                       {
                         this.state.QuizBody[this.state.currentQuestionNumber]
                           .option2
@@ -164,7 +165,7 @@ class StudentQuizView extends React.Component {
                   </li>
                   <br />
                   <li>
-                    <Button onClick={() => this.handleSelect(3)} id={3}>
+                    <Button onClick={() => {this.onOptionSelect(this.state.currentQuestionNumber, 3)}} id={3}>
                       {
                         this.state.QuizBody[this.state.currentQuestionNumber]
                           .option3
@@ -173,7 +174,7 @@ class StudentQuizView extends React.Component {
                   </li>
                   <br />
                   <li>
-                    <Button onClick={() => this.handleSelect(4)} id={4}>
+                    <Button onClick={() => {this.onOptionSelect(this.state.currentQuestionNumber, 4 )}} id={4}>
                       {
                         this.state.QuizBody[this.state.currentQuestionNumber]
                           .option4
@@ -182,29 +183,7 @@ class StudentQuizView extends React.Component {
                   </li>
                 </ol>
                 <span style={{ float: "right" }}>
-                  <Button
-                    variant="success"
-                    onClick={() => {
-                      this.calculateScore(this.state.currentQuestionNumber);
-                      if (
-                        this.state.currentQuestionNumber <
-                        this.state.QuizBody.length - 1
-                      ) {
-                        this.setState({
-                          currentQuestionNumber:
-                            this.state.currentQuestionNumber + 1,
-                        });
-                      } else {
-                        this.setState({
-                          lastQuestion: true,
-                        });
-                      }
-                    }}
-                  >
-                    {this.state.lastQuestion === true
-                      ? this.noQuestionsLeft
-                      : this.nextQuestion}
-                  </Button>
+                  {this.state.lastQuestion? <Alert variant="primary">This is the last question</Alert> : ""}
                 </span>
               </Modal.Body>
               <Modal.Footer>
@@ -215,7 +194,6 @@ class StudentQuizView extends React.Component {
                   variant="danger"
                   onClick={() => {
                     this.handleShow();
-                    this.calculateScore(this.state.currentQuestionNumber);
                     this.setState({
                       submittedQuiz: true,
                     });

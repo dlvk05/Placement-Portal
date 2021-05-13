@@ -269,7 +269,7 @@ router.get("/jobProfile/getApplicantList/:id", (req, res) => {
                         // console.log(err);
                       });
 
-                      // removing the temporary files
+                      //removing the temporary files
                       let desToRemove = "../temp/" + randomFolder;
                       fs.removeSync(desToRemove);
                       console.log("temporary files removed");
