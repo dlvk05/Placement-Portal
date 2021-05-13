@@ -6,8 +6,8 @@ import JobAdditionalInfoComponent from "../../Components/StudentJobViewComponent
 import JobDescriptionsComponent from "../../Components/StudentJobViewComponents/JobDescriptionsComponent/JobDescriptionsComponent";
 import OpeningOverviewComponent from "../../Components/StudentJobViewComponents/OpeningOverviewComponent/OpeningOverviewComponent";
 import HiringWorkflowComponent from "../../Components/StudentJobViewComponents/HiringWorkflowComponent/HiringWorkflowComponent";
-import EligibilityCriteriaComponent from "../../Components/StudentJobViewComponents/EligibilityCriteriaComponent/EligibilityCriteriaComponent";
-// import StudentJobFeedBackContainer from "./StudentJobFeedBackContainer/StudentJobFeedBackContainer";
+import { connect } from "react-redux";
+
 import axios from "axios";
 import AdminEligibilityCriteriaComponent from "../../Components/AdminEligibilityCriteriaComponent/AdminEligibilityCriteriaComponent";
 
@@ -36,14 +36,18 @@ class AdminJobViewContainer extends React.Component {
       HiringWorkflow: [],
 
       //ELIGIBILITYCRITERIACOMPONENT
-      EligibilityCriteria:{},
-
-      //FOR ADMIN MODAL
-      show: false,
+      EligibilityCriteria: {},
     },
+    //FOR ADMIN MODAL
+    show: false,
+    deadlinePassed: false,
+    finalSelectionsDone: false,
+    checkedApplicationStatus: false,
+    jobProfileLoaded: false,
+    selectedFile: null,
   };
 
-  componentDidMount() {
+  loadInitialDate = () => {
     let url = "/api/jobProfile/getJobProfile/" + this.props.match.params.id;
     axios
       .get(url)
@@ -51,17 +55,70 @@ class AdminJobViewContainer extends React.Component {
         console.log(res.data);
         this.setState({
           jobProfile: res.data.jobProfile,
+          jobProfileLoaded: true,
+          checkedApplicationStatus: false,
         });
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  componentDidMount() {
+    this.loadInitialDate();
   }
+
+  checkApplicationStatus = () => {
+    if (this.state.checkedApplicationStatus !== true) {
+      let currentJob = this.state.jobProfile;
+      let currentDate = new Date();
+      let deadline = new Date(this.state.jobProfile.ApplicationDeadLine);
+      let finalSelectionsDone = false;
+      let deadlinePassed = false;
+      if (currentDate > deadline) {
+        deadlinePassed = true;
+      }
+
+      if (currentJob.SelectedApplications.length > 0) {
+        finalSelectionsDone = true;
+      }
+
+      console.log({
+        deadlinePassed: deadlinePassed,
+        finalSelectionsDone: finalSelectionsDone,
+      });
+
+      this.setState({
+        ...this.state,
+        deadlinePassed: deadlinePassed,
+        checkedApplicationStatus: true,
+        finalSelectionsDone: finalSelectionsDone,
+      });
+    }
+  };
 
   handleShow = () => {
     this.setState({
       show: !this.state.show,
     });
+  };
+
+  jobDeleteHandler = () => {
+    let url = "/api/jobProfile/deleteSpecificJobProfile";
+    let postData = {
+      jobProfileId: this.state.jobProfile._id,
+    };
+    axios.post(url, postData).then((res) => {
+      this.history.push("/JobProfilesFeed");
+    });
+  };
+
+  downloadInitialApplicantsHandler = () => {
+    let url = "/api/jobProfile/getApplicantList/" + this.state.jobProfile._id;
+    axios
+      .get(url)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   render() {
@@ -74,38 +131,42 @@ class AdminJobViewContainer extends React.Component {
           </div>
           <hr />
           <div>
-            <Button variant="danger">Delete</Button>
+            <Button variant="danger" onClick={this.jobDeleteHandler}>Delete</Button>
           </div>
           <hr />
           <div>
             <h6>Download Initial Applicants List</h6>
           </div>
           <div>
-            <Button variant="info">Download</Button>
+            <Button variant="info" onClick={this.downloadInitialApplicantsHandler}>Download</Button>
           </div>
           <hr />
           <div>
             <h6>Upload Selected Applicants List</h6>
           </div>
           <div>
-            <Button variant="info" onClick={this.handleShow}>Upload</Button>
+            <Button variant="info" onClick={this.handleShow}>
+              Upload
+            </Button>
             <div>
-            <Modal show={this.state.show} onHide={this.handleShow}>
+              <Modal show={this.state.show} onHide={this.handleShow}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Upload List of Final Selects (selects.xlsx)</Modal.Title>
+                  <Modal.Title>
+                    Upload List of Final Selects (selects.xlsx)
+                  </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <Form>
-                  <Form.Group as={Col} sm={6}>
-                <Form.Row>
-                  <Form.Label column="sm">Upload File: </Form.Label>
-                  <Form.File
-                    Placeholder="Upload Doc"
-                    size="sm"
-                    // onChange={this.onFileChange}
-                  />
-                </Form.Row>
-              </Form.Group>
+                    <Form.Group as={Col} sm={6}>
+                      <Form.Row>
+                        <Form.Label column="sm">Upload File: </Form.Label>
+                        <Form.File
+                          Placeholder="Upload Doc"
+                          size="sm"
+                          // onChange={this.onFileChange}
+                        />
+                      </Form.Row>
+                    </Form.Group>
                   </Form>
                 </Modal.Body>
                 <Modal.Footer>
@@ -128,14 +189,18 @@ class AdminJobViewContainer extends React.Component {
           </div>
           <hr />
           <div>
-            <h6><span style={{display: "flex"}}>Send Applicants List to <br/> Company Representative</span></h6>
+            <h6>
+              <span style={{ display: "flex" }}>
+                Send Applicants List to <br /> Company Representative
+              </span>
+            </h6>
           </div>
           <div>
             <Button variant="success">Send</Button>
           </div>
         </div>
         <div className={styles.container}>
-        <OpeningOverviewComponent
+          <OpeningOverviewComponent
             openingOverview={this.state.jobProfile.OpeningOverview}
             companyName={this.state.jobProfile.CompanyName}
             location={this.state.jobProfile.Location}
@@ -166,11 +231,16 @@ class AdminJobViewContainer extends React.Component {
           EligibilityCriteria={this.state.jobProfile.EligibilityCriteria}
           />
           <br />
-          {/* <StudentJobFeedBackContainer/> */}
         </div>
       </div>
     );
   }
 }
 
-export default AdminJobViewContainer;
+const mapStateToProps = (state) => {
+  return {
+    userId: state.userAuth.userId,
+  };
+};
+
+export default connect(mapStateToProps)(AdminJobViewContainer);
