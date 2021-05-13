@@ -24,6 +24,7 @@ import AdminJobViewContainer from "./Containers/AdminJobViewContainer/AdminJobVi
 import QuizUploadForm from "./Containers/Adminfunctionalities/QuizUploadForm/QuizUploadForm";
 import QuizListFeed from "./Containers/QuizContainers/QuizListFeed/QuizListFeed";
 import StudentQuizView from "./Containers/QuizContainers/StudentQuizView/StudentQuizView";
+import LearningVideosFeed from "./Containers/LearningVideosFeed/LearningVideosFeed";
 
 class App extends React.Component {
   componentDidMount() {
@@ -71,6 +72,7 @@ class App extends React.Component {
             <Route path="/UserAccountInfoPage" exact component={UserAccountInfoPage} />
             <Route path="/StudentJobView/:id" exact component={StudentJobViewContainer} />
             <Route path="/QuizListFeed" exact component={QuizListFeed} />
+            <Route path="/LearningVideosFeed" exact component={LearningVideosFeed} />
             <Route path="/StudentQuizView" exact component={StudentQuizView} />
 
           </Switch>
