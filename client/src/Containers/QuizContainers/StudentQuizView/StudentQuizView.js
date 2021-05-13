@@ -55,6 +55,7 @@ class StudentQuizView extends React.Component {
     selectedOption: 0,
     score: 0,
     submittedQuiz: false,
+    QandA: [],
   };
 
   noQuestionsLeft = "No Questions left";
@@ -67,13 +68,14 @@ class StudentQuizView extends React.Component {
   };
 
  onOptionSelect = (currentQNo, optionNo) =>{
+   this.state.QandA.push(optionNo);
    //check if selected option is currect option and that score isn't more than maxmarks then increase score
     if(this.state.QuizBody[currentQNo].correctOption === optionNo && this.state.score < this.state.MaxMarks){
       this.setState({
         score: this.state.score + 1
       })
     }
-
+    
     //checks if current question number is not final question
     if(currentQNo<this.state.QuizBody.length-1){
       this.setState({
@@ -90,7 +92,25 @@ class StudentQuizView extends React.Component {
  }
 
 
+
   render() {
+    
+
+    let QuizReview = this.state.QuizBody.map((currentQ, i) => (
+      <div>
+        <div><b>Q{i+1}.{this.state.QuizBody[i].question}</b></div>
+        <ol type="1">
+          <li>{this.state.QuizBody[i].option1}</li>
+          <li>{this.state.QuizBody[i].option2}</li>
+          <li>{this.state.QuizBody[i].option3}</li>
+          <li>{this.state.QuizBody[i].option4}</li>
+        </ol>
+        <div>Your Answer: <b>{this.state.QandA[i]}</b></div>
+        <div>Correct Answer: <b>{this.state.QuizBody[i].correctOption}</b></div><br />
+      </div>
+    ))
+
+
     return (
       <div className={a.wrapper}>
         <div className={a.container}>
@@ -207,7 +227,9 @@ class StudentQuizView extends React.Component {
               style={{ display: this.state.submittedQuiz ? "block" : "none" }}
             >
               <hr />
-              <h4>Score: {this.state.score}</h4>
+              <h4>Your Score: {this.state.score}</h4>
+              <hr />
+              {QuizReview}
             </div>
           </div>
         </div>
