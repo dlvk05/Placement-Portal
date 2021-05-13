@@ -10,6 +10,7 @@ class LearningVideosFeed extends React.Component{
                 VideoModuleTitle: "Kpop Music Videos",
                 VideoModuleTopic: "Kpop",
                 TotalVideos: 5,
+                VideoModuleDescription: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio autem eaque placeat!",
                 VideoLinks: [
                     <iframe width="853" height="480" src="https://www.youtube.com/embed/mAKsZ26SabQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>,
                     <iframe width="853" height="480" src="https://www.youtube.com/embed/IHNzOHi8sJs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>,
@@ -28,14 +29,14 @@ class LearningVideosFeed extends React.Component{
         <td><Link>{currentVid.VideoModuleTitle}</Link></td>
         <td>{currentVid.VideoModuleTopic}</td>
         <td>{currentVid.TotalVideos}</td>
-        <td>Not Attempted</td>
+        <td>Unwatched</td>
       </tr>
     ));
 
     return(
       <div className={a.wrapper}>
           <div className={a.container}>
-              <h3>Learning Videos</h3>
+              <h3>Learning Video Modules</h3>
               <hr />
               <div>
             <Form inline>
@@ -77,16 +78,16 @@ class LearningVideosFeed extends React.Component{
                         Created Date
                       </option>
                       <option value="JobProfileTitle" eventkey="2">
-                        Job Title
+                        Module Title
                       </option>
                       <option value="CompanyName" eventkey="3">
-                        Company Name
+                        Module Topic
                       </option>
                       <option value="Location" eventkey="4">
-                        Location
+                        Number of Videos
                       </option>
                       <option value="ApplicationDeadLine" eventkey="5">
-                        Application Deadline
+                        Status
                       </option>
                     </Form.Control>
                   </Form.Row>
@@ -99,8 +100,8 @@ class LearningVideosFeed extends React.Component{
           <Table>
             <thead>
               <tr>
-                <td><b>Quiz Title</b></td>
-                <td><b>Quiz Topic</b></td>
+                <td><b>Module Title</b></td>
+                <td><b>Module Topic</b></td>
                 <td><b>Number of Videos</b></td>
                 <td><b>Status</b></td>
               </tr>

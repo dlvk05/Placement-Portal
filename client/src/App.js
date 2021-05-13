@@ -25,6 +25,7 @@ import QuizUploadForm from "./Containers/Adminfunctionalities/QuizUploadForm/Qui
 import QuizListFeed from "./Containers/QuizContainers/QuizListFeed/QuizListFeed";
 import StudentQuizView from "./Containers/QuizContainers/StudentQuizView/StudentQuizView";
 import LearningVideosFeed from "./Containers/LearningVideosFeed/LearningVideosFeed";
+import LearningVideoModule from "./Containers/LearningVideoModule/LearningVideoModule";
 
 class App extends React.Component {
   componentDidMount() {
@@ -74,7 +75,7 @@ class App extends React.Component {
             <Route path="/QuizListFeed" exact component={QuizListFeed} />
             <Route path="/LearningVideosFeed" exact component={LearningVideosFeed} />
             <Route path="/StudentQuizView" exact component={StudentQuizView} />
-
+            <Route path="/LearningVideoModule" exact component={LearningVideoModule} />
           </Switch>
         </UserLayout>
       );
