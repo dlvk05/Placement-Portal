@@ -1,7 +1,8 @@
 .wrapper {
     background-color: aliceblue;
     padding: 10px;
-    height: 100vmin;
+    /* height: fit-content; */
+    min-height: 100vh;
   }
   
   .container {

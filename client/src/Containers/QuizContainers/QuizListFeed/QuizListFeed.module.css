@@ -1,6 +1,7 @@
 .wrapper {
     background-color: aliceblue;
     padding: 10px;
+    height: 100vh;
   }
   
   .container {

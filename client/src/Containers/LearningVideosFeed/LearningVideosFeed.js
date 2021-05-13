@@ -29,7 +29,7 @@ class LearningVideosFeed extends React.Component{
         <td><Link>{currentVid.VideoModuleTitle}</Link></td>
         <td>{currentVid.VideoModuleTopic}</td>
         <td>{currentVid.TotalVideos}</td>
-        <td>Unwatched</td>
+        {/* <td>Unwatched</td> */}
       </tr>
     ));
 
@@ -86,9 +86,9 @@ class LearningVideosFeed extends React.Component{
                       <option value="Location" eventkey="4">
                         Number of Videos
                       </option>
-                      <option value="ApplicationDeadLine" eventkey="5">
+                      {/* <option value="ApplicationDeadLine" eventkey="5">
                         Status
-                      </option>
+                      </option> */}
                     </Form.Control>
                   </Form.Row>
                 </Form.Group>
@@ -103,7 +103,7 @@ class LearningVideosFeed extends React.Component{
                 <td><b>Module Title</b></td>
                 <td><b>Module Topic</b></td>
                 <td><b>Number of Videos</b></td>
-                <td><b>Status</b></td>
+                {/* <td><b>Status</b></td> */}
               </tr>
             </thead>
             {list}
