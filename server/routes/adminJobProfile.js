@@ -4,11 +4,14 @@ const keys = require("../config/keys");
 const multer = require("multer");
 const fs = require("fs-extra");
 const mongoose = require("mongoose");
-
+const csvConverter = require("json-2-csv");
+const archiver = require("archiver");
+const AdmZip = require("adm-zip");
 
 //Load JobProfile model
 const JobProfile = require("../models/jobProfileModel");
 const UserProfile = require("../models/profileModel");
+const StudentStats = require("../models/studentStatsModel");
 
 //multer config
 const storage = multer.diskStorage({
@@ -27,7 +30,6 @@ const storage = multer.diskStorage({
 });
 
 const uploadStorage = multer({ storage: storage });
-
 
 //route to get a random Mongoose id
 router.get("/jobProfile/getRandomId", (req, res) => {
@@ -69,9 +71,6 @@ router.get("/jobProfile/downloadFile", (req, res) => {
   });
 });
 
-
-
-
 // get all job profiles
 router.get("/jobProfile/getAllJobProfiles", (req, res) => {
   JobProfile.find({}).then((foundJobProfiles) => {
@@ -102,7 +101,6 @@ router.get("/jobProfile/getJobProfile/:id", (req, res) => {
       success: true,
       jobProfile: foundJobProfile,
     });
-
   });
 });
 
@@ -121,7 +119,7 @@ router.post("/jobProfile/addNewJobProfile", (req, res) => {
     } else {
       //create new jobProfile object
       const newJobProfile = new JobProfile({
-        _id:req.body.jobProfileID,
+        _id: req.body.jobProfileID,
         adminAccount: req.body.adminAccount,
         ApplicationDeadLine: req.body.ApplicationDeadLine,
         JobProfileTitle: req.body.JobProfileTitle,
@@ -155,6 +153,170 @@ router.post("/jobProfile/addNewJobProfile", (req, res) => {
   });
 });
 
+//delete a specific job profile
+router.post("/jobProfile/deleteSpecificJobProfile", (req, res) => {
+  JobProfile.findByIdAndDelete(req.body.jobProfileId).then(
+    (deletedJobProfile) => {
+      console.log("deletedJobProfile");
+      console.log(req.body.jobProfileId);
+      if (!deletedJobProfile) {
+        res.status(404).json({
+          success: false,
+          error: "profile not found",
+        });
+      }
+      res.json({
+        success: true,
+        deletedJobProfile: deletedJobProfile,
+      });
+    }
+  );
+});
+
+// get Initial applicant list of a specific profile
+router.get("/jobProfile/getApplicantList/:id", (req, res) => {
+  let initialApplicantsCSV = [];
+  let pathToResumes = [];
+  let randomFolder = String(Date.now());
+  JobProfile.findById(req.params.id).then((foundJobProfile) => {
+    if (!foundJobProfile) {
+      res.status(400).json({
+        success: false,
+        error: "encountered an error",
+      });
+    } else {
+      //save initial Applications data
+      let InitialApplicationsData = foundJobProfile.InitialApplications;
+      // console.log(InitialApplicationsData);
+      //create list of profileIds
+      let InitialApplicationProfileIds = [];
+      InitialApplicationsData.forEach((application) => {
+        InitialApplicationProfileIds.push(String(application.userProfile));
+      });
+
+      //create data and resume path for all ids in InitialApplicationProfileIds
+      UserProfile.find({}).then((foundUserProfiles) => {
+        foundUserProfiles.forEach((profile) => {
+          if (InitialApplicationProfileIds.includes(String(profile._id))) {
+            let temp = {
+              Name: null,
+              RegistrationNumber: null,
+              ResumeFileName: null,
+            };
+            temp.Name = profile.About.Overview.Name;
+            temp.RegistrationNumber = profile.Education.Current.RegNo;
+            temp.ResumeFileName = profile.Resumes[0].DocumentName;
+            let path = "../uploads/Profile/" + profile._id + "/Resumes/";
+            //+ temp.ResumeFileName;
+            initialApplicantsCSV.push(temp);
+            pathToResumes.push(path);
+          }
+        });
+
+        // console.log(initialApplicantsCSV);
+        // console.log(pathToResumes);
+
+        //csv file configure
+        let csvFileName =
+          foundJobProfile.JobProfileTitle +
+          "_" +
+          foundJobProfile.CompanyName +
+          ".csv";
+        csvConverter.json2csv(initialApplicantsCSV, (err, csv) => {
+          let filePath = "../temp/" + randomFolder + "/" + csvFileName;
+
+          //creating the csv file in temp
+          fs.outputFile(filePath, csv)
+            .then(() => {
+              console.log("successfully saved csv");
+
+              //---------------------------
+              //moving the required resumes to temp folder
+              let index = 0;
+              let numberOfResumes = pathToResumes.length;
+
+              let des = "../temp/" + randomFolder + "/" + "resumes/";
+              pathToResumes.forEach((path) => {
+                index++;
+                fs.copy(path, des)
+                  .then(() => {
+                    if (index === numberOfResumes) {
+                      console.log("successfully copied the resumes");
+                      //---------------------
+                      // adding everything to zip
+
+                      const file = new AdmZip();
+
+                      let zipName =
+                        foundJobProfile.CompanyName +
+                        "_" +
+                        foundJobProfile.JobProfileTitle +
+                        "_" +
+                        "Applicants.zip";
+                      let zipDes = "../tempResults/" + randomFolder;
+                      let zipFileDes =
+                        "../tempResults/" + randomFolder + "/" + zipName;
+                      let zipSrc = "../temp/" + randomFolder;
+                      // file.addLocalFolder("../random");
+                      file.addLocalFolder(zipSrc);
+                      fs.ensureDirSync(zipDes);
+                      file.writeZip(zipFileDes);
+                      console.log("zip created");
+
+                      res.download(zipFileDes);
+
+                      //removing the temporary files
+                      let desToRemove = "../temp/" + randomFolder;
+                      fs.removeSync(desToRemove)
+                      console.log("temporary files removed");
+                      desToRemove="../tempResults/" + randomFolder;
+                      fs.removeSync(desToRemove);
+
+                    }
+                  })
+                  .catch((err) => console.log(err));
+              });
+            })
+            .catch((err) => console.log(err));
+
+          //-------------------------------------------------------
+          // //moving the required resumes to temp folder
+          // let des = "../temp/" + randomFolder + "/" + "resumes/";
+          // pathToResumes.forEach((path) => {
+          //   fs.copy(path, des)
+          //     .then(() => console.log("successfully copied the resumes"))
+          //     .catch((err) => console.log(err));
+          // });
+
+          // // adding everything to zip
+          // const file = new AdmZip();
+
+          // let zipName =
+          //   foundJobProfile.CompanyName +
+          //   "_" +
+          //   foundJobProfile.JobProfileTitle +
+          //   "_" +
+          //   "Applicants.zip";
+          // let zipDes = "../tempResults/" + randomFolder;
+          // let zipFileDes = "../tempResults/" + randomFolder + "/" + zipName;
+          // let zipSrc = "../temp/" + randomFolder;
+          // // file.addLocalFolder(zipSrc);
+          // file.addLocalFolder(zipSrc);
+          // fs.ensureDirSync(zipDes);
+          // file.writeZip(zipFileDes);
+
+          // //removing the temporary files
+          // let desToRemove = "../temp/" + randomFolder;
+          // fs.remove(desToRemove)
+          //   .then(() => console.log("removed the temp files"))
+          //   .catch((err) => console.log(err));
+          //-------------------------------------------------------------------------
+        });
+      });
+    }
+  });
+});
+
 //add final SelectedApplications to a jobProfile
 router.put("/jobProfile/addSelectedApplications", (req, res) => {
   let selectedApplicantsRegNo = req.body.selectedApplicantsData;
@@ -169,7 +331,7 @@ router.put("/jobProfile/addSelectedApplications", (req, res) => {
         error: "job profile not found",
       });
     } else {
-      //retrieve all
+      //retrieve all userProfiles
       UserProfile.find({}).then((foundUserProfiles) => {
         if (!foundUserProfiles) {
           res.status(400).json({
@@ -203,27 +365,6 @@ router.put("/jobProfile/addSelectedApplications", (req, res) => {
       });
     }
   });
-});
-
-//! Not complete yet
-// get applicant list of a specific profile
-router.get("/jobProfile/getApplicantList/:id", (req, res) => {
-  JobProfile.findById(req.params.id)
-    .populate("InitialApplications.userAccount")
-    .populate("InitialApplications.userProfile")
-    .then((foundJobProfiles) => {
-      if (!foundJobProfiles) {
-        res.status(400).json({
-          success: false,
-          error: "encountered an error",
-        });
-      }
-
-      res.json({
-        success: true,
-        jobProfiles: foundJobProfiles,
-      });
-    });
 });
 
 module.exports = router;
