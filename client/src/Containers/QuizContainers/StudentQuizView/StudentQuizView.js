@@ -58,9 +58,6 @@ class StudentQuizView extends React.Component {
     QandA: [],
   };
 
-  noQuestionsLeft = "No Questions left";
-  nextQuestion = "Next Question";
-
   handleShow = () => {
     this.setState({
       show: !this.state.show,
@@ -69,10 +66,11 @@ class StudentQuizView extends React.Component {
 
  onOptionSelect = (currentQNo, optionNo) =>{
    this.state.QandA.push(optionNo);
+
    //check if selected option is currect option and that score isn't more than maxmarks then increase score
     if(this.state.QuizBody[currentQNo].correctOption === optionNo && this.state.score < this.state.MaxMarks){
       this.setState({
-        score: this.state.score + 1
+        score: this.state.score + 1,
       })
     }
     
@@ -86,27 +84,27 @@ class StudentQuizView extends React.Component {
         lastQuestion: true
       })
     }
-
-    console.log(this.state.score);
-    console.log(this.state.currentQuestionNumber);
  }
 
 
 
   render() {
     
-
+let x;
     let QuizReview = this.state.QuizBody.map((currentQ, i) => (
       <div>
-        <div><b>Q{i+1}.{this.state.QuizBody[i].question}</b></div>
-        <ol type="1">
-          <li>{this.state.QuizBody[i].option1}</li>
-          <li>{this.state.QuizBody[i].option2}</li>
-          <li>{this.state.QuizBody[i].option3}</li>
-          <li>{this.state.QuizBody[i].option4}</li>
-        </ol>
-        <div>Your Answer: <b>{this.state.QandA[i]}</b></div>
-        <div>Correct Answer: <b>{this.state.QuizBody[i].correctOption}</b></div><br />
+        <span style={{display: "none"}}>{currentQ.correctOption===this.state.QandA[i]?  x = "success": x = "danger"}</span>
+        <Alert variant={x}>
+          <div><b>Q{i+1}.{currentQ.question}</b></div>
+          <ol type="1">
+            <li>{currentQ.option1}</li>
+            <li>{currentQ.option2}</li>
+            <li>{currentQ.option3}</li>
+            <li>{currentQ.option4}</li>
+          </ol>
+          <div>Your Answer: <b>{this.state.QandA[i]}</b></div>
+          <div>Correct Answer: <b>{currentQ.correctOption}</b></div><br />
+        </Alert>
       </div>
     ))
 

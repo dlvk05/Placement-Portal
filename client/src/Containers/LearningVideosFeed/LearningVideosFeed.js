@@ -7,12 +7,15 @@ class LearningVideosFeed extends React.Component{
     state={
         videoList: [
             {
-                VideoTitle: "Kpop Music Videos",
-                VideoTopic: "Kpop",
-                TotalVideos: 2,
+                VideoModuleTitle: "Kpop Music Videos",
+                VideoModuleTopic: "Kpop",
+                TotalVideos: 5,
                 VideoLinks: [
-                    "https://youtu.be/3ymwOvzhwHs",
-                    "https://youtu.be/mAKsZ26SabQ"
+                    <iframe width="853" height="480" src="https://www.youtube.com/embed/mAKsZ26SabQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>,
+                    <iframe width="853" height="480" src="https://www.youtube.com/embed/IHNzOHi8sJs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>,
+                    <iframe width="853" height="480" src="https://www.youtube.com/embed/bwmSjveL3Lc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>,
+                    <iframe width="853" height="480" src="https://www.youtube.com/embed/jeI992mvlEY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>,
+                    <iframe width="853" height="480" src="https://www.youtube.com/embed/wxDHQT0iBKM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 ]
             }
         ]
@@ -22,8 +25,8 @@ class LearningVideosFeed extends React.Component{
     let list;
     list = this.state.videoList.map((currentVid, i) => (
       <tr key={i}>
-        <td><Link>{currentVid.VideoTitle}</Link></td>
-        <td>{currentVid.VideoTopic}</td>
+        <td><Link>{currentVid.VideoModuleTitle}</Link></td>
+        <td>{currentVid.VideoModuleTopic}</td>
         <td>{currentVid.TotalVideos}</td>
         <td>Not Attempted</td>
       </tr>
@@ -98,7 +101,7 @@ class LearningVideosFeed extends React.Component{
               <tr>
                 <td><b>Quiz Title</b></td>
                 <td><b>Quiz Topic</b></td>
-                <td><b>Total Number of Videos</b></td>
+                <td><b>Number of Videos</b></td>
                 <td><b>Status</b></td>
               </tr>
             </thead>
