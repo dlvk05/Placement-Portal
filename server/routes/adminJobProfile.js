@@ -175,12 +175,13 @@ router.post("/jobProfile/deleteSpecificJobProfile", (req, res) => {
 
 // get Initial applicant list of a specific profile
 router.get("/jobProfile/getApplicantList/:id", (req, res) => {
+  console.log("called");
   let initialApplicantsCSV = [];
   let pathToResumes = [];
   let randomFolder = String(Date.now());
   JobProfile.findById(req.params.id).then((foundJobProfile) => {
     if (!foundJobProfile) {
-      res.status(400).json({
+      res.status(404).json({
         success: false,
         error: "encountered an error",
       });
@@ -190,6 +191,7 @@ router.get("/jobProfile/getApplicantList/:id", (req, res) => {
       // console.log(InitialApplicationsData);
       //create list of profileIds
       let InitialApplicationProfileIds = [];
+
       InitialApplicationsData.forEach((application) => {
         InitialApplicationProfileIds.push(String(application.userProfile));
       });
@@ -262,23 +264,23 @@ router.get("/jobProfile/getApplicantList/:id", (req, res) => {
                       fs.ensureDirSync(zipDes);
                       file.writeZip(zipFileDes);
                       console.log("zip created");
-
-                      res.download(zipFileDes);
+                      console.log(zipFileDes);
+                      res.download(zipFileDes, (err) => {
+                        // console.log(err);
+                      });
 
                       // removing the temporary files
                       let desToRemove = "../temp/" + randomFolder;
-                      fs.removeSync(desToRemove)
+                      fs.removeSync(desToRemove);
                       console.log("temporary files removed");
                       // desToRemove="../tempResults/" + randomFolder;
                       // fs.removeSync(desToRemove);
-
                     }
                   })
                   .catch((err) => console.log(err));
               });
             })
             .catch((err) => console.log(err));
-
         });
       });
     }

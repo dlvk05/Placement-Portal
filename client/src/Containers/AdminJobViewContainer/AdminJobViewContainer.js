@@ -10,6 +10,7 @@ import { connect } from "react-redux";
 
 import axios from "axios";
 import AdminEligibilityCriteriaComponent from "../../Components/AdminEligibilityCriteriaComponent/AdminEligibilityCriteriaComponent";
+var fileDownload = require("js-file-download");
 
 class AdminJobViewContainer extends React.Component {
   state = {
@@ -114,11 +115,21 @@ class AdminJobViewContainer extends React.Component {
   };
 
   downloadInitialApplicantsHandler = () => {
+    let fileName =
+      this.state.jobProfile.CompanyName +
+      "_" +
+      this.state.jobProfile.JobProfileTitle +
+      "_" +
+      "Applicants.zip";
     let url = "/api/jobProfile/getApplicantList/" + this.state.jobProfile._id;
-    axios
-      .get(url)
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
+    axios({
+      url: url,
+      method: "GET",
+      responseType: "blob",
+    }).then((res) => {
+      fileDownload(res.data, fileName);
+      console.log("file downloaded");
+    });
   };
 
   render() {
@@ -131,14 +142,21 @@ class AdminJobViewContainer extends React.Component {
           </div>
           <hr />
           <div>
-            <Button variant="danger" onClick={this.jobDeleteHandler}>Delete</Button>
+            <Button variant="danger" onClick={this.jobDeleteHandler}>
+              Delete
+            </Button>
           </div>
           <hr />
           <div>
             <h6>Download Initial Applicants List</h6>
           </div>
           <div>
-            <Button variant="info" onClick={this.downloadInitialApplicantsHandler}>Download</Button>
+            <Button
+              variant="info"
+              onClick={this.downloadInitialApplicantsHandler}
+            >
+              Download
+            </Button>
           </div>
           <hr />
           <div>
@@ -228,7 +246,7 @@ class AdminJobViewContainer extends React.Component {
           />
           <br />
           <AdminEligibilityCriteriaComponent
-          EligibilityCriteria={this.state.jobProfile.EligibilityCriteria}
+            EligibilityCriteria={this.state.jobProfile.EligibilityCriteria}
           />
           <br />
         </div>
