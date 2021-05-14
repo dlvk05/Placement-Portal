@@ -78,53 +78,89 @@ class StudentJobFeedBackContainer extends React.Component {
       });
   };
 
-  
+  checkDisabled = () => {
+    if (this.props.disabled === "true") {
+      let x = document.getElementById("toDisableForm");
+      x.setAttribute("disabled", "true");
+    }
+  };
+
+  returnForm = () => {
+    let formData = (
+      <div>
+        <Form.Group as={Col} controlId="UserRating" sm={2}>
+          <Form.Row>
+            <Form.Label column="sm">User Rating :</Form.Label>
+            <Form.Control
+              type=""
+              placeholder="Rate out of 5"
+              required
+              size="sm"
+              onChange={(event, string) => {
+                this.inputChangeHandler(event, "Rating");
+              }}
+            />
+          </Form.Row>
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Row>
+            <Form.Label>Student FeedBack</Form.Label>
+            <Form.Control
+              type="TextArea"
+              placeholder="What did you think of this Job opportunity?"
+              rows="10"
+              cols="40"
+              as="textarea"
+              onChange={(event, string) => {
+                this.inputChangeHandler(event, "FeedBackText");
+              }}
+            />
+          </Form.Row>
+        </Form.Group>
+      </div>
+    );
+
+    let disabledForm = (
+      <div>
+        <Form>
+          <fieldset disabled>{formData}</fieldset>
+        </Form>
+        <Button disabled onClick={this.onSubmitHandler}>
+          Submit FeedBack
+        </Button>
+      </div>
+    );
+
+    let enabledForm = (
+      <div>
+        <Form>
+          <fieldset>{formData}</fieldset>
+        </Form>
+        <Button onClick={this.onSubmitHandler}>Submit FeedBack</Button>
+      </div>
+    );
+
+    if (this.props.disabled === "true") {
+      return disabledForm;
+    } else {
+      return enabledForm;
+    }
+  };
 
   render() {
     return (
       <div className={styles.feedbackDiv}>
         <h5>Student Feedback</h5>
         <hr />
-        {this.props.disabled==="true"?<p>The FeedBack Form is currently closed</p>:null}
-        <div>
-          <Form>
-            <fieldset disabled={this.props.disabled}>
-              <Form.Group as={Col} controlId="UserRating" sm={2}>
-                <Form.Row>
-                  <Form.Label column="sm">User Rating :</Form.Label>
-                  <Form.Control
-                    type=""
-                    placeholder="Rate out of 5"
-                    required
-                    size="sm"
-                    onChange={(event, string) => {
-                      this.inputChangeHandler(event, "Rating");
-                    }}
-                  />
-                </Form.Row>
-              </Form.Group>
-              <Form.Group as={Col}>
-                <Form.Row>
-                  <Form.Label>Student FeedBack</Form.Label>
-                  <Form.Control
-                    type="TextArea"
-                    placeholder="What did you think of this Job opportunity?"
-                    rows="10"
-                    cols="40"
-                    as="textarea"
-                    onChange={(event, string) => {
-                      this.inputChangeHandler(event, "FeedBackText");
-                    }}
-                  />
-                </Form.Row>
-              </Form.Group>
-            </fieldset>
-          </Form>
-          <Button disabled={this.props.disabled} onClick={this.onSubmitHandler}>Submit FeedBack</Button>
-        </div>
+        {this.props.disabled === "true" ? (
+          <p>The FeedBack Form is currently closed</p>
+        ) : null}
+        {this.returnForm()}
       </div>
     );
   }
 }
 
 export default StudentJobFeedBackContainer;
+
+//--------------------------------------------

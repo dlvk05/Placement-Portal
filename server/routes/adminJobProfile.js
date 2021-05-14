@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const csvConverter = require("json-2-csv");
 const archiver = require("archiver");
 const AdmZip = require("adm-zip");
+const nodemailer = require("nodemailer");
 
 //Load JobProfile model
 const JobProfile = require("../models/jobProfileModel");
@@ -173,6 +174,120 @@ router.post("/jobProfile/deleteSpecificJobProfile", (req, res) => {
   );
 });
 
+const createRequiredZip = (id, callback) => {
+  let initialApplicantsCSV = [];
+  let pathToResumes = [];
+  let randomFolder = String(Date.now());
+  let receiverMailId = null;
+  JobProfile.findById(id).then((foundJobProfile) => {
+    if (!foundJobProfile) {
+      console.log("encountered an error");
+    } else {
+      receiverMailId = foundJobProfile.CompanyRepresentativeMailId;
+      //save initial Applications data
+      let InitialApplicationsData = foundJobProfile.InitialApplications;
+      // console.log(InitialApplicationsData);
+      //create list of profileIds
+      let InitialApplicationProfileIds = [];
+
+      InitialApplicationsData.forEach((application) => {
+        InitialApplicationProfileIds.push(String(application.userProfile));
+      });
+
+      //create data and resume path for all ids in InitialApplicationProfileIds
+      UserProfile.find({}).then((foundUserProfiles) => {
+        foundUserProfiles.forEach((profile) => {
+          if (InitialApplicationProfileIds.includes(String(profile._id))) {
+            let temp = {
+              Name: null,
+              RegistrationNumber: null,
+              ResumeFileName: null,
+            };
+            temp.Name = profile.About.Overview.Name;
+            temp.RegistrationNumber = profile.Education.Current.RegNo;
+            temp.ResumeFileName = profile.Resumes[0].DocumentName;
+            let path = "../uploads/Profile/" + profile._id + "/Resumes/";
+            //+ temp.ResumeFileName;
+            initialApplicantsCSV.push(temp);
+            pathToResumes.push(path);
+          }
+        });
+
+        // console.log(initialApplicantsCSV);
+        // console.log(pathToResumes);
+
+        //csv file configure
+        let csvFileName =
+          foundJobProfile.JobProfileTitle +
+          "_" +
+          foundJobProfile.CompanyName +
+          ".csv";
+        csvConverter.json2csv(initialApplicantsCSV, (err, csv) => {
+          let filePath = "../temp/" + randomFolder + "/" + csvFileName;
+
+          //creating the csv file in temp
+          fs.outputFile(filePath, csv)
+            .then(() => {
+              console.log("successfully saved csv");
+
+              //---------------------------
+              //moving the required resumes to temp folder
+              let index = 0;
+              let numberOfResumes = pathToResumes.length;
+
+              let des = "../temp/" + randomFolder + "/" + "resumes/";
+              pathToResumes.forEach((path) => {
+                index++;
+                fs.copy(path, des)
+                  .then(() => {
+                    if (index === numberOfResumes) {
+                      console.log("successfully copied the resumes");
+                      //---------------------
+                      // adding everything to zip
+
+                      const file = new AdmZip();
+
+                      let zipName =
+                        foundJobProfile.CompanyName +
+                        "_" +
+                        foundJobProfile.JobProfileTitle +
+                        "_" +
+                        "Applicants.zip";
+                      let zipDes = "../tempResults/" + randomFolder;
+                      let zipFileDes =
+                        "../tempResults/" + randomFolder + "/" + zipName;
+                      let zipSrc = "../temp/" + randomFolder;
+                      // file.addLocalFolder("../random");
+                      file.addLocalFolder(zipSrc);
+                      fs.ensureDirSync(zipDes);
+                      file.writeZip(zipFileDes);
+                      console.log("zip created");
+                      console.log(zipFileDes);
+
+                      //removing the temporary files
+                      let desToRemove = "../temp/" + randomFolder;
+                      fs.removeSync(desToRemove);
+                      console.log("temporary files removed");
+
+                      callback({
+                        fileName: zipName,
+                        zipPath: zipFileDes,
+                        receiverMailId: receiverMailId,
+                        profileTitle: foundJobProfile.JobProfileTitle,
+                        companyName: foundJobProfile.CompanyName,
+                      });
+                    }
+                  })
+                  .catch((err) => console.log(err));
+              });
+            })
+            .catch((err) => console.log(err));
+        });
+      });
+    }
+  });
+};
+
 // get Initial applicant list of a specific profile
 router.get("/jobProfile/getApplicantList/:id", (req, res) => {
   console.log("called");
@@ -334,6 +449,115 @@ router.put("/jobProfile/addSelectedApplications", (req, res) => {
         }
       });
     }
+  });
+});
+
+//send student feedBack for download to admin
+router.get("/jobProfile/downloadStudentFeedback/:id", (req, res) => {
+  let studentFeedbackCSV = [];
+  let randomFolder = String(Date.now());
+  JobProfile.findById(req.params.id)
+    .populate("StudentFeedback.userAccount")
+    .then((foundJobProfile) => {
+      if (!foundJobProfile) {
+        res.status(404).json({
+          success: false,
+          error: "profile not found",
+        });
+      } else {
+        let feedBackData = foundJobProfile.StudentFeedback;
+        feedBackData.forEach((feedBack) => {
+          let temp = {
+            StudentName:
+              feedBack.userAccount.firstName +
+              " " +
+              feedBack.userAccount.lastName,
+            StudentRegNo: feedBack.userAccount.regNo,
+            StudentProgramme: feedBack.userAccount.programme,
+            StudentDepartment: feedBack.userAccount.department,
+            Rating: feedBack.Rating,
+            FeedBack: feedBack.FeedBackText,
+            DateGiven: String(feedBack.CreatedOn).slice(4, 15),
+          };
+
+          studentFeedbackCSV.push(temp);
+        });
+        // console.log(studentFeedback);
+
+        //csv file configure
+        let csvFileName =
+          foundJobProfile.JobProfileTitle +
+          "_" +
+          foundJobProfile.CompanyName +
+          "_" +
+          "StudentFeedBack.csv";
+
+        csvConverter.json2csv(studentFeedbackCSV, (err, csv) => {
+          let filePath = "../temp/" + randomFolder + "/" + csvFileName;
+
+          fs.outputFile(filePath, csv)
+            .then(() => {
+              console.log("successfully saved csv");
+              //sending the csv to client
+              res.download(filePath);
+              
+            })
+            .catch((err) => console.log(err));
+        });
+      }
+    });
+});
+
+//send initial applications list to company representative
+router.post("/jobProfile/sendApplicantList/:id", async (req, res) => {
+  console.log(req.params.id);
+
+  createRequiredZip(req.params.id, (zipConfig) => {
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GMAILID,
+        pass: process.env.GMAILPASSWORD,
+      },
+    });
+
+    console.log(zipConfig);
+
+    let mailSubject =
+      "Manipal University Jaipur Applicants list for the job posting titled " +
+      zipConfig.profileTitle;
+
+    let mailHtml =
+      "<p>Attached is a zip file with a list of applicants and their respective resumes for the profile titled " +
+      zipConfig.profileTitle +
+      " offered by " +
+      zipConfig.companyName +
+      " at Manipal University Jaipur</p>" +
+      "<br><p>This is a system generated mail please don't reply to it</p>";
+
+    let mailOptions = {
+      from: process.env.GMAILID,
+      to: zipConfig.receiverMailId,
+      subject: mailSubject,
+      html: mailHtml,
+      attachments: [
+        {
+          filename: zipConfig.fileName,
+          path: zipConfig.zipPath,
+        },
+      ],
+    };
+
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Email sent: " + info.response);
+        res.json({
+          success: true,
+        });
+      }
+    });
   });
 });
 

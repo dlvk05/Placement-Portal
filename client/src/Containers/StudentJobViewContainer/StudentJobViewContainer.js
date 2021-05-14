@@ -31,7 +31,7 @@ class StudentJobViewContainer extends React.Component {
     selected: false,
     studentStats: null,
     eligibilityResults: {
-      MaxOffers3:true,
+      MaxOffers3: true,
       DreamOffer: true,
       ItesOffers: true,
       CoreOffers: true,
@@ -498,11 +498,11 @@ class StudentJobViewContainer extends React.Component {
       );
     }
 
-    if(!this.state.applied){
-      feedBack=null;
+    if (!this.state.applied) {
+      feedBack = null;
     }
 
-    console.log("feedback is")
+    console.log("feedback is");
     console.log(feedBack);
 
     return feedBack;

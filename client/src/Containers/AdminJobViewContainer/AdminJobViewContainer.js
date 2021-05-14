@@ -110,7 +110,7 @@ class AdminJobViewContainer extends React.Component {
       jobProfileId: this.state.jobProfile._id,
     };
     axios.post(url, postData).then((res) => {
-      this.history.push("/JobProfilesFeed");
+      this.props.history.push("/JobProfilesFeed");
     });
   };
 
@@ -129,6 +129,34 @@ class AdminJobViewContainer extends React.Component {
     }).then((res) => {
       fileDownload(res.data, fileName);
       console.log("file downloaded");
+    });
+  };
+
+  sendInitialApplicantsHandler = () => {
+    console.log("sendInitialApplicantsHandler");
+    let url = "/api/jobProfile/sendApplicantList/" + this.state.jobProfile._id;
+    axios
+      .post(url)
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
+  };
+
+  downloadStudentFeedbackHandler = () => {
+    console.log("downloadStudentFeedbackHandler ");
+    let url = "/api/jobProfile/downloadStudentFeedback/" + this.state.jobProfile._id;
+    let fileName =
+      this.state.jobProfile.CompanyName +
+      "_" +
+      this.state.jobProfile.JobProfileTitle +
+      "_" +
+      "StudentFeedBack.csv";
+    axios({
+      url: url,
+      method: "GET",
+      responseType: "blob",
+    }).then((res) => {
+      fileDownload(res.data, fileName);
+      // console.log("file downloaded");
     });
   };
 
@@ -203,7 +231,7 @@ class AdminJobViewContainer extends React.Component {
             <h6>Download Student Feedback</h6>
           </div>
           <div>
-            <Button variant="warning">Download</Button>
+            <Button variant="warning" onClick={this.downloadStudentFeedbackHandler}>Download</Button>
           </div>
           <hr />
           <div>
@@ -214,7 +242,12 @@ class AdminJobViewContainer extends React.Component {
             </h6>
           </div>
           <div>
-            <Button variant="success">Send</Button>
+            <Button
+              variant="success"
+              onClick={this.sendInitialApplicantsHandler}
+            >
+              Send
+            </Button>
           </div>
         </div>
         <div className={styles.container}>
