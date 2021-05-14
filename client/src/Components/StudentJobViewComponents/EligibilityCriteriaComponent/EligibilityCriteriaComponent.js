@@ -262,7 +262,7 @@ const eligibilityCriteriaComponent = (props) => {
         <br />
         <b>Placement Eligibility :</b>
         <br />
-        {AdminEligibilityTable}
+        {studentEligibilityTable}
       </div>
     </div>
   );
