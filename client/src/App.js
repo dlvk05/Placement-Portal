@@ -26,6 +26,7 @@ import QuizListFeed from "./Containers/QuizContainers/QuizListFeed/QuizListFeed"
 import StudentQuizView from "./Containers/QuizContainers/StudentQuizView/StudentQuizView";
 import LearningVideosFeed from "./Containers/LearningVideosFeed/LearningVideosFeed";
 import LearningVideoModule from "./Containers/LearningVideoModule/LearningVideoModule";
+import LearningModuleUpload from "./Containers/LearningModuleUpload/LearningModuleUpload";
 
 class App extends React.Component {
   componentDidMount() {
@@ -55,6 +56,7 @@ class App extends React.Component {
             <Route path="/JobProfilesFeed" exact component={JobProfilesFeed} />
             <Route path="/Logout" exact component={Logout} />
             <Route path="/QuizUpload" exact component={QuizUploadForm} />
+            <Route path="/LearningModuleUpload" exact component={LearningModuleUpload} />
             <Route path="/AdminJobView/:id" exact component={AdminJobViewContainer} />
           </Switch>
         </AdminLayout>

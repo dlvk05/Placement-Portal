@@ -153,17 +153,11 @@ class QuizListFeed extends React.Component {
                       <option value="createdOn" eventkey="1">
                         Created Date
                       </option>
-                      <option value="JobProfileTitle" eventkey="2">
-                        Job Title
+                      <option value="QuizTitle" eventkey="2">
+                        Quiz Title
                       </option>
-                      <option value="CompanyName" eventkey="3">
-                        Company Name
-                      </option>
-                      <option value="Location" eventkey="4">
-                        Location
-                      </option>
-                      <option value="ApplicationDeadLine" eventkey="5">
-                        Application Deadline
+                      <option value="QuizTopic" eventkey="3">
+                        Quiz Topic
                       </option>
                     </Form.Control>
                   </Form.Row>

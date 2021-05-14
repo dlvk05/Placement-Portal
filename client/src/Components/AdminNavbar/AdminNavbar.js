@@ -28,6 +28,7 @@ const adminNavbar = (props) => {
             <NavDropdown.Item href="/JobProfileForm">Add New Job Profile</NavDropdown.Item>
             <NavDropdown.Item href="/Updates">Add New Update</NavDropdown.Item>
             <NavDropdown.Item href="/QuizUpload">Add New Quiz</NavDropdown.Item>
+            <NavDropdown.Item href="/LearningModuleUpload">Add Learning Module</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href="/Logout">Logout</NavDropdown.Item>
           </NavDropdown>
