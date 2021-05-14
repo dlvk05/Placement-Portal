@@ -10,15 +10,19 @@ class LearningVideoModule extends React.Component {
     VideoModuleDescription:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio autem eaque placeat!",
     VideoLinks: [
-      <iframe
-        width="853"
-        height="480"
-        src="https://www.youtube.com/embed/mAKsZ26SabQ"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>,
+      <div>
+        <div>Title</div>
+        <br />
+        <iframe
+          width="853"
+          height="480"
+          src="https://www.youtube.com/embed/mAKsZ26SabQ"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>,
       <iframe
         width="853"
         height="480"
@@ -57,7 +61,10 @@ class LearningVideoModule extends React.Component {
       ></iframe>,
     ],
     currentVid: 0,
+    videoList: [],
   };
+
+
   render() {
     return (
       <div className={a.wrapper}>
@@ -134,3 +141,28 @@ class LearningVideoModule extends React.Component {
 }
 
 export default LearningVideoModule;
+
+//the new way we'll render this page
+/* state={
+  videolist:[{
+    videoTitle:"somevideo",
+    iframeTag:"<iframe ...></iframe>"
+  }]
+}
+
+createVideoLinks=()=>{
+  let VideoLinks=this.state.videolist.map(video=>{
+    return(
+      <div>
+        <div>video.videoTitle</div>
+        <br/>
+        {this.returnIframe(iframeTag)}
+      </div>
+    )
+  })
+  return VideoLinks;
+}
+
+render(){
+  VideoLinks=this.createVideoLinks();
+} */
