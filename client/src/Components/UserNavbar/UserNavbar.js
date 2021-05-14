@@ -24,6 +24,9 @@ const userNavbar = () => {
           <Nav.Link href="/QuizListFeed" style={{ color: "#F2E7C4" }}>
             Quizes
           </Nav.Link>
+          <Nav.Link href="/LearningVideosFeed" style={{ color: "#F2E7C4" }}>
+            Learning Videos
+          </Nav.Link>
         </Nav>
         <div style={{ color: "white", marginRight: "70px" }}>
           {/* ^^^ you have to edit this dropdown properly later */}

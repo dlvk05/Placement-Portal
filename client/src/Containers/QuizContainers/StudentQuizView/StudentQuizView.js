@@ -55,10 +55,8 @@ class StudentQuizView extends React.Component {
     selectedOption: 0,
     score: 0,
     submittedQuiz: false,
+    QandA: [],
   };
-
-  noQuestionsLeft = "No Questions left";
-  nextQuestion = "Next Question";
 
   handleShow = () => {
     this.setState({
@@ -67,13 +65,15 @@ class StudentQuizView extends React.Component {
   };
 
  onOptionSelect = (currentQNo, optionNo) =>{
+   this.state.QandA.push(optionNo);
+
    //check if selected option is currect option and that score isn't more than maxmarks then increase score
     if(this.state.QuizBody[currentQNo].correctOption === optionNo && this.state.score < this.state.MaxMarks){
       this.setState({
-        score: this.state.score + 1
+        score: this.state.score + 1,
       })
     }
-
+    
     //checks if current question number is not final question
     if(currentQNo<this.state.QuizBody.length-1){
       this.setState({
@@ -84,13 +84,31 @@ class StudentQuizView extends React.Component {
         lastQuestion: true
       })
     }
-
-    console.log(this.state.score);
-    console.log(this.state.currentQuestionNumber);
  }
 
 
+
   render() {
+    
+let x;
+    let QuizReview = this.state.QuizBody.map((currentQ, i) => (
+      <div>
+        <span style={{display: "none"}}>{currentQ.correctOption===this.state.QandA[i]?  x = "success": x = "danger"}</span>
+        <Alert variant={x}>
+          <div><b>Q{i+1}.{currentQ.question}</b></div>
+          <ol type="1">
+            <li>{currentQ.option1}</li>
+            <li>{currentQ.option2}</li>
+            <li>{currentQ.option3}</li>
+            <li>{currentQ.option4}</li>
+          </ol>
+          <div>Your Answer: <b>{this.state.QandA[i]}</b></div>
+          <div>Correct Answer: <b>{currentQ.correctOption}</b></div><br />
+        </Alert>
+      </div>
+    ))
+
+
     return (
       <div className={a.wrapper}>
         <div className={a.container}>
@@ -207,7 +225,9 @@ class StudentQuizView extends React.Component {
               style={{ display: this.state.submittedQuiz ? "block" : "none" }}
             >
               <hr />
-              <h4>Score: {this.state.score}</h4>
+              <h4>Your Score: {this.state.score}</h4>
+              <hr />
+              {QuizReview}
             </div>
           </div>
         </div>
