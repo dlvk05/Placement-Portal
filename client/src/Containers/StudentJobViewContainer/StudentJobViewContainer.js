@@ -196,9 +196,11 @@ class StudentJobViewContainer extends React.Component {
       currentOffers.TotalOffers =
         this.state.studentStats.JobProfilesSelectedFor.length;
       if (this.state.studentStats.JobProfilesSelectedFor.length > 0) {
+        console.log("here")
+        console.log(this.state.studentStats.JobProfilesSelectedFor);
         this.state.studentStats.JobProfilesSelectedFor.forEach((jobProfile) => {
-          currentOffers[jobProfile.OpeningOverview.Category] =
-            currentOffers[jobProfile.OpeningOverview.Category] + 1;
+          currentOffers[jobProfile.JobProfileId.OpeningOverview.Category] =
+            currentOffers[jobProfile.JobProfileId.OpeningOverview.Category] + 1;
           //check for dreamOffer eligibility
           if (jobProfile.Dream == true) {
             currentOffers.Dream = currentOffers.Dream + 1;

@@ -13,7 +13,7 @@ router.get("/student/getAllStudentStats", (req, res) => {
   StudentStats.find({})
     .populate("UserProfile")
     .populate("UserAccount")
-    // .populate("QuizStats.QuizId")
+    .populate("QuizStats.QuizId")
     .populate("JobProfilesAppliedFor.JobProfileId")
     .populate("JobProfilesSelectedFor.JobProfileId")
     .then((foundStudentStats) => {
@@ -36,7 +36,7 @@ router.get("/student/getSpecificStudentStat/:userAccountId", (req, res) => {
   StudentStats.findOne({ UserAccount: req.params.userAccountId })
     .populate("UserProfile")
     .populate("UserAccount")
-    // .populate("QuizStats.QuizId")
+    .populate("QuizStats.QuizId")
     .populate("JobProfilesAppliedFor.JobProfileId")
     .populate("JobProfilesSelectedFor.JobProfileId")
     .then((foundStudentStat) => {

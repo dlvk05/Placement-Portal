@@ -441,7 +441,7 @@ router.put("/jobProfile/addSelectedApplications", (req, res) => {
                 temp.userAccount = profile.userAccount;
                 temp.userProfile = profile._id;
                 SelectedApplications.push(temp);
-                Student.JobProfilesSelectedFor.push(req.body.jobProfileId);
+                Student.JobProfilesSelectedFor.push({JobProfileId:req.body.jobProfileId});
                 Student.save();
               }
             });
