@@ -93,8 +93,8 @@ class JobProfilesFeed extends React.Component {
   };
 
   inputChangeHandler = (event, inputIdentifier) => {
-    console.log(inputIdentifier);
-    console.log(event.target.value);
+    // console.log(inputIdentifier);
+    // console.log(event.target.value);
     this.setState({
       ...this.state,
       [inputIdentifier]:

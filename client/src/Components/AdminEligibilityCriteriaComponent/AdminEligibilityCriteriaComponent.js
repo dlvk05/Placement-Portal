@@ -23,7 +23,7 @@ const AdminEligibilityCriteriaComponent = (props) => {
     }
   }; */
 
-  console.log(EligibilityCriteria.ProgrammesAllowed);
+  // console.log(EligibilityCriteria.ProgrammesAllowed);
 
   let AdminEligibilityTable = (
     <Table striped bordered hover>

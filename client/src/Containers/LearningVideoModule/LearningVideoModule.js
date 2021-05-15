@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import a from "./LearningVideoModule.module.css";
-
+import axios from "axios";
 class LearningVideoModule extends React.Component {
   state = {
     VideoModuleTitle: "Kpop Music Videos",
@@ -9,61 +9,100 @@ class LearningVideoModule extends React.Component {
     TotalVideos: 5,
     VideoModuleDescription:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio autem eaque placeat!",
-    VideoLinks: [
-      <div>
-        <div>Title</div>
-        <br />
-        <iframe
-          width="853"
-          height="480"
-          src="https://www.youtube.com/embed/mAKsZ26SabQ"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
-      </div>,
-      <iframe
-        width="853"
-        height="480"
-        src="https://www.youtube.com/embed/IHNzOHi8sJs"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>,
-      <iframe
-        width="853"
-        height="480"
-        src="https://www.youtube.com/embed/bwmSjveL3Lc"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>,
-      <iframe
-        width="853"
-        height="480"
-        src="https://www.youtube.com/embed/jeI992mvlEY"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>,
-      <iframe
-        width="853"
-        height="480"
-        src="https://www.youtube.com/embed/wxDHQT0iBKM"
-        title="YouTube video player"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>,
-    ],
+    // VideoLinks: [
+    //   <div>
+    //     <div>Title</div>
+    //     <br />
+    //     <iframe
+    //       width="853"
+    //       height="480"
+    //       src="https://www.youtube.com/embed/mAKsZ26SabQ"
+    //       title="YouTube video player"
+    //       frameborder="0"
+    //       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    //       allowfullscreen
+    //     ></iframe>
+    //   </div>,
+    //   <iframe
+    //     width="853"
+    //     height="480"
+    //     src="https://www.youtube.com/embed/IHNzOHi8sJs"
+    //     title="YouTube video player"
+    //     frameborder="0"
+    //     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    //     allowfullscreen
+    //   ></iframe>,
+    //   <iframe
+    //     width="853"
+    //     height="480"
+    //     src="https://www.youtube.com/embed/bwmSjveL3Lc"
+    //     title="YouTube video player"
+    //     frameborder="0"
+    //     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    //     allowfullscreen
+    //   ></iframe>,
+    //   <iframe
+    //     width="853"
+    //     height="480"
+    //     src="https://www.youtube.com/embed/jeI992mvlEY"
+    //     title="YouTube video player"
+    //     frameborder="0"
+    //     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    //     allowfullscreen
+    //   ></iframe>,
+    // <iframe
+    //   width="853"
+    //   height="480"
+    //   src="https://www.youtube.com/embed/wxDHQT0iBKM"
+    //   title="YouTube video player"
+    //   frameborder="0"
+    //   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    //   allowfullscreen
+    // ></iframe>,
+    // ],
+    VideoLinks: [],
     currentVid: 0,
     videoList: [],
+    moduleLoaded: false,
   };
 
+  // addEscapeCharacters=(iframe)=>{
+  //   iframe.replaceAll(" \" "," \\\" "  )
+  // }
+
+  loadInitialData = () => {
+    let url =
+      "/api/student/learningModules/getSpecificModule/" +
+      this.props.match.params.id;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log("moduleLoaded");
+        console.log(res.data.module);
+        this.setState({
+          ...this.state,
+          VideoModuleTitle: res.data.module.VideoModuleTitle,
+          VideoModuleTopic: res.data.module.VideoModuleTopic,
+          TotalVideos: res.data.module.TotalVideos,
+          VideoModuleDescription: res.data.module.VideoModuleDescription,
+          DateOfCreation: res.data.module.DateOfCreation,
+          VideoLinks: res.data.module.VideoLinks,
+          moduleLoaded: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  componentDidMount() {
+    this.loadInitialData();
+    // console.log(this.state);
+  }
+
+  createMarkup = (iframe) => {
+    return { __html: iframe };
+  };
 
   render() {
     return (
@@ -85,8 +124,10 @@ class LearningVideoModule extends React.Component {
                   ) : (
                     ""
                   )}{" "}
-                  Video Number {i + 1} <br />
+                  {this.state.VideoLinks[i].VideoTitle} <br />
+
                 </a>
+                <hr />
               </center>
             ))}
           </div>
@@ -97,14 +138,27 @@ class LearningVideoModule extends React.Component {
             Total Number of Videos in this Module: {this.state.TotalVideos}
           </h5>
           <div>
-              <h5>Module Description:</h5> {this.state.VideoModuleDescription}
+            <h5>Module Description:</h5> {this.state.VideoModuleDescription}
           </div>
           <hr />
           <div>
             Video Number: {this.state.currentVid + 1} / {this.state.TotalVideos}
           </div>
           <br />
-          <div>{this.state.VideoLinks[this.state.currentVid]}</div>
+          {this.state.moduleLoaded ? (
+            <div>
+              <div>
+                {this.state.VideoLinks[this.state.currentVid].VideoTitle}
+              </div>
+              <hr />
+
+              <div
+                dangerouslySetInnerHTML={this.createMarkup(
+                  this.state.VideoLinks[this.state.currentVid].iframe
+                )}
+              ></div>
+            </div>
+          ) : null}
           <br /> {/* below is how the next and previous buttons rendered */}
           {this.state.currentVid > 0 ? (
             <span>
@@ -120,7 +174,6 @@ class LearningVideoModule extends React.Component {
           ) : (
             ""
           )}
-
           {this.state.currentVid < this.state.TotalVideos - 1 ? (
             <span className={a.nextButton}>
               <Button

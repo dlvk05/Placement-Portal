@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Redirect, Route, Switch} from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "./Redux/actions/index";
 //Custom Components import
@@ -14,7 +14,7 @@ import AdminLogin from "./Containers/Authentication/AdminLogin/AdminLogin";
 import AdminLayout from "./HOC/AdminLayout/AdminLayout";
 import JobProfileForm from "./Containers/Adminfunctionalities/JobProfileForm/JobProfileForm";
 import StudentUpdates from "./Containers/StudentUpdates/StudentUpdates";
-import AdminUpdates from './Containers/AdminUpdates/AdminUpdates';
+import AdminUpdates from "./Containers/AdminUpdates/AdminUpdates";
 import JobProfilesFeed from "./Containers/JobProfilesFeed/JobProfilesFeed";
 import PracticeContainer from "./Containers/PracticeContainer/PracticeContainer";
 import UserAccountInfoPage from "./Containers/UserAccountInfoPage/UserAccountInfoPage";
@@ -50,14 +50,33 @@ class App extends React.Component {
       routes = (
         <AdminLayout>
           <Switch>
-            <Route path="/Updates" exact component={UpdatesForm}/>
-            <Route path="/AdminUpdatesFeed" exact component={AdminUpdates}/>
-            <Route path="/JobProfileForm" exact component={JobProfileForm}/>
+            <Route path="/Updates" exact component={UpdatesForm} />
+            <Route path="/AdminUpdatesFeed" exact component={AdminUpdates} />
+            <Route path="/JobProfileForm" exact component={JobProfileForm} />
             <Route path="/JobProfilesFeed" exact component={JobProfilesFeed} />
             <Route path="/Logout" exact component={Logout} />
             <Route path="/QuizUpload" exact component={QuizUploadForm} />
-            <Route path="/LearningModuleUpload" exact component={LearningModuleUpload} />
-            <Route path="/AdminJobView/:id" exact component={AdminJobViewContainer} />
+            <Route
+              path="/LearningModuleUpload"
+              exact
+              component={LearningModuleUpload}
+            />
+            <Route
+              path="/AdminJobView/:id"
+              exact
+              component={AdminJobViewContainer}
+            />
+            <Route
+              path="/LearningVideosFeed"
+              exact
+              component={LearningVideosFeed}
+            />
+             <Route
+              path="/LearningVideoModule/:id"
+              exact
+              component={LearningVideoModule}
+            />
+            <Route path="/QuizListFeed" exact component={QuizListFeed} />
           </Switch>
         </AdminLayout>
       );
@@ -72,12 +91,32 @@ class App extends React.Component {
             <Route path="/UpdatesFeed" exact component={StudentUpdates} />
             <Route path="/JobProfilesFeed" exact component={JobProfilesFeed} />
             <Route path="/Logout" exact component={Logout} />
-            <Route path="/UserAccountInfoPage" exact component={UserAccountInfoPage} />
-            <Route path="/StudentJobView/:id" exact component={StudentJobViewContainer} />
+            <Route
+              path="/UserAccountInfoPage"
+              exact
+              component={UserAccountInfoPage}
+            />
+            <Route
+              path="/StudentJobView/:id"
+              exact
+              component={StudentJobViewContainer}
+            />
             <Route path="/QuizListFeed" exact component={QuizListFeed} />
-            <Route path="/LearningVideosFeed" exact component={LearningVideosFeed} />
-            <Route path="/StudentQuizView" exact component={StudentQuizView} />
-            <Route path="/LearningVideoModule" exact component={LearningVideoModule} />
+            <Route
+              path="/LearningVideosFeed"
+              exact
+              component={LearningVideosFeed}
+            />
+            <Route
+              path="/StudentQuizView/:id"
+              exact
+              component={StudentQuizView}
+            />
+            <Route
+              path="/LearningVideoModule/:id"
+              exact
+              component={LearningVideoModule}
+            />
           </Switch>
         </UserLayout>
       );

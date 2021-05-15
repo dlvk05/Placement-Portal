@@ -5,7 +5,7 @@ const multer = require("multer");
 const fs = require("fs-extra");
 const mongoose = require("mongoose");
 const csvConverter = require("json-2-csv");
-const archiver = require("archiver");
+// const archiver = require("archiver");
 const AdmZip = require("adm-zip");
 const nodemailer = require("nodemailer");
 
@@ -416,40 +416,48 @@ router.put("/jobProfile/addSelectedApplications", (req, res) => {
         error: "job profile not found",
       });
     } else {
-      //retrieve all userProfiles
-      UserProfile.find({}).then((foundUserProfiles) => {
-        if (!foundUserProfiles) {
-          res.status(400).json({
-            success: false,
-            error: "encountered an error",
-          });
-        } else {
-          foundUserProfiles.forEach((profile) => {
-            let temp = {
-              userAccount: null,
-              userProfile: null,
-            };
-
-            if (
-              selectedApplicantsRegNo.includes(profile.Education.Current.RegNo)
-            ) {
-              temp.userAccount = profile.userAccount;
-              temp.userProfile = profile.id;
-              SelectedApplications.push(temp);
-            }
-          });
-          //forEach loop ends here
-          foundJobProfile.SelectedApplications = SelectedApplications;
-          foundJobProfile.save().then((updatedJobProfile) => {
-            res.json({
-              success: true,
-              updatedJobProfile: updatedJobProfile,
+      //retrieve all StudentStats
+      StudentStats.find({})
+        .populate("UserProfile")
+        .then((foundStudentStats) => {
+          if (!foundStudentStats) {
+            res.status(400).json({
+              success: false,
+              error: "encountered an error",
             });
-          });
-        }
-      });
+          } else {
+            foundStudentStats.forEach((Student) => {
+              let profile = Student.UserProfile;
+              let temp = {
+                userAccount: null,
+                userProfile: null,
+              };
+
+              if (
+                selectedApplicantsRegNo.includes(
+                  profile.Education.Current.RegNo
+                )
+              ) {
+                temp.userAccount = profile.userAccount;
+                temp.userProfile = profile._id;
+                SelectedApplications.push(temp);
+                Student.JobProfilesSelectedFor.push(req.body.jobProfileId);
+                Student.save();
+              }
+            });
+            //forEach loop ends here
+            foundJobProfile.SelectedApplications = SelectedApplications;
+            foundJobProfile.save().then((updatedJobProfile) => {
+              res.json({
+                success: true,
+                updatedJobProfile: updatedJobProfile,
+              });
+            });
+          }
+        });
     }
   });
+  
 });
 
 //send student feedBack for download to admin
@@ -500,7 +508,6 @@ router.get("/jobProfile/downloadStudentFeedback/:id", (req, res) => {
               console.log("successfully saved csv");
               //sending the csv to client
               res.download(filePath);
-              
             })
             .catch((err) => console.log(err));
         });

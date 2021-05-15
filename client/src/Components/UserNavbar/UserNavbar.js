@@ -22,7 +22,7 @@ const userNavbar = () => {
             Profile
           </Nav.Link>
           <Nav.Link href="/QuizListFeed" style={{ color: "#F2E7C4" }}>
-            Quizes
+            Quizzes
           </Nav.Link>
           <Nav.Link href="/LearningVideosFeed" style={{ color: "#F2E7C4" }}>
             Learning Videos

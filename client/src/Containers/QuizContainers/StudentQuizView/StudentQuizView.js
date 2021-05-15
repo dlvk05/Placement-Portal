@@ -1,12 +1,15 @@
 import React from "react";
 import a from "./StudentQuizView.module.css";
 import { Modal, Button, Alert } from "react-bootstrap";
-
+import axios from "axios";
+import { connect } from "react-redux";
 class StudentQuizView extends React.Component {
   state = {
+    quizId: null,
     QuizTitle: "History of Rome",
     QuizTopic: "Republic of Rome",
     MaxMarks: 5,
+    DateOfCreation: new Date(),
     QuizBody: [
       {
         question: "When was Julius Caesar made consul of rome?",
@@ -49,6 +52,10 @@ class StudentQuizView extends React.Component {
         correctOption: 4,
       },
     ],
+    AttemptedBy: [],
+    checkedAttempted: false,
+    quizLoaded: false,
+    attemptedAlready: false,
     show: false,
     currentQuestionNumber: 0,
     lastQuestion: false,
@@ -58,56 +65,134 @@ class StudentQuizView extends React.Component {
     QandA: [],
   };
 
+  componentDidMount() {
+    let url = "/api/student/quiz/getSpecificQuiz/" + this.props.match.params.id;
+    axios
+      .get(url)
+      .then((res) => {
+        console.log("quizLoaded");
+        console.log(res.data.quiz);
+        this.setState({
+          ...this.state,
+          quizId: res.data.quiz._id,
+          QuizTitle: res.data.quiz.QuizTitle,
+          QuizTopic: res.data.quiz.QuizTopic,
+          MaxMarks: res.data.quiz.MaxMarks,
+          DateOfCreation: res.data.quiz.DateOfCreation,
+          QuizBody: res.data.quiz.QuizBody,
+          AttemptedBy: res.data.quiz.AttemptedBy,
+          quizLoaded: true,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   handleShow = () => {
     this.setState({
       show: !this.state.show,
     });
   };
 
- onOptionSelect = (currentQNo, optionNo) =>{
-   this.state.QandA.push(optionNo);
+  checkAttemptedStatus = () => {
+    let attempted = false;
+    console.log(this.state.AttemptedBy)
 
-   //check if selected option is currect option and that score isn't more than maxmarks then increase score
-    if(this.state.QuizBody[currentQNo].correctOption === optionNo && this.state.score < this.state.MaxMarks){
+    this.state.AttemptedBy.forEach((attempt) => {
+      console.log(attempt.UserAccount)
+      console.log(this.props.userId)
+      if (attempt.UserAccount._id === this.props.userId) {
+        attempted = true;
+      }
+    });
+    this.setState({
+      ...this.state,
+      checkedAttempted: true,
+      attemptedAlready: attempted,
+    });
+  };
+
+  onOptionSelect = (currentQNo, optionNo) => {
+    this.state.QandA.push(optionNo);
+
+    //check if selected option is currect option and that score isn't more than maxmarks then increase score
+    if (
+      this.state.QuizBody[currentQNo].correctOption === optionNo &&
+      this.state.score < this.state.MaxMarks
+    ) {
       this.setState({
         score: this.state.score + 1,
-      })
+      });
     }
-    
+
     //checks if current question number is not final question
-    if(currentQNo<this.state.QuizBody.length-1){
+    if (currentQNo < this.state.QuizBody.length - 1) {
       this.setState({
-        currentQuestionNumber: currentQNo + 1
-      })
-    } else{
+        currentQuestionNumber: currentQNo + 1,
+      });
+    } else {
       this.setState({
-        lastQuestion: true
-      })
+        lastQuestion: true,
+      });
     }
- }
+  };
 
+  onSubmitHandler = (event) => {
+    let postData = {
+      UserAccount: this.props.userId,
+      UserProfile: this.props.profileId,
+      MarksScored: this.state.score,
+      quizId: this.state.quizId,
+    };
 
+    let url = "/api/student/quiz/saveResult";
+    axios.put(url, postData).then((res) => {
+      console.log(res.data.updatedQuiz);
+      this.setState({
+        ...this.state,
+        show: !this.state.show,
+        submittedQuiz: true,
+        attemptedAlready: true,
+      });
+    });
+  };
 
   render() {
-    
-let x;
+    if (this.state.quizLoaded && this.state.checkedAttempted === false) {
+      this.checkAttemptedStatus();
+    }
+
+    let x;
     let QuizReview = this.state.QuizBody.map((currentQ, i) => (
       <div>
-        <span style={{display: "none"}}>{currentQ.correctOption===this.state.QandA[i]?  x = "success": x = "danger"}</span>
+        <span style={{ display: "none" }}>
+          {currentQ.correctOption === this.state.QandA[i]
+            ? (x = "success")
+            : (x = "danger")}
+        </span>
         <Alert variant={x}>
-          <div><b>Q{i+1}.{currentQ.question}</b></div>
+          <div>
+            <b>
+              Q{i + 1}.{currentQ.question}
+            </b>
+          </div>
           <ol type="1">
             <li>{currentQ.option1}</li>
             <li>{currentQ.option2}</li>
             <li>{currentQ.option3}</li>
             <li>{currentQ.option4}</li>
           </ol>
-          <div>Your Answer: <b>{this.state.QandA[i]}</b></div>
-          <div>Correct Answer: <b>{currentQ.correctOption}</b></div><br />
+          <div>
+            Your Answer: <b>{this.state.QandA[i]}</b>
+          </div>
+          <div>
+            Correct Answer: <b>{currentQ.correctOption}</b>
+          </div>
+          <br />
         </Alert>
       </div>
-    ))
-
+    ));
 
     return (
       <div className={a.wrapper}>
@@ -136,7 +221,10 @@ let x;
               not be viewable again
             </li>
             <li>Once submitted, the quiz cannot be attempted again</li>
-            <li>Once an option has been clicked you will be moved to the next question, and the clicked option will be treated as your answer</li>
+            <li>
+              Once an option has been clicked you will be moved to the next
+              question, and the clicked option will be treated as your answer
+            </li>
           </ul>
           <br />
           <br />
@@ -144,7 +232,7 @@ let x;
             <center>
               <Button
                 onClick={this.handleShow}
-                disabled={this.state.submittedQuiz ? true : false}
+                disabled={this.state.attemptedAlready ? true : false}
               >
                 Start The Quiz
               </Button>
@@ -165,7 +253,15 @@ let x;
                 <hr />
                 <ol type="A">
                   <li>
-                    <Button onClick={() => {this.onOptionSelect(this.state.currentQuestionNumber, 1)}} id={1} >
+                    <Button
+                      onClick={() => {
+                        this.onOptionSelect(
+                          this.state.currentQuestionNumber,
+                          1
+                        );
+                      }}
+                      id={1}
+                    >
                       {
                         this.state.QuizBody[this.state.currentQuestionNumber]
                           .option1
@@ -174,7 +270,15 @@ let x;
                   </li>
                   <br />
                   <li>
-                    <Button onClick={() => {this.onOptionSelect(this.state.currentQuestionNumber, 2)}} id={2}>
+                    <Button
+                      onClick={() => {
+                        this.onOptionSelect(
+                          this.state.currentQuestionNumber,
+                          2
+                        );
+                      }}
+                      id={2}
+                    >
                       {
                         this.state.QuizBody[this.state.currentQuestionNumber]
                           .option2
@@ -183,7 +287,15 @@ let x;
                   </li>
                   <br />
                   <li>
-                    <Button onClick={() => {this.onOptionSelect(this.state.currentQuestionNumber, 3)}} id={3}>
+                    <Button
+                      onClick={() => {
+                        this.onOptionSelect(
+                          this.state.currentQuestionNumber,
+                          3
+                        );
+                      }}
+                      id={3}
+                    >
                       {
                         this.state.QuizBody[this.state.currentQuestionNumber]
                           .option3
@@ -192,7 +304,15 @@ let x;
                   </li>
                   <br />
                   <li>
-                    <Button onClick={() => {this.onOptionSelect(this.state.currentQuestionNumber, 4 )}} id={4}>
+                    <Button
+                      onClick={() => {
+                        this.onOptionSelect(
+                          this.state.currentQuestionNumber,
+                          4
+                        );
+                      }}
+                      id={4}
+                    >
                       {
                         this.state.QuizBody[this.state.currentQuestionNumber]
                           .option4
@@ -201,22 +321,18 @@ let x;
                   </li>
                 </ol>
                 <span style={{ float: "right" }}>
-                  {this.state.lastQuestion? <Alert variant="primary">This is the last question</Alert> : ""}
+                  {this.state.lastQuestion ? (
+                    <Alert variant="primary">This is the last question</Alert>
+                  ) : (
+                    ""
+                  )}
                 </span>
               </Modal.Body>
               <Modal.Footer>
                 <Button variant="secondary" onClick={this.handleShow}>
                   Close
                 </Button>
-                <Button
-                  variant="danger"
-                  onClick={() => {
-                    this.handleShow();
-                    this.setState({
-                      submittedQuiz: true,
-                    });
-                  }}
-                >
+                <Button variant="danger" onClick={this.onSubmitHandler}>
                   Submit Quiz
                 </Button>
               </Modal.Footer>
@@ -236,4 +352,11 @@ let x;
   }
 }
 
-export default StudentQuizView;
+const mapStateToProps = (state) => {
+  return {
+    userId: state.userAuth.userId,
+    profileId: state.userAuth.profileId,
+  };
+};
+
+export default connect(mapStateToProps)(StudentQuizView);

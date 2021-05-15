@@ -13,7 +13,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Feedback from "react-bootstrap/esm/Feedback";
+// import Feedback from "react-bootstrap/esm/Feedback";
 toast.configure();
 
 class StudentJobViewContainer extends React.Component {

@@ -7,11 +7,13 @@ import JobDescriptionsComponent from "../../Components/StudentJobViewComponents/
 import OpeningOverviewComponent from "../../Components/StudentJobViewComponents/OpeningOverviewComponent/OpeningOverviewComponent";
 import HiringWorkflowComponent from "../../Components/StudentJobViewComponents/HiringWorkflowComponent/HiringWorkflowComponent";
 import { connect } from "react-redux";
-
+import readXlsxFile from "read-excel-file";
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AdminEligibilityCriteriaComponent from "../../Components/AdminEligibilityCriteriaComponent/AdminEligibilityCriteriaComponent";
 var fileDownload = require("js-file-download");
-
+toast.configure();
 class AdminJobViewContainer extends React.Component {
   state = {
     jobProfile: {
@@ -53,7 +55,7 @@ class AdminJobViewContainer extends React.Component {
     axios
       .get(url)
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         this.setState({
           jobProfile: res.data.jobProfile,
           jobProfileLoaded: true,
@@ -68,6 +70,11 @@ class AdminJobViewContainer extends React.Component {
   componentDidMount() {
     this.loadInitialDate();
   }
+
+  onFileChange = (event) => {
+    // Update the state
+    this.setState({ selectedFile: event.target.files[0] });
+  };
 
   checkApplicationStatus = () => {
     if (this.state.checkedApplicationStatus !== true) {
@@ -104,6 +111,19 @@ class AdminJobViewContainer extends React.Component {
     });
   };
 
+  handleShowForUploadFinalSelects = () => {
+    //below check is only to make sure the upload final selects
+    // can only be done if deadline has passed and since it is the only
+    //one that uses a modal we can use this for it
+    if (!this.state.deadlinePassed) {
+      toast.error("The Application deadline hasn't passed yet");
+      return;
+    }
+    this.setState({
+      show: !this.state.show,
+    });
+  };
+
   jobDeleteHandler = () => {
     let url = "/api/jobProfile/deleteSpecificJobProfile";
     let postData = {
@@ -115,6 +135,16 @@ class AdminJobViewContainer extends React.Component {
   };
 
   downloadInitialApplicantsHandler = () => {
+    if (!this.state.deadlinePassed) {
+      toast.error("The Application deadline hasn't passed yet");
+      return;
+    }
+
+    if (this.state.jobProfile.InitialApplications.length <= 0) {
+      toast.info("No Applications found");
+      return;
+    }
+
     let fileName =
       this.state.jobProfile.CompanyName +
       "_" +
@@ -133,17 +163,40 @@ class AdminJobViewContainer extends React.Component {
   };
 
   sendInitialApplicantsHandler = () => {
+    if (!this.state.deadlinePassed) {
+      toast.error("The Application deadline hasn't passed yet");
+      return;
+    }
+
+    if (this.state.jobProfile.InitialApplications.length <= 0) {
+      toast.info("No Applications found");
+      return;
+    }
+    toast.info("Processing");
     console.log("sendInitialApplicantsHandler");
     let url = "/api/jobProfile/sendApplicantList/" + this.state.jobProfile._id;
     axios
       .post(url)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        toast.success("The data has been sent to the company");
+      })
       .catch((err) => console.log(err));
   };
 
   downloadStudentFeedbackHandler = () => {
+    if (!this.state.finalSelectionsDone) {
+      toast.error("The Selection Process hasn't been completed yet");
+      return;
+    }
+
+    if (this.state.jobProfile.StudentFeedback.length <= 0) {
+      toast.info("No FeedBacks found");
+      return;
+    }
+
     console.log("downloadStudentFeedbackHandler ");
-    let url = "/api/jobProfile/downloadStudentFeedback/" + this.state.jobProfile._id;
+    let url =
+      "/api/jobProfile/downloadStudentFeedback/" + this.state.jobProfile._id;
     let fileName =
       this.state.jobProfile.CompanyName +
       "_" +
@@ -160,8 +213,46 @@ class AdminJobViewContainer extends React.Component {
     });
   };
 
+  uploadSelectedApplicantsHandler = () => {
+    console.log("uploadSelectedApplicantsHandler");
+    let SelectedRegNos = [];
+    readXlsxFile(this.state.selectedFile).then((rows) => {
+      let index = rows[0].indexOf("RegistrationNo");
+      let i;
+      for (i = 1; i < rows.length; i++) {
+        SelectedRegNos.push(rows[i][index]);
+      }
+      console.log(rows);
+      console.log(SelectedRegNos);
+      let url = "/api/jobProfile/addSelectedApplications";
+      let postData = {
+        jobProfileId: this.state.jobProfile._id,
+        selectedApplicantsData: SelectedRegNos,
+      };
+      axios
+        .put(url, postData)
+        .then((res) => {
+          console.log(res.data);
+          toast.success("Success");
+          this.loadInitialDate();
+          // this.setState({
+          //   ...this.state,
+          //   show: !this.state.show,
+          // });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  };
+
   render() {
-    console.log(this.state);
+    if (
+      this.state.jobProfileLoaded === true &&
+      this.state.checkedApplicationStatus === false
+    ) {
+      this.checkApplicationStatus();
+    }
     return (
       <div className={styles.wrapper}>
         <div className={styles.sidebar}>
@@ -191,11 +282,17 @@ class AdminJobViewContainer extends React.Component {
             <h6>Upload Selected Applicants List</h6>
           </div>
           <div>
-            <Button variant="info" onClick={this.handleShow}>
+            <Button
+              variant="info"
+              onClick={this.handleShowForUploadFinalSelects}
+            >
               Upload
             </Button>
             <div>
-              <Modal show={this.state.show} onHide={this.handleShow}>
+              <Modal
+                show={this.state.show}
+                onHide={this.handleShowForUploadFinalSelects}
+              >
                 <Modal.Header closeButton>
                   <Modal.Title>
                     Upload List of Final Selects (selects.xlsx)
@@ -209,7 +306,7 @@ class AdminJobViewContainer extends React.Component {
                         <Form.File
                           Placeholder="Upload Doc"
                           size="sm"
-                          // onChange={this.onFileChange}
+                          onChange={this.onFileChange}
                         />
                       </Form.Row>
                     </Form.Group>
@@ -219,7 +316,10 @@ class AdminJobViewContainer extends React.Component {
                   <Button variant="secondary" onClick={this.handleShow}>
                     Close
                   </Button>
-                  <Button variant="primary" onClick={this.handleShow}>
+                  <Button
+                    variant="primary"
+                    onClick={this.uploadSelectedApplicantsHandler}
+                  >
                     Upload and Submit
                   </Button>
                 </Modal.Footer>
@@ -231,7 +331,12 @@ class AdminJobViewContainer extends React.Component {
             <h6>Download Student Feedback</h6>
           </div>
           <div>
-            <Button variant="warning" onClick={this.downloadStudentFeedbackHandler}>Download</Button>
+            <Button
+              variant="warning"
+              onClick={this.downloadStudentFeedbackHandler}
+            >
+              Download
+            </Button>
           </div>
           <hr />
           <div>

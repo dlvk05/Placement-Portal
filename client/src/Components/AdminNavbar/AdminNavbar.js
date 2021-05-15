@@ -17,14 +17,20 @@ const adminNavbar = (props) => {
           <Nav.Link href="/JobProfilesFeed" style={{ color: "#F2E7C4" }}>
             Job Profile Feed
           </Nav.Link>
-          <Nav.Link href="/Profile" style={{ color: "#F2E7C4" }}>
-            Reports
+          <Nav.Link href="/QuizListFeed" style={{ color: "#F2E7C4" }}>
+            Quizzes Feed
           </Nav.Link>
+          <Nav.Link href="/LearningVideosFeed" style={{ color: "#F2E7C4" }}>
+            Learning Videos
+          </Nav.Link>
+          {/* <Nav.Link href="/Profile" style={{ color: "#F2E7C4" }}>
+            Reports
+          </Nav.Link> */}
         </Nav>
         <div style={{ color: "white", marginRight: "120px" }}>
           {/* ^^^ you have to edit this dropdown properly later */}
           <NavDropdown title={x} style={{ color: "white" }}>
-            <NavDropdown.Item href="#action/3.1">Account Info</NavDropdown.Item>
+            {/* <NavDropdown.Item href="#action/3.1">Account Info</NavDropdown.Item> */}
             <NavDropdown.Item href="/JobProfileForm">Add New Job Profile</NavDropdown.Item>
             <NavDropdown.Item href="/Updates">Add New Update</NavDropdown.Item>
             <NavDropdown.Item href="/QuizUpload">Add New Quiz</NavDropdown.Item>

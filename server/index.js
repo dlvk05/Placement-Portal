@@ -19,8 +19,10 @@ const adminUpdates=require('./routes/adminUpdates');
 const studentUpdates=require('./routes/studentUpdates');
 const studentJobProfiles=require('./routes/studentJobProfiles');
 const studentStats=require('./routes/studentStats');
-
-
+const adminQuiz=require('./routes/adminQuiz');
+const studentQuiz=require('./routes/studentQuiz');
+const adminLearningModule=require('./routes/adminLearningModule');
+const studentLearningModule=require('./routes/studentLearningModule');
 const app = express();
 
 app.use(express.urlencoded({ extended: true|false }));
@@ -59,6 +61,10 @@ app.use("/api", adminUpdates);
 app.use("/api", studentJobProfiles);
 app.use("/api", studentUpdates);
 app.use("/api", studentStats);
+app.use("/api", adminQuiz);
+app.use("/api", studentQuiz);
+app.use("/api", adminLearningModule);
+app.use("/api", studentLearningModule);
 
 
 app.get(
