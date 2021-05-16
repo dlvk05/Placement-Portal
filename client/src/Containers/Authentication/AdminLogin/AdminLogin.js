@@ -128,11 +128,11 @@ class Login extends React.Component {
           </Button>
           </Form>
           <hr /> 
-          <Link to="/AdminSignup">
+          {/* <Link to="/AdminSignup">
           <Button variant="warning" className={styles.b1}>
             Admin Signup
           </Button>
-          </Link>
+          </Link> */}
           <Link to="/Login">
             <Button variant="info">Student Login</Button>
           </Link>

@@ -56,6 +56,8 @@ class StudentQuizView extends React.Component {
     checkedAttempted: false,
     quizLoaded: false,
     attemptedAlready: false,
+    attemptScore: null,
+    attemptDate: null,
     show: false,
     currentQuestionNumber: 0,
     lastQuestion: false,
@@ -96,20 +98,26 @@ class StudentQuizView extends React.Component {
   };
 
   checkAttemptedStatus = () => {
-    let attempted = false;
-    console.log(this.state.AttemptedBy)
+    let attempted = false,
+      attemptScore = null,
+      attemptDate = null;
+    console.log(this.state.AttemptedBy);
 
     this.state.AttemptedBy.forEach((attempt) => {
-      console.log(attempt.UserAccount)
-      console.log(this.props.userId)
+      // console.log(attempt.UserAccount)
+      // console.log(this.props.userId)
       if (attempt.UserAccount._id === this.props.userId) {
         attempted = true;
+        attemptScore = attempt.MarksScored;
+        attemptDate = attempt.AttemptDate;
       }
     });
     this.setState({
       ...this.state,
       checkedAttempted: true,
       attemptedAlready: attempted,
+      attemptScore: attemptScore,
+      attemptDate: attemptDate,
     });
   };
 
@@ -156,6 +164,31 @@ class StudentQuizView extends React.Component {
         attemptedAlready: true,
       });
     });
+  };
+
+  returnDiv = (QuizReview) => {
+    let temp = null;
+    if (this.state.attemptedAlready && !this.state.submittedQuiz) {
+      temp = (
+        <div style={{ display: "block" }}>
+          <h6>Attempted On: {this.state.attemptDate.slice(0, 10)}</h6>
+          <hr />
+          <h6>Your Score: {this.state.attemptScore}</h6>
+          <hr />
+        </div>
+      );
+    }
+
+    if (this.state.attemptedAlready && this.state.submittedQuiz) {
+      temp = (
+        <div style={{ display: "block" }}>
+          <h6>Your Score: {this.state.score}</h6>
+          <hr />
+          {QuizReview}
+        </div>
+      );
+    }
+    return temp;
   };
 
   render() {
@@ -329,7 +362,7 @@ class StudentQuizView extends React.Component {
                 </span>
               </Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary" onClick={this.handleShow}>
+                <Button variant="secondary" onClick={this.onSubmitHandler}>
                   Close
                 </Button>
                 <Button variant="danger" onClick={this.onSubmitHandler}>
@@ -337,14 +370,17 @@ class StudentQuizView extends React.Component {
                 </Button>
               </Modal.Footer>
             </Modal>
-            <div
-              style={{ display: this.state.submittedQuiz ? "block" : "none" }}
+            {this.returnDiv(QuizReview)}
+            {/* <div
+              style={{
+                display: this.state.attemptedAlready ? "block" : "none",
+              }}
             >
               <hr />
-              <h4>Your Score: {this.state.score}</h4>
+              <h4>Your Score: {this.state.attemptScore}</h4>
               <hr />
               {QuizReview}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -46,7 +46,7 @@ const updatesFeed = (props) => {
                     {currentUpdate.AdminAccount.lastName}
                   </b>{" "}
                   <br />
-                  <i>{currentUpdate.DateOfCreation}</i>
+                  <i>{currentUpdate.DateOfCreation.slice(0,10)}</i>
                 </p>
               </div>
             </Col>

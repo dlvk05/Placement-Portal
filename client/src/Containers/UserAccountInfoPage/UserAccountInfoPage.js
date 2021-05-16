@@ -64,6 +64,10 @@ class UserAccountInfoPage extends React.Component {
       value: "",
       type: String,
     },
+    employeeId: {
+      value: "",
+      type: String,
+    },
     show: false,
     accountLoaded: false,
   };
@@ -92,6 +96,10 @@ class UserAccountInfoPage extends React.Component {
 
         mobileNo: {
           value: res.data.user.mobileNo,
+          type: String,
+        },
+        employeeId: {
+          value: res.data.user.employeeId,
           type: String,
         },
       });
@@ -152,11 +160,11 @@ class UserAccountInfoPage extends React.Component {
               marginTop: "5px",
             }}
           >
-            STUDENT
+            {this.props.isAdmin?"ADMIN":"STUDENT"}
           </div>
           <hr style={{ width: "90%" }} />
           <h5>Manipal University Jaipur</h5>
-          <h5>{this.state.regNo.value}</h5>
+          <h5>{this.props.isAdmin?this.state.employeeId.value:this.state.regNo.value}</h5>
         </div>
         <div className={styles.subdiv}>
           <h3>Basic Account Information</h3>
