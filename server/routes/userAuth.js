@@ -11,6 +11,26 @@ const User = require("../models/userModel");
 const UserProfile = require("../models/profileModel");
 const StudentStats = require("../models/studentStatsModel");
 
+
+
+//get specific account
+router.get("/getSpecificUser/:id",(req,res)=>{
+  User.findById(req.params.id)
+  .then(foundUser=>{
+    if(!foundUser){
+      res.status(404).json({
+        success:false,
+        error:"account not found"
+      })
+    }else{
+      res.json({
+        success:true,
+        user:foundUser,
+      })
+    }
+  })
+})
+
 // @route POST api/signupUser
 // @desc Register user
 // @access Public
@@ -128,6 +148,52 @@ router.post("/loginUser", (req, res) => {
             });
           }
         );
+      } else {
+        return res.status(400).json({ passwordError: "Password incorrect" });
+      }
+    });
+  });
+});
+
+//change password
+router.put("/changePassword", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  let newPassword = req.body.newPassword;
+  console.log(email)
+  console.log(password)
+  console.log(newPassword)
+
+  // Find user by email
+  User.findOne({ email:email }).then((user) => {
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ emailError: "Email not found" });
+    }
+
+    //Check password
+    bcrypt.compare(password, user.password).then(async (isMatch) => {
+      if (isMatch) {
+        //User Matched
+
+        // Hash password before saving in database
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newPassword, salt, (err, hash) => {
+            if (err) throw err;
+            newPassword = hash;
+            user.password = newPassword;
+            user
+              .save()
+              .then((user) => {
+                console.log("password changed");
+                res.json({
+                  success: true,
+                  updatedAccount: user,
+                });
+              })
+              .catch((err) => console.log(err));
+          });
+        });
       } else {
         return res.status(400).json({ passwordError: "Password incorrect" });
       }

@@ -1,7 +1,11 @@
 import React from "react";
 import { Col, Row, Modal, Button, Form } from "react-bootstrap";
 import styles from "./UserAccountInfoPage.module.css";
-
+import axios from "axios";
+import { connect } from "react-redux";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+toast.configure();
 class UserAccountInfoPage extends React.Component {
   state = {
     firstName: {
@@ -48,7 +52,20 @@ class UserAccountInfoPage extends React.Component {
       type: Boolean,
       default: false,
     },
+    currentPassword: {
+      value: "",
+      type: String,
+    },
+    newPassword1: {
+      value: "",
+      type: String,
+    },
+    newPassword2: {
+      value: "",
+      type: String,
+    },
     show: false,
+    accountLoaded: false,
   };
 
   handleShow = () => {
@@ -57,7 +74,71 @@ class UserAccountInfoPage extends React.Component {
     });
   };
 
+  componentDidMount() {
+    let url = "/api/getSpecificUser/" + this.props.userId;
+
+    if (this.props.isAdmin) {
+      url = "/api/admin/getSpecificUser/" + this.props.userId;
+    }
+
+    // console.log("componentDidMount")
+    axios.get(url).then((res) => {
+      // console.log("account loaded")
+      this.setState({
+        email: {
+          value: res.data.user.email,
+          type: String,
+        },
+
+        mobileNo: {
+          value: res.data.user.mobileNo,
+          type: String,
+        },
+      });
+    });
+  }
+
+  inputChangeHandler = (event, inputIdentifier) => {
+    // console.log(inputIdentifier);
+    // console.log(event.target.value);
+    let temp = {
+      value: event.target.value,
+    };
+    // console.log(temp);
+
+    this.setState({
+      ...this.state,
+      [inputIdentifier]: temp,
+    });
+  };
+
+  onSubmitHandler = (event) => {
+    event.preventDefault();
+    let formData = {
+      email: this.state.email.value,
+      password: this.state.currentPassword.value,
+      newPassword: this.state.newPassword2.value,
+    };
+    // console.log(formData);
+    let url = "/api/changePassword";
+
+    if (this.props.isAdmin) {
+      url = "/api/admin/changePassword";
+    }
+
+    axios
+      .put(url, formData)
+      .then((res) => {
+        toast.success("Password Changed");
+        this.handleShow();
+      })
+      .catch((err) => {
+        toast.error("Error occurred please try again later")
+        console.log(err)});
+  };
+
   render() {
+    // console.log(this.state);
     return (
       <div className={styles.wrapper}>
         <div className={styles.sidediv}>
@@ -108,16 +189,16 @@ class UserAccountInfoPage extends React.Component {
                   <Form>
                     <Form.Group as={Col} controlId="formGridCurrentPassword">
                       <Form.Row>
-                      <Form.Label column="sm">Current Password</Form.Label>
-                      <Form.Control
-                        type="CurrentPassword"
-                        placeholder="Type Here"
-                        required
-                        size="sm"
-                        /* onChange={(event, string) => {
-                        this.inputChangeHandler(event, "CurrentPassword");
-                        }} */
-                      />
+                        <Form.Label column="sm">Current Password</Form.Label>
+                        <Form.Control
+                          type="password"
+                          placeholder="Type Here"
+                          required
+                          size="sm"
+                          onChange={(event, string) => {
+                            this.inputChangeHandler(event, "currentPassword");
+                          }}
+                        />
                       </Form.Row>
                     </Form.Group>
                     <Form.Group as={Col} controlId="formGridPassword">
@@ -128,9 +209,9 @@ class UserAccountInfoPage extends React.Component {
                           placeholder="Type here"
                           required
                           size="sm"
-                          /* onChange={(event, string) => {
-                              this.inputChangeHandler(event, "password");
-                              }} */
+                          onChange={(event, string) => {
+                            this.inputChangeHandler(event, "newPassword1");
+                          }}
                         />
                       </Form.Row>
                     </Form.Group>
@@ -142,9 +223,9 @@ class UserAccountInfoPage extends React.Component {
                           placeholder="Type here"
                           required
                           size="sm"
-                          /* onChange={(event, string) => {
-                              this.inputChangeHandler(event, "confirmPassword");
-                              }} */
+                          onChange={(event, string) => {
+                            this.inputChangeHandler(event, "newPassword2");
+                          }}
                         />
                       </Form.Row>
                     </Form.Group>
@@ -154,7 +235,7 @@ class UserAccountInfoPage extends React.Component {
                   <Button variant="secondary" onClick={this.handleShow}>
                     Close
                   </Button>
-                  <Button variant="primary" onClick={this.handleShow}>
+                  <Button variant="primary" onClick={this.onSubmitHandler}>
                     Save Changes
                   </Button>
                 </Modal.Footer>
@@ -181,4 +262,12 @@ class UserAccountInfoPage extends React.Component {
   }
 }
 
-export default UserAccountInfoPage;
+const mapStateToProps = (state) => {
+  return {
+    userId: state.userAuth.userId,
+    profileId: state.userAuth.profileId,
+    isAdmin: state.userAuth.isAdmin,
+  };
+};
+
+export default connect(mapStateToProps)(UserAccountInfoPage);

@@ -235,10 +235,9 @@ class AdminJobViewContainer extends React.Component {
           console.log(res.data);
           toast.success("Success");
           this.loadInitialDate();
-          // this.setState({
-          //   ...this.state,
-          //   show: !this.state.show,
-          // });
+          this.setState({
+            show: !this.state.show,
+          });
         })
         .catch((err) => {
           console.log(err);
@@ -371,6 +370,7 @@ class AdminJobViewContainer extends React.Component {
             attachedDocuments={
               this.state.jobProfile.AttachedDocuments[0].DocumentName
             }
+            jobProfileID={this.state.jobProfile._id}
           />
           <br />
           <JobDescriptionsComponent

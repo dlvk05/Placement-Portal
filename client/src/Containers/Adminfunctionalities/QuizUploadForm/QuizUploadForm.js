@@ -87,7 +87,8 @@ class QuizUploadForm extends React.Component {
       axios
         .post("/api/quiz/addNewQuiz", formData)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
+          this.props.history.push("/QuizListFeed")
         })
         .catch((err) => console.log(err));
     });

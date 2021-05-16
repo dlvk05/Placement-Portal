@@ -105,12 +105,12 @@ class StudentJobViewContainer extends React.Component {
         });
       }
 
-      console.log({
-        deadlinePassed: deadlinePassed,
-        applied: applied,
-        selected: selected,
-        finalSelectionsDone: finalSelectionsDone,
-      });
+      // console.log({
+      //   deadlinePassed: deadlinePassed,
+      //   applied: applied,
+      //   selected: selected,
+      //   finalSelectionsDone: finalSelectionsDone,
+      // });
 
       this.setState({
         ...this.state,
@@ -130,8 +130,8 @@ class StudentJobViewContainer extends React.Component {
     axios
       .get(url)
       .then((res) => {
-        console.log("job profile loaded");
-        console.log(res.data.jobProfile);
+        // console.log("job profile loaded");
+        // console.log(res.data.jobProfile);
         this.setState({
           ...this.state,
           jobProfileLoaded: true,
@@ -148,8 +148,8 @@ class StudentJobViewContainer extends React.Component {
     axios
       .get(url2)
       .then((res) => {
-        console.log("student stats loaded");
-        console.log(res.data);
+        // console.log("student stats loaded");
+        // console.log(res.data);
         this.setState({
           ...this.state,
 
@@ -319,10 +319,10 @@ class StudentJobViewContainer extends React.Component {
         finalEligibility = false;
       }
 
-      console.log(eligibilityResults);
-      console.log(finalEligibility);
-      console.log(currentResults);
-      console.log(currentOffers);
+      // console.log(eligibilityResults);
+      // console.log(finalEligibility);
+      // console.log(currentResults);
+      // console.log(currentOffers);
 
       this.setState({
         ...this.state,
@@ -504,8 +504,8 @@ class StudentJobViewContainer extends React.Component {
       feedBack = null;
     }
 
-    console.log("feedback is");
-    console.log(feedBack);
+    // console.log("feedback is");
+    // console.log(feedBack);
 
     return feedBack;
   };
@@ -515,7 +515,8 @@ class StudentJobViewContainer extends React.Component {
     if (this.state.jobProfileLoaded === true) {
       if (
         this.state.eligibilityChecked === false &&
-        this.state.studentProfile !== null &&
+        this.state.studentProfile !== null
+         &&
         this.state.applied !== true
       ) {
         this.checkEligibility();
@@ -543,6 +544,7 @@ class StudentJobViewContainer extends React.Component {
             attachedDocuments={
               this.state.jobProfile.AttachedDocuments[0].DocumentName
             }
+            jobProfileID={this.state.jobProfile._id}
           />
           <br />
           <JobDescriptionsComponent

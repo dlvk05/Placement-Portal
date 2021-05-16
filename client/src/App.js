@@ -50,12 +50,15 @@ class App extends React.Component {
       routes = (
         <AdminLayout>
           <Switch>
+            <Redirect from="/AdminLogin" to="/AdminUpdatesFeed" />
             <Route path="/Updates" exact component={UpdatesForm} />
             <Route path="/AdminUpdatesFeed" exact component={AdminUpdates} />
             <Route path="/JobProfileForm" exact component={JobProfileForm} />
             <Route path="/JobProfilesFeed" exact component={JobProfilesFeed} />
             <Route path="/Logout" exact component={Logout} />
             <Route path="/QuizUpload" exact component={QuizUploadForm} />
+          <Route path="/AdminSignup" exact component={AdminSignup} />
+
             <Route
               path="/LearningModuleUpload"
               exact
@@ -76,6 +79,11 @@ class App extends React.Component {
               exact
               component={LearningVideoModule}
             />
+            <Route
+              path="/UserAccountInfoPage"
+              exact
+              component={UserAccountInfoPage}
+            />
             <Route path="/QuizListFeed" exact component={QuizListFeed} />
           </Switch>
         </AdminLayout>
@@ -87,6 +95,7 @@ class App extends React.Component {
       routes = (
         <UserLayout>
           <Switch>
+            <Redirect from="/login" to="/UpdatesFeed" />
             <Route path="/Profile" exact component={Profile} />
             <Route path="/UpdatesFeed" exact component={StudentUpdates} />
             <Route path="/JobProfilesFeed" exact component={JobProfilesFeed} />

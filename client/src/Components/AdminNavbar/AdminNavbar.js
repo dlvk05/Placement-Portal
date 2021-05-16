@@ -30,11 +30,20 @@ const adminNavbar = (props) => {
         <div style={{ color: "white", marginRight: "120px" }}>
           {/* ^^^ you have to edit this dropdown properly later */}
           <NavDropdown title={x} style={{ color: "white" }}>
-            {/* <NavDropdown.Item href="#action/3.1">Account Info</NavDropdown.Item> */}
-            <NavDropdown.Item href="/JobProfileForm">Add New Job Profile</NavDropdown.Item>
+            <NavDropdown.Item href="/UserAccountInfoPage">
+              Acount Info
+            </NavDropdown.Item>
+            <NavDropdown.Item href="/AdminSignup">
+              Add New Admin
+            </NavDropdown.Item>
+            <NavDropdown.Item href="/JobProfileForm">
+              Add New Job Profile
+            </NavDropdown.Item>
             <NavDropdown.Item href="/Updates">Add New Update</NavDropdown.Item>
             <NavDropdown.Item href="/QuizUpload">Add New Quiz</NavDropdown.Item>
-            <NavDropdown.Item href="/LearningModuleUpload">Add Learning Module</NavDropdown.Item>
+            <NavDropdown.Item href="/LearningModuleUpload">
+              Add Learning Module
+            </NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href="/Logout">Logout</NavDropdown.Item>
           </NavDropdown>

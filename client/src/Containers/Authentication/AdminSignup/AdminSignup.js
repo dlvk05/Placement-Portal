@@ -93,6 +93,10 @@ class AdminSignup extends React.Component {
   };
 
   render() {
+    //experimental code ,not yet checked if works
+    if(this.props.signupDone){
+      this.props.history.push("/AdminUpdatesFeed");
+    }
     return (
       <div className={styles.section3}>
         <div className={styles.section4}>

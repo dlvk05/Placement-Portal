@@ -83,7 +83,7 @@ class Login extends React.Component {
     }
 
     if (this.props.isAuthenticated) {
-      this.props.history.push("/");
+      this.props.history.push("/UpdatesFeed");
     }
 
     if (this.props.error) {

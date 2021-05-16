@@ -84,7 +84,8 @@ class LearningModuleUpload extends React.Component {
       axios
         .post("/api/learningModules/addNewLearningModule", formData)
         .then((res) => {
-          console.log(res.data);
+          // console.log(res.data);
+          this.props.history.push("/LearningVideosFeed")
         })
         .catch((err) => console.log(err));
     });

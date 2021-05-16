@@ -8,6 +8,25 @@ const keys = require("../config/keys");
 const Admin=require("../models/adminModel");
 
 
+//get specific account
+router.get("/admin/getSpecificUser/:id",(req,res)=>{
+  Admin.findById(req.params.id)
+  .then(foundUser=>{
+    if(!foundUser){
+      res.status(404).json({
+        success:false,
+        error:"account not found"
+      })
+    }else{
+      res.json({
+        success:true,
+        user:foundUser,
+      })
+    }
+  })
+})
+
+
 // @route POST api/signupAdmin
 // @desc Register admin
 // @access Public
@@ -97,6 +116,96 @@ router.post("/loginAdmin", (req, res) => {
             });
           }
         );
+      } else {
+        return res.status(400).json({ passwordError: "Password incorrect" });
+      }
+    });
+  });
+});
+
+//change password
+router.put("/changePasswordAdmin", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  let newPassword = req.body.newPassword;
+
+  // Find user by email
+  Admin.findOne({ email }).then((user) => {
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ emailError: "Email not found" });
+    }
+
+    //Check password
+    bcrypt.compare(password, user.password).then(async (isMatch) => {
+      if (isMatch) {
+        //User Matched
+
+        // Hash password before saving in database
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newPassword, salt, (err, hash) => {
+            if (err) throw err;
+            newPassword = hash;
+            user.password = newPassword;
+            user
+              .save()
+              .then((user) => {
+                console.log("password changed");
+                res.json({
+                  success: true,
+                  updatedAccount: user,
+                });
+              })
+              .catch((err) => console.log(err));
+          });
+        });
+      } else {
+        return res.status(400).json({ passwordError: "Password incorrect" });
+      }
+    });
+  });
+});
+
+
+//change password
+router.put("/admin/changePassword", (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+  let newPassword = req.body.newPassword;
+  console.log(email)
+  console.log(password)
+  console.log(newPassword)
+
+  // Find user by email
+  Admin.findOne({ email:email }).then((user) => {
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ emailError: "Email not found" });
+    }
+
+    //Check password
+    bcrypt.compare(password, user.password).then(async (isMatch) => {
+      if (isMatch) {
+        //User Matched
+
+        // Hash password before saving in database
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newPassword, salt, (err, hash) => {
+            if (err) throw err;
+            newPassword = hash;
+            user.password = newPassword;
+            user
+              .save()
+              .then((user) => {
+                console.log("password changed");
+                res.json({
+                  success: true,
+                  updatedAccount: user,
+                });
+              })
+              .catch((err) => console.log(err));
+          });
+        });
       } else {
         return res.status(400).json({ passwordError: "Password incorrect" });
       }
