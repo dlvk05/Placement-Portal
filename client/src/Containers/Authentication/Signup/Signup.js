@@ -257,7 +257,7 @@ class Signup extends React.Component {
                     Please Select an Option
                   </option>
                   <option eventkey="2">Bachelor of Technology</option>
-                  <option eventkey="3">Master Technology</option>
+                  <option eventkey="3">Master of Technology</option>
                   <option eventkey="3">Master of Business Administration</option>
                 </Form.Control>
               </Form.Group>
