@@ -16,13 +16,22 @@
   
 .sideNav {
   position: fixed;
+  height: 80%; 
+  display: block;
   right: 30px;
   border: solid silver 2px;
   border-radius: 10px;
   padding: 20px;
   background-color: #f5f5f5;
   width: 15%;
-  overflow: auto;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none;
+  z-index: 1;
+}
+
+.sideNav::-webkit-scrollbar {
+  display: none;
 }
 
 .nextButton {
