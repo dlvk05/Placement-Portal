@@ -42,6 +42,10 @@ class XIIClassModal extends React.Component {
         type: "FileName",
         value: "",
       },
+      Class12thCompleted:{
+        type:Boolean,
+        default:false,
+      },
     },
     selectedFile: null,
     loading: false,
@@ -79,6 +83,8 @@ class XIIClassModal extends React.Component {
         formElementIdentifier
       ].value;
     }
+
+    formData.Class12thCompleted=true;
 
     if (this.state.selectedFile !== null) {
       formData.MarksheetProvided = true;

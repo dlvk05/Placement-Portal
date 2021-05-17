@@ -42,6 +42,10 @@ class XClassModal extends React.Component {
         type: "FileName",
         value: "",
       },
+      Class10thCompleted:{
+        type:Boolean,
+        default:false,
+      },
     },
     selectedFile: null,
     loading: false,
@@ -84,6 +88,8 @@ class XClassModal extends React.Component {
       formData.MarksheetProvided = true;
       formData.FileName = this.state.selectedFile.name;
     }
+
+    formData.Class10thCompleted=true;
 
     console.log(formData);
 

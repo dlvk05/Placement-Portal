@@ -9,6 +9,7 @@ const csvConverter = require("json-2-csv");
 const AdmZip = require("adm-zip");
 const nodemailer = require("nodemailer");
 
+let emailSent = false;
 //Load JobProfile model
 const JobProfile = require("../models/jobProfileModel");
 const UserProfile = require("../models/profileModel");
@@ -136,6 +137,7 @@ router.post("/jobProfile/addNewJobProfile", (req, res) => {
         HiringWorkflow: req.body.HiringWorkflow,
         AttachedDocuments: req.body.AttachedDocuments,
         EligibilityCriteria: req.body.EligibilityCriteria,
+        CompanyRepresentativeMailId: req.body.CompanyRepresentativeMailId,
       });
       //save the new jobProfile
       newJobProfile
@@ -179,6 +181,8 @@ const createRequiredZip = (id, callback) => {
   let pathToResumes = [];
   let randomFolder = String(Date.now());
   let receiverMailId = null;
+  let zipFileDes ;
+  let zipName;
   JobProfile.findById(id).then((foundJobProfile) => {
     if (!foundJobProfile) {
       console.log("encountered an error");
@@ -238,47 +242,43 @@ const createRequiredZip = (id, callback) => {
               let des = "../temp/" + randomFolder + "/" + "resumes/";
               pathToResumes.forEach((path) => {
                 index++;
-                fs.copy(path, des)
-                  .then(() => {
-                    if (index === numberOfResumes) {
-                      console.log("successfully copied the resumes");
-                      //---------------------
-                      // adding everything to zip
+                fs.ensureDirSync(des);
+                fs.copySync(path, des);
 
-                      const file = new AdmZip();
+                console.log("successfully copied the resumes");
+                //---------------------
+                // adding everything to zip
 
-                      let zipName =
-                        foundJobProfile.CompanyName +
-                        "_" +
-                        foundJobProfile.JobProfileTitle +
-                        "_" +
-                        "Applicants.zip";
-                      let zipDes = "../tempResults/" + randomFolder;
-                      let zipFileDes =
-                        "../tempResults/" + randomFolder + "/" + zipName;
-                      let zipSrc = "../temp/" + randomFolder;
-                      // file.addLocalFolder("../random");
-                      file.addLocalFolder(zipSrc);
-                      fs.ensureDirSync(zipDes);
-                      file.writeZip(zipFileDes);
-                      console.log("zip created");
-                      console.log(zipFileDes);
+                const file = new AdmZip();
 
-                      //removing the temporary files
-                      let desToRemove = "../temp/" + randomFolder;
-                      fs.removeSync(desToRemove);
-                      console.log("temporary files removed");
+                 zipName =
+                  foundJobProfile.CompanyName +
+                  "_" +
+                  foundJobProfile.JobProfileTitle +
+                  "_" +
+                  "Applicants.zip";
+                let zipDes = "../tempResults/" + randomFolder;
+                 zipFileDes =
+                  "../tempResults/" + randomFolder + "/" + zipName;
+                let zipSrc = "../temp/" + randomFolder;
+                // file.addLocalFolder("../random");
+                file.addLocalFolder(zipSrc);
+                fs.ensureDirSync(zipDes);
+                file.writeZip(zipFileDes);
+                console.log("zip created");
+                console.log(zipFileDes);
 
-                      callback({
-                        fileName: zipName,
-                        zipPath: zipFileDes,
-                        receiverMailId: receiverMailId,
-                        profileTitle: foundJobProfile.JobProfileTitle,
-                        companyName: foundJobProfile.CompanyName,
-                      });
-                    }
-                  })
-                  .catch((err) => console.log(err));
+                //removing the temporary files
+                // let desToRemove = "../temp/" + randomFolder;
+                // fs.removeSync(desToRemove);
+                // console.log("temporary files removed");
+              });
+              callback({
+                fileName: zipName,
+                zipPath: zipFileDes,
+                receiverMailId: receiverMailId,
+                profileTitle: foundJobProfile.JobProfileTitle,
+                companyName: foundJobProfile.CompanyName,
               });
             })
             .catch((err) => console.log(err));
@@ -331,7 +331,7 @@ router.get("/jobProfile/getApplicantList/:id", (req, res) => {
         });
 
         // console.log(initialApplicantsCSV);
-        // console.log(pathToResumes);
+        console.log(pathToResumes);
 
         //csv file configure
         let csvFileName =
@@ -355,8 +355,13 @@ router.get("/jobProfile/getApplicantList/:id", (req, res) => {
               let des = "../temp/" + randomFolder + "/" + "resumes/";
               pathToResumes.forEach((path) => {
                 index++;
+                fs.ensureDirSync(des);
                 fs.copy(path, des)
                   .then(() => {
+                    console.log("moved");
+                    console.log(path);
+                    console.log(index);
+                    console.log(numberOfResumes);
                     if (index === numberOfResumes) {
                       console.log("successfully copied the resumes");
                       //---------------------
@@ -385,10 +390,10 @@ router.get("/jobProfile/getApplicantList/:id", (req, res) => {
                       });
 
                       //removing the temporary files
-                      let desToRemove = "../temp/" + randomFolder;
-                      fs.removeSync(desToRemove);
-                      console.log("temporary files removed");
-                      // desToRemove="../tempResults/" + randomFolder;
+                      // let desToRemove = "../temp/" + randomFolder;
+                      // fs.removeSync(desToRemove);
+                      // console.log("temporary files removed");
+                      // // desToRemove="../tempResults/" + randomFolder;
                       // fs.removeSync(desToRemove);
                     }
                   })
@@ -441,7 +446,9 @@ router.put("/jobProfile/addSelectedApplications", (req, res) => {
                 temp.userAccount = profile.userAccount;
                 temp.userProfile = profile._id;
                 SelectedApplications.push(temp);
-                Student.JobProfilesSelectedFor.push({JobProfileId:req.body.jobProfileId});
+                Student.JobProfilesSelectedFor.push({
+                  JobProfileId: req.body.jobProfileId,
+                });
                 Student.save();
               }
             });
@@ -457,7 +464,6 @@ router.put("/jobProfile/addSelectedApplications", (req, res) => {
         });
     }
   });
-  
 });
 
 //send student feedBack for download to admin
@@ -555,16 +561,19 @@ router.post("/jobProfile/sendApplicantList/:id", async (req, res) => {
       ],
     };
 
-    transporter.sendMail(mailOptions, (err, info) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Email sent: " + info.response);
-        res.json({
-          success: true,
-        });
-      }
-    });
+    if (emailSent === false) {
+      transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Email sent: " + info.response);
+          emailSent = true;
+          res.json({
+            success: true,
+          });
+        }
+      });
+    }
   });
 });
 

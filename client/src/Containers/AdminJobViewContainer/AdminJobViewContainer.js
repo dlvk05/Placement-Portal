@@ -366,7 +366,7 @@ class AdminJobViewContainer extends React.Component {
             jobSector={this.state.jobProfile.JobSector}
             dream={this.state.jobProfile.Dream}
             positionType={this.state.jobProfile.PositionType}
-            applicationDeadLine={this.state.jobProfile.ApplicationDeadLine}
+            applicationDeadLine={this.state.jobProfileLoaded?this.state.jobProfile.ApplicationDeadLine.slice(0,10):null}
             attachedDocuments={
               this.state.jobProfile.AttachedDocuments[0].DocumentName
             }
@@ -380,7 +380,7 @@ class AdminJobViewContainer extends React.Component {
           />
           <br />
           <HiringWorkflowComponent
-            HiringWorkflow={this.state.jobProfile.HiringWorkflow}
+            HiringWorkflow={this.state.jobProfile.HiringWorkflow.length>0?this.state.jobProfile.HiringWorkflow:[]}
           />
           <br />
           <AdminEligibilityCriteriaComponent

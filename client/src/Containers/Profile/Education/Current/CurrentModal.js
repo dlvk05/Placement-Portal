@@ -47,6 +47,10 @@ class CurrentModal extends React.Component {
         type: "EndDate",
         value: "",
       },
+      CurrentCompleted: {
+        type: "CurrentCompleted",
+        value: "",
+      },
     },
     performance: [
       {
@@ -222,6 +226,7 @@ class CurrentModal extends React.Component {
         formElementIdentifier
       ].value;
     }
+    formData.CurrentCompleted=true;
 
     //adding performance array to formData
     formData.Performance = this.state.performance;
@@ -234,6 +239,7 @@ class CurrentModal extends React.Component {
         formData.Performance[index].FileName = selectedFile.file.name;
       }
     });
+
 
     // console.log("formData after adding fileNames");
     console.log(formData);

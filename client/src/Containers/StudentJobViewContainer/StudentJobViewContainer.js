@@ -21,6 +21,7 @@ class StudentJobViewContainer extends React.Component {
     currentResults: null,
     currentOffers: null,
     jobProfileLoaded: false,
+    studentStatsLoaded: false,
     studentProfile: null,
     finalEligibility: true,
     deadlinePassed: false,
@@ -152,7 +153,7 @@ class StudentJobViewContainer extends React.Component {
         // console.log(res.data);
         this.setState({
           ...this.state,
-
+          studentStatsLoaded: true,
           studentStats: res.data.foundStudentStat,
           studentProfile: res.data.foundStudentStat.UserProfile,
           checkedApplicationStatus: false,
@@ -166,6 +167,19 @@ class StudentJobViewContainer extends React.Component {
   }
 
   checkEligibility = () => {
+    if (
+      (this.state.studentProfile.Education.Current.CurrentCompleted &&
+        this.state.studentProfile.Education.Class12th.Class12thCompleted &&
+        this.state.studentProfile.Education.Class10th.Class10thCompleted) ===
+      false
+    ) {
+      this.setState({
+        eligibilityChecked: true,
+        finalEligibility: false,
+      });
+      return;
+    }
+
     let finalEligibility = true;
     let eligibilityResults = {
       MaxOffers3: true,
@@ -196,7 +210,7 @@ class StudentJobViewContainer extends React.Component {
       currentOffers.TotalOffers =
         this.state.studentStats.JobProfilesSelectedFor.length;
       if (this.state.studentStats.JobProfilesSelectedFor.length > 0) {
-        console.log("here")
+        console.log("here");
         console.log(this.state.studentStats.JobProfilesSelectedFor);
         this.state.studentStats.JobProfilesSelectedFor.forEach((jobProfile) => {
           currentOffers[jobProfile.JobProfileId.OpeningOverview.Category] =
@@ -295,28 +309,54 @@ class StudentJobViewContainer extends React.Component {
         finalEligibility = false;
       }
       //check 12th Score required
+
       let current12thScore =
         this.state.studentProfile.Education.Class12th.Score;
       currentResults["Score12"] = current12thScore;
 
       if (
-        current12thScore <
-        currentJobProfile.EligibilityCriteria.Class12thScoreRequiredPercentage
+        this.state.studentProfile.Education.Class12th.ScoreType === "Percentage"
       ) {
-        eligibilityResults.Class12thScoreRequired = false;
-        finalEligibility = false;
+        if (
+          current12thScore <
+          currentJobProfile.EligibilityCriteria.Class12thScoreRequiredPercentage
+        ) {
+          eligibilityResults.Class12thScoreRequired = false;
+          finalEligibility = false;
+        }
+      } else {
+        if (
+          current12thScore <
+          currentJobProfile.EligibilityCriteria.Class12thScoreRequiredCGPA
+        ) {
+          eligibilityResults.Class12thScoreRequired = false;
+          finalEligibility = false;
+        }
       }
+
       //check 10th Score required
       let current10thScore =
         this.state.studentProfile.Education.Class10th.Score;
       currentResults["Score10"] = current10thScore;
 
       if (
-        current10thScore <
-        currentJobProfile.EligibilityCriteria.Class10thScoreRequiredPercentage
+        this.state.studentProfile.Education.Class10th.ScoreType === "Percentage"
       ) {
-        eligibilityResults.Class10thScoreRequired = false;
-        finalEligibility = false;
+        if (
+          current10thScore <
+          currentJobProfile.EligibilityCriteria.Class10thScoreRequiredPercentage
+        ) {
+          eligibilityResults.Class10thScoreRequired = false;
+          finalEligibility = false;
+        }
+      } else {
+        if (
+          current10thScore <
+          currentJobProfile.EligibilityCriteria.Class10thScoreRequiredCGPA
+        ) {
+          eligibilityResults.Class10thScoreRequired = false;
+          finalEligibility = false;
+        }
       }
 
       // console.log(eligibilityResults);
@@ -377,7 +417,9 @@ class StudentJobViewContainer extends React.Component {
 
   displaySidebar = () => {
     let action = null;
-
+    if (!this.state.studentStatsLoaded) {
+      return null;
+    }
     let apply = (
       <div>
         <div>
@@ -436,12 +478,22 @@ class StudentJobViewContainer extends React.Component {
       action = null;
     }
 
+    if (
+      (this.state.studentProfile.Education.Current.CurrentCompleted &&
+        this.state.studentProfile.Education.Class12th.Class12thCompleted &&
+        this.state.studentProfile.Education.Class10th.Class10thCompleted) ===
+      false
+    ) {
+      action = null;
+      applicationStatus = <h6>Profile Incomplete</h6>;
+    }
+
     return (
       <div>
         {action}
         {applicationStatus}
-        {apply}
-        {withdraw}
+        {/* {apply}
+        {withdraw} */}
       </div>
     );
   };
@@ -510,13 +562,39 @@ class StudentJobViewContainer extends React.Component {
     return feedBack;
   };
 
+  returnEligibilityComponent = () => {
+    let com=null;
+    if(!this.state.studentStatsLoaded){
+      return;
+    }
+    if (
+      (this.state.studentProfile.Education.Current.CurrentCompleted &&
+        this.state.studentProfile.Education.Class12th.Class12thCompleted &&
+        this.state.studentProfile.Education.Class10th.Class10thCompleted) ===
+      false
+    ) {
+      com = <div>Profile Incomplete</div>;
+    } else {
+      com = (
+        <EligibilityCriteriaComponent
+          EligibilityCriteria={this.state.jobProfile.EligibilityCriteria}
+          eligibilityResults={this.state.eligibilityResults}
+          currentResults={this.state.currentResults}
+          currentOffers={this.state.currentOffers}
+          finalEligibility={this.state.finalEligibility}
+        />
+      );
+    }
+
+    return com;
+  };
+
   render() {
     // console.log(this.state);`
     if (this.state.jobProfileLoaded === true) {
       if (
         this.state.eligibilityChecked === false &&
-        this.state.studentProfile !== null
-         &&
+        this.state.studentProfile !== null &&
         this.state.applied !== true
       ) {
         this.checkEligibility();
@@ -540,7 +618,11 @@ class StudentJobViewContainer extends React.Component {
             jobSector={this.state.jobProfile.JobSector}
             dream={this.state.jobProfile.Dream}
             positionType={this.state.jobProfile.PositionType}
-            applicationDeadLine={this.state.jobProfile.ApplicationDeadLine}
+            applicationDeadLine={
+              this.state.jobProfileLoaded
+                ? this.state.jobProfile.ApplicationDeadLine.slice(0, 10)
+                : null
+            }
             attachedDocuments={
               this.state.jobProfile.AttachedDocuments[0].DocumentName
             }
@@ -557,13 +639,14 @@ class StudentJobViewContainer extends React.Component {
             HiringWorkflow={this.state.jobProfile.HiringWorkflow}
           />
           <br />
-          <EligibilityCriteriaComponent
+            {this.returnEligibilityComponent()}
+          {/* <EligibilityCriteriaComponent
             EligibilityCriteria={this.state.jobProfile.EligibilityCriteria}
             eligibilityResults={this.state.eligibilityResults}
             currentResults={this.state.currentResults}
             currentOffers={this.state.currentOffers}
             finalEligibility={this.state.finalEligibility}
-          />
+          /> */}
           <br />
           {this.studentFeedbackHandler()}
         </div>

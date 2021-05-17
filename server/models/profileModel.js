@@ -66,6 +66,10 @@ const profileSchema = new Schema({
       PercentageScore: String,
       StartDate: Date,
       EndDate: Date,
+      CurrentCompleted:{
+        type:Boolean,
+        default:false,
+      },
       Performance: [
         {
           SemNo: String,
@@ -91,6 +95,10 @@ const profileSchema = new Schema({
       ScoreType: String,
       StartDate: Date,
       EndDate: Date,
+      Class12thCompleted:{
+        type:Boolean,
+        default:false,
+      },
       MarksheetProvided: {
         type: Boolean,
         default: false,
@@ -106,6 +114,10 @@ const profileSchema = new Schema({
       ScoreType: String,
       StartDate: Date,
       EndDate: Date,
+      Class10thCompleted:{
+        type:Boolean,
+        default:false,
+      },
       MarksheetProvided: {
         type: Boolean,
         default: false,

@@ -28,8 +28,8 @@ const data ={
                               <td>{currentStage.StageNo}</td>
                               <td>{currentStage.StageTitle}</td>
                               <td>{currentStage.StageVenue}</td>
-                              <td>{currentStage.StartDate}</td>
-                              <td>{currentStage.EndDate}</td>
+                              <td>{currentStage.StartDate.slice(0,10)}</td>
+                              <td>{currentStage.EndDate.slice(0,10)}</td>
                               <td>{currentStage.StageDescription}</td>
                           </tr>
                       ))}
