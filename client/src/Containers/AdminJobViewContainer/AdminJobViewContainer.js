@@ -119,6 +119,12 @@ class AdminJobViewContainer extends React.Component {
       toast.error("The Application deadline hasn't passed yet");
       return;
     }
+
+    if (this.state.finalSelectionsDone) {
+      toast.error("The final list has already been added Please Contact the system administrator to edit the list");
+      return;
+    }
+
     this.setState({
       show: !this.state.show,
     });

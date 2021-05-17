@@ -234,6 +234,7 @@ class StudentJobViewContainer extends React.Component {
         currentOffers.ITES >= 2
       ) {
         eligibilityResults.ItesOffers = false;
+        finalEligibility = false;
       }
 
       //check Core Companies placedIn
@@ -242,6 +243,7 @@ class StudentJobViewContainer extends React.Component {
         currentOffers.CORE >= 1
       ) {
         eligibilityResults.CoreOffers = false;
+        finalEligibility = false;
       }
 
       //check RnD Companies placedIn
@@ -250,6 +252,7 @@ class StudentJobViewContainer extends React.Component {
         currentOffers.RandD >= 1
       ) {
         eligibilityResults.RnDOffers = false;
+        finalEligibility = false;
       }
 
       //check Non-Core Companies placedIn
@@ -258,6 +261,7 @@ class StudentJobViewContainer extends React.Component {
         currentOffers.NonCORE >= 2
       ) {
         eligibilityResults.NonCoreOffers = false;
+        finalEligibility = false;
       }
       //check backlogs
       let currentSem = parseInt(
@@ -359,10 +363,10 @@ class StudentJobViewContainer extends React.Component {
         }
       }
 
-      // console.log(eligibilityResults);
-      // console.log(finalEligibility);
-      // console.log(currentResults);
-      // console.log(currentOffers);
+      console.log(eligibilityResults);
+      console.log(finalEligibility);
+      console.log(currentResults);
+      console.log(currentOffers);
 
       this.setState({
         ...this.state,
@@ -547,7 +551,7 @@ class StudentJobViewContainer extends React.Component {
           <br />
           <p>{feedbackData.FeedBackText}</p>
           <br />
-          <span>{feedbackData.CreatedOn}</span>
+          <span>{feedbackData.CreatedOn.slice(0,10)}</span>
         </div>
       );
     }
